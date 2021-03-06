@@ -1,12 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-//import theme from './resources/theme';
 import Theme from './components/Theme';
 import ThemeSwitch from './components/ThemeSwitch';
-import useDarkMode from './components/ThemeHook';
-import { LightTheme, DarkTheme } from './resources/themes.js';
+import useThemeSwitch from './components/ThemeHook';
 
 import BlockUI from './components/Backdrop';
 
@@ -19,14 +17,15 @@ import InputPostUrl from './components/InputPostUrl';
 
 import SETTINGS from './Settings';
 import DataAccess from './data/DataAccess';
-//import DataContext from './data/DataContext';
+
 export const DataContext = React.createContext();
+export const ThemeContext = React.createContext();
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [themename, setThemeName] = useDarkMode();
+  const [themeName, theme, setThemeName] = useThemeSwitch();
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
-  const theme = themename === 'dark' ? DarkTheme : LightTheme;
+
 
   useEffect(
     () => {
@@ -37,63 +36,65 @@ const App = () => {
 
   return (
     <DataContext.Provider value={DataAccess}>
-      <Theme theme={theme}>
-        <Box mb={2}>
-          <AppBar position="static" style={theme.AppBar}>
-            <Toolbar>
-              <IconButton onClick={() => setDrawerIsOpen(true)} color="inherit" aria-label="Menu" style={{ marginLeft: -12, marginRight: 20, }}>
-                <MenuIcon />
-              </IconButton>
-              <Container align="center">
-                <Typography color="inherit" style={{ flex: 1 }} >
+      <ThemeContext.Provider value={{ themeName, theme, setThemeName }}>
+        <Theme theme={theme}>
+          <Box mb={2}>
+            <AppBar position="static" style={theme.AppBar}>
+              <Toolbar>
+                <IconButton onClick={() => setDrawerIsOpen(true)} color="inherit" aria-label="Menu" style={{ marginLeft: -12, marginRight: 20, }}>
+                  <MenuIcon />
+                </IconButton>
+                <Container align="center">
+                  <Typography color="inherit" style={{ flex: 1 }} >
 
-                  <InputPostUrl></InputPostUrl>
-                </Typography>
+                    <InputPostUrl></InputPostUrl>
+                  </Typography>
+                </Container>
+                {/* <Button onClick={() => setDrawerIsOpen(true)} color="inherit">Drawer</Button> */}
+              </Toolbar>
+            </AppBar>
+            <Drawer variant="persistent" open={drawerIsOpen}>
+              <Box style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                <IconButton onClick={() => setDrawerIsOpen(false)}>
+                  <ChevronLeft />
+                </IconButton>
+              </Box>
+              <Container>
+                <ThemeSwitch currentThemeName={themeName} currentTheme={theme} onclick={setThemeName} />
               </Container>
-              {/* <Button onClick={() => setDrawerIsOpen(true)} color="inherit">Drawer</Button> */}
-            </Toolbar>
-          </AppBar>
-        </Box>
-        <Drawer variant="persistent" open={drawerIsOpen}>
-          <Box style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-            <IconButton onClick={() => setDrawerIsOpen(false)}>
-              <ChevronLeft />
-            </IconButton>
+            </Drawer>
           </Box>
-          <Container>
-            <ThemeSwitch currentThemeName={themename} currentTheme={theme} onclick={setThemeName} />
-          </Container>
-        </Drawer>
-        <Grid container>
-          <Grid item xs={12} sm={8}>
-            <Container maxWidth="sm">
-              <Container align="center">
-                <img src={logo} className="App-logo" alt="logo" style={{ maxWidth: '6rem', height: '10vh' }} />
+
+          <Grid container>
+            <Grid item xs={12} sm={8}>
+              <Container maxWidth="sm">
+                <Container align="center">
+                  <img src={logo} className="App-logo" alt="logo" style={{ maxWidth: '6rem', height: '10vh' }} />
+
+                </Container>
+                <Box mb={1}>
+                  <Alert severity="info">
+                    <Typography variant="caption">
+                      To simulate sending a parameter with no value in POST, please type "{SETTINGS.noValueString.join('" or "')}" in the desired input
+                </Typography>
+                  </Alert>
+                </Box>
+                <Paper>
+                  <Box mb={1} p={3} align="left">
+
+                  </Box>
+                </Paper>
 
               </Container>
-              <Box mb={1}>
-                <Alert severity="info">
-                  <Typography variant="caption">
-                    To simulate sending a parameter with no value in POST, please type "{SETTINGS.noValueString.join('" or "')}" in the desired input
-                </Typography>
-                </Alert>
-              </Box>
+            </Grid>
+            <Grid item xs={12} sm={4}>
               <Paper>
-                <Box mb={1} p={3} align="left">
-
+                <Box p={3} textAlign="left" align="center" height="49.75vh">
+                  {/* <DisplayPost text={formValues} /> */}
                 </Box>
-              </Paper>
-
-            </Container>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Paper>
-              <Box p={3} textAlign="left" align="center" height="49.75vh">
-                {/* <DisplayPost text={formValues} /> */}
-              </Box>
-              <Divider />
-              <Box p={3} textAlign="left" align="center" height="49.75vh">
-                {/* <DisplaySubmitted 
+                <Divider />
+                <Box p={3} textAlign="left" align="center" height="49.75vh">
+                  {/* <DisplaySubmitted 
                 history={history} 
                 setFormValues={setFormValues} 
                 setAlertOpen={setOpenAlert}
@@ -101,16 +102,18 @@ const App = () => {
                 setAlertType={setAlertType}
                 blockUI={setIsLoading}      
               /> */}
-              </Box>
-            </Paper>
+                </Box>
+              </Paper>
+            </Grid>
+
+
           </Grid>
 
+          {/* <BlockUI theme={theme} open={isLoading} /> */}
+          <BlockUI open={isLoading} />
 
-        </Grid>
-
-        <BlockUI theme={theme} open={isLoading} />
-
-      </Theme>
+        </Theme>
+      </ThemeContext.Provider>
     </DataContext.Provider>
   );
 }

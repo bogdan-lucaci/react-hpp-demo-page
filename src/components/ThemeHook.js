@@ -1,24 +1,25 @@
 import { useEffect, useState } from 'react';
+import { LightTheme, DarkTheme } from '../resources/themes';
 
-const useDarkMode = () => {
-    const [theme, setTheme] = useState(window.localStorage.getItem('theme') || 'dark');
+const useThemeSwitch = () => {
+    const [themeName, setThemeName] = useState(window.localStorage.getItem('theme') || 'dark');
     const toggleTheme = () => {
-        if (theme === 'light') {
+        if (themeName === 'light') {
             window.localStorage.setItem('theme', 'dark')
-            setTheme('dark')
+            setThemeName('dark')
         } else {
             window.localStorage.setItem('theme', 'light')
-            setTheme('light')
+            setThemeName('light')
         }
-        console.log('useDarkMode : theme = ', theme);
+        //console.log('useDarkMode : theme = ', themeName);
     };
 
     useEffect(() => {
         const localTheme = window.localStorage.getItem('theme');
-        localTheme && setTheme(localTheme);
+        localTheme && setThemeName(localTheme);
     }, []);
 
-    return [theme, toggleTheme]
+    return [themeName, themeName === 'dark' ? DarkTheme : LightTheme, toggleTheme]
 };
 
-export default useDarkMode;
+export default useThemeSwitch;
