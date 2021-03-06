@@ -1,10 +1,8 @@
 import { Backdrop, CircularProgress } from '@material-ui/core';
-import { useContext } from 'react';
-import { ThemeContext } from '../App';
+import useAppContext from '../AppContextHook';
 
 const BlockUI = ({ open }) => {
-    //const theme = useContext(ThemeContext);
-    const { theme } = useContext(ThemeContext);
+    const { theme } = useAppContext('ThemeContext');
 
     return (
         <Backdrop style={{ zIndex: theme.zIndex.drawer + 1 }} open={open} /*transitionDuration={1000}*/>

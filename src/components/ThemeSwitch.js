@@ -1,11 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
-import { ThemeContext } from '../App';
+import useAppContext from '../AppContextHook';
 
 import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-
-import Tooltip from '@material-ui/core/Tooltip';
+import  { FormControlLabel, Tooltip } from '@material-ui/core';
 
 
 const ThemeIcon = ({ theme, isDarkMode }) => {
@@ -29,7 +27,7 @@ const ThemeIcon = ({ theme, isDarkMode }) => {
 
 // themeName, theme (object), setThemeName provided by ThemeSwitchHook from ThemeContext
 const ThemeSwitch = () => {
-	const {themeName: currentThemeName, theme: currentTheme, setThemeName} = useContext(ThemeContext);
+	const {themeName: currentThemeName, theme: currentTheme, setThemeName} = useAppContext('ThemeContext');
 	const [switchState, setSwitchState] = useState({
 		dark: currentThemeName === 'dark',
 		//light: false

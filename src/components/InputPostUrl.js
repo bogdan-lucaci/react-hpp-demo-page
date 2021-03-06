@@ -1,11 +1,8 @@
-import { useContext } from 'react';
 import { Select } from '@material-ui/core';
-import { DataContext } from '../App';
+import useAppContext from '../AppContextHook';
 
 const InputPostUrl = () => {
-    const _data = useContext(DataContext);
-    
-    console.log(_data.getPostURLs());
+    const _data = useAppContext('DataContext');
 
     const PostURLs = _data.getPostURLs();
 
