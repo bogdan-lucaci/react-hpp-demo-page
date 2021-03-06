@@ -3,7 +3,7 @@ import AppHeader from './AppHeader';
 import AppDrawer from './AppDrawer';
 
 const AppHeaderAndDrawer = () => {
-    const [drawerIsOpen, setDrawerIsOpen] = useState(true);
+    const [drawerIsOpen, setDrawerIsOpen] = useState(false);
     return (
         <>
             <AppHeader setOpen={setDrawerIsOpen} />
