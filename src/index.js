@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './res/index.css';
 import App from './App';
 import { AppContext } from './AppContextHook';
 import Theme from './components/UI/Theme';

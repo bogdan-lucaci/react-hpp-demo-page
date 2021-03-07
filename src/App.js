@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import SETTINGS from './Settings';
 
-import logo from './logo.svg';
-import './App.css';
+
+
 
 import BlockUI from './components/UI/Backdrop';
 
@@ -14,6 +14,7 @@ import AppHeaderAndDrawer from './components/UI/AppHeaderAndDrawer';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [formValues, setFormValues] = useState({});
 
   useEffect(
     () => {
@@ -32,17 +33,17 @@ const App = () => {
         <Grid item xs={12} sm={8}>
           <Container maxWidth="sm">
             <Container align="center">
-              <img src={logo} className="App-logo" alt="logo" style={{ maxWidth: '6rem', height: '10vh' }} />
-
+              
             </Container>
-            <Box mb={1}>
+
+            <Paper>
+            <Box mb={1} p={2}>
               <Alert severity="info">
                 <Typography variant="caption">
                   To simulate sending a parameter with no value in POST, please type "{SETTINGS.noValueString.join('" or "')}" in the desired input
                 </Typography>
               </Alert>
-            </Box>
-            <Paper>
+            </Box>              
               <Box mb={1} p={3} align="left">
 
               </Box>
