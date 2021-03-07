@@ -1,11 +1,19 @@
 import { Typography, Divider, Box, Container, Paper, Grid, Button, AppBar, Drawer, Toolbar, IconButton, Select } from '@material-ui/core';
 import { ChevronLeft } from '@material-ui/icons';
 import ThemeSwitch from './ThemeSwitch';
+import useAppContext from '../../AppContextHook';
 
 const AppHeaderDrawer = ({open, setOpen}) => {
-
+    const {theme} = useAppContext('ThemeContext');
+    
     return (
-        <Drawer variant="persistent" open={open} anchor="left">
+        <Drawer 
+            //classes={{ paper: styles.paper }}
+            style={theme.AppBar}
+            variant="persistent" 
+            open={open} 
+            anchor="left"
+        >
             <Box m={1} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <IconButton onClick={() => setOpen(false)}>
                     <ChevronLeft />

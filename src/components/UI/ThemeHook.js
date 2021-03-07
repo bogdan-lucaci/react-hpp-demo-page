@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { LightTheme, DarkTheme } from '../resources/themes';
+import { LightTheme, DarkTheme } from '../../res/themes';
 
 const useThemeSwitch = () => {
     const [themeName, setThemeName] = useState(window.localStorage.getItem('theme') || 'dark');

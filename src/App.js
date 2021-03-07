@@ -4,12 +4,12 @@ import SETTINGS from './Settings';
 import logo from './logo.svg';
 import './App.css';
 
-import BlockUI from './components/Backdrop';
+import BlockUI from './components/UI/Backdrop';
 
 import { Typography, Divider, Box, Container, Paper, Grid, Button, AppBar, Drawer, Toolbar, IconButton, Select } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 
-import AppHeaderAndDrawer from './components/AppHeaderAndDrawer';
+import AppHeaderAndDrawer from './components/UI/AppHeaderAndDrawer';
 
 
 const App = () => {

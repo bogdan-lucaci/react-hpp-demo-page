@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import DataAccess from './data/DataAccess';
-import useThemeSwitch from './components/ThemeHook';
+import useThemeSwitch from './components/UI/ThemeHook';
 
 const DataContext = React.createContext();
 const ThemeContext = React.createContext();
