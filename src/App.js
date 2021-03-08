@@ -12,11 +12,6 @@ import Form from './components/Form';
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const [formValues, setFormValues] = useState({});
-  // must be passsed to InputPostUrl -> maybe add it to a new context - FormContext?
-  const [formAction, setFormAction] = useState('');
-  const [formTarget, setformTarget] = useState();
-
   useEffect(
     () => {
       console.log('APP rendered!');
@@ -33,8 +28,8 @@ const App = () => {
       <Grid container>
         <Grid item xs={12} sm={8}>
           <Container maxWidth="sm">
-            <Paper>
-              <Box p={2}>
+            {/* <Paper> */}
+              <Box p={0} mb={2}>
                 <Box mb={1}>
                   <Alert severity="info">
                     <Typography variant="caption">
@@ -43,14 +38,10 @@ const App = () => {
                   </Alert>
                 </Box>
                 <Box align="left">
-                  <Form
-                    formValues={formValues} setFormValues={setFormValues}
-                    formValues={formAction} setFormValues={setFormAction}
-                    formValues={formTarget} setFormValues={setformTarget}
-                  />
+                  <Form />
                 </Box>
               </Box>
-            </Paper>
+            {/* </Paper> */}
 
           </Container>
         </Grid>

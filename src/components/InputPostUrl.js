@@ -11,9 +11,9 @@ const InputPostUrl = () => {
         <Box 
             border={0}
             borderRadius={12}
-            borderColor="grey.400"
+            //borderColor="grey.400"
             //bgcolor="text.disabled"
-            bgcolor="primary.dark"
+            //bgcolor="primary.light"
             p="5px"
         > 
             <ButtonGroup
@@ -38,11 +38,11 @@ const InputPostUrl = () => {
                     //MenuProps=""
                     //value=""
                     //onChange={handleChange}
-                    onClose={(e) => { console.log(e.target) }}
+                    //onClose={(e) => { console.log(e.target) }}
                     //style={{width: "75%"}}
                 >
                     {PostURLs.map(x => (
-                        <option key="{x.ID}" value="{x.URL}">{x.DisplayName} | {x.URL}</option>
+                        <option key={x.ID} value={x.URL}>{x.DisplayName} | {x.URL}</option>
                     ))}
                 </Select>
                 <Button
