@@ -6,13 +6,13 @@ import InputParam from './InputParam';
 
 const getInputsForArea = (areaId) => DATA_FORM_MODEL.params.filter(param => param.area[0] === areaId);
 
-const Form = () => {
+const Form = ({ postValues, setPostValues }) => {
 
     return (
         <form method="post" name="mainForm" id="mainForm" spellCheck="false" autoComplete="off" >
             {DATA_FORM_MODEL.areas.map((area) => {
                 return (
-                    <Accordion key={area.id} defaultExpanded="true">
+                    <Accordion key={area.id} defaultExpanded={true}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography>{area.name}</Typography>
                         </AccordionSummary>
@@ -22,7 +22,12 @@ const Form = () => {
                                     return (
                                         <Grid key={param.name + (param.area.toString())} item xs={12} sm={6}>
 
-                                            <InputParam id={param.name + (param.area.toString())} name={param.name} />
+                                            <InputParam
+                                                id={param.name + (param.area.toString())}
+                                                name={param.name}
+                                                postValues={postValues}
+                                                setPostValues={setPostValues}
+                                            />
 
                                         </Grid>
                                     )

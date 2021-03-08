@@ -9,24 +9,32 @@ const InputPostUrl = () => {
 
     return (
         <Box 
-            border={0}
+        //border={1}
+        //borderColor="grey.400"            
             borderRadius={12}
-            //borderColor="grey.400"
             //bgcolor="text.disabled"
             //bgcolor="primary.light"
-            p="5px"
+            p="1rem"
+            // display="flex"
+            // justifyContent="center"
+            // alignItems="center"
+            width="100%"
+
         > 
             <ButtonGroup
                 size="large"
                 color="primary"
+                fullWidth={true}
                 aria-label="large outlined primary button group"
-                style={{justifyContent: "center", width: "100%"}}
+                style={{width: "100%"}}
             >
                 <Select
                     //labelId="demo-simple-select-helper-label"
                     //id="demo-simple-select-helper"
                     //IconComponent = {Person}
                     native
+                    
+                    style={{width: "60%"}}
                     //variant="filled"
                     margin="dense"
                     inputProps={{
@@ -46,8 +54,7 @@ const InputPostUrl = () => {
                     ))}
                 </Select>
                 <Button
-                    fullWidth="true"
-                    //style={{width: "25%"}}
+                    style={{width: "40%"}}
                     size="large"
                     variant="contained"
                     disableElevation

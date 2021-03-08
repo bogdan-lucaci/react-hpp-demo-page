@@ -53,7 +53,6 @@ const hasHelper = (name) => DATA_FORM_MODEL.helpers.filter(x => x.for === name).
 const InputParamHelper = ({ inputName, setShowHelper }) => {
     const _data = useAppContext('DataContext');
     const helperHasData = getHelperData(_data, inputName).length ? true : false;
-    console.log(getHelperData(_data, inputName));
 
     useEffect(() => {
         return setShowHelper(helperHasData)

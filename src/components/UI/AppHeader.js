@@ -15,9 +15,9 @@ const AppHeader = ({ setOpen: setDrawerIsOpen }) => {
                     <MenuIcon />
                 </IconButton>
                 {/* <Divider orientation="vertical" flexItem  /> */}
-                <Typography color="inherit" style={{ flex: 1 }} >
+                <Container align="center" maxWidth="md" >
                     <InputPostUrl />
-                </Typography>
+                </Container>
                 <img src={logo} className="App-logo" alt="logo" style={{ maxWidth: '6rem', height: '5vh' }} />
                 {/* <Button onClick={() => setDrawerIsOpen(true)} color="inherit">Drawer</Button> */}
             </Toolbar>
