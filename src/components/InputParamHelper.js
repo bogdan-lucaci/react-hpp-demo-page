@@ -50,13 +50,19 @@ const getHelperData = (_data, inputName) => {
 
 const hasHelper = (name) => DATA_FORM_MODEL.helpers.filter(x => x.for === name).length ? true : false;
 
-const InputParamHelper = ({ inputName, setShowHelper }) => {
+const InputParamHelper = ({ inputName, setShowHelper, setInputVal }) => {
     const _data = useAppContext('DataContext');
     const helperHasData = getHelperData(_data, inputName).length ? true : false;
 
     useEffect(() => {
         return setShowHelper(helperHasData)
     }, []);
+
+    const handleChange = (e) => {
+        // if (e.target.value) {
+            setInputVal(e.target.value);
+        //}
+    };
 
     return (
         <>
@@ -68,7 +74,9 @@ const InputParamHelper = ({ inputName, setShowHelper }) => {
                         backgroundColor: grey[600],
                         borderLeft: '2px solid ' + grey[500]
                     }}
+                    onChange={handleChange}
                 >
+                    <option key="no-value" value=""></option >
                     {
                         getHelperData(_data, inputName).map(x =>
                             <option key={x.id} value={x.id}>{x.val}</option >

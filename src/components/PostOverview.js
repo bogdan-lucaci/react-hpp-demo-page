@@ -12,7 +12,7 @@ const sortParams = text => {
         return "{}";
 };
 
-const PostOverview = ({ postValues }) => {console.log(postValues); return (
+const PostOverview = ({ postValues }) => (
     <>
         <Typography variant="h6">
             <Box color="text.disabled">
@@ -24,5 +24,6 @@ const PostOverview = ({ postValues }) => {console.log(postValues); return (
             {sortParams(postValues)}
         </pre>
     </>
-)};
+);
+
 export default PostOverview;

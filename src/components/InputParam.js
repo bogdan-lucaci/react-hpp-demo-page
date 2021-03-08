@@ -20,14 +20,15 @@ const handleValue = (postValues, inputName, inputValue) => {
     }
 
     return updatedValues;
-};
+}; 
 
 const InputParam = ({ id, name, postValues, setPostValues }) => {
     const [showHelper, setShowHelper] = useState(true);
 
-    const handleChange = (e) => {
+    // we do this so we may pass down to InputParaamHelper this action
+    const setInputVal = (val) => {
         setPostValues(
-            handleValue(postValues, name, e.target.value)
+            handleValue(postValues, name, val)
         );
     };
 
@@ -45,10 +46,11 @@ const InputParam = ({ id, name, postValues, setPostValues }) => {
                 type="text"
                 id={id}
                 name={id}
-                onChange={handleChange}
+                value={postValues[name] || ''}
+                onChange={(e) => setInputVal(e.target.value)}
             />
             {showHelper ? (
-                <InputParamHelper inputName={name} setShowHelper={setShowHelper} />
+                <InputParamHelper inputName={name} setShowHelper={setShowHelper} setInputVal={setInputVal} />
             ) : ''}
         </fieldset>
     )
