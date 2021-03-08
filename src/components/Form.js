@@ -6,10 +6,17 @@ import InputParam from './InputParam';
 
 const getInputsForArea = (areaId) => DATA_FORM_MODEL.params.filter(param => param.area[0] === areaId);
 
-const Form = ({ postValues, setPostValues }) => {
+const Form = ({ postValues, setPostValues, formAction }) => {
 
     return (
-        <form method="post" name="mainForm" id="mainForm" spellCheck="false" autoComplete="off" >
+        <form 
+            method="post" 
+            action={formAction}
+            name="HppPostForm" 
+            id="HppPostForm" 
+            spellCheck="false" 
+            autoComplete="off" 
+        >
             {DATA_FORM_MODEL.areas.map((area) => {
                 return (
                     <Accordion key={area.id} defaultExpanded={true}>

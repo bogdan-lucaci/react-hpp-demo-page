@@ -7,12 +7,14 @@ import { Alert } from '@material-ui/lab';
 import BlockUI from './components/UI/Backdrop';
 import AppHeaderAndDrawer from './components/UI/AppHeaderAndDrawer';
 import Form from './components/Form';
+import InputPostUrl from './components/InputPostUrl';
 import PostOverview from './components/PostOverview';
 
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [postValues, setPostValues] = useState({});
+  const [formAction, setFormAction] = useState('');
 
   useEffect(
     () => {
@@ -24,7 +26,11 @@ const App = () => {
   return (
     <>
       <Box mb={2}>
-        <AppHeaderAndDrawer />
+        <AppHeaderAndDrawer>
+
+          <InputPostUrl setFormAction={setFormAction} />
+          
+        </AppHeaderAndDrawer>
       </Box>
 
       <Grid container>
@@ -41,9 +47,10 @@ const App = () => {
               </Box>
               <Box align="left">
 
-                <Form 
+                <Form
                   postValues={postValues}
                   setPostValues={setPostValues}
+                  formAction={formAction}
                 />
 
               </Box>

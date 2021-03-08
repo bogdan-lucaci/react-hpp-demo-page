@@ -1,11 +1,10 @@
 import { Typography, Divider, Box, Container, Paper, Grid, Button, AppBar, Drawer, Toolbar, IconButton, Select } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import InputPostUrl from '../InputPostUrl';
 import useAppContext from '../../AppContextHook';
 import logo from '../../res/logo.svg';
 import '../../res/logo.css';
 
-const AppHeader = ({ setOpen: setDrawerIsOpen }) => {
+const AppHeader = ({ setOpen: setDrawerIsOpen, children }) => {
     const { theme } = useAppContext('ThemeContext');
 
     return (
@@ -16,7 +15,7 @@ const AppHeader = ({ setOpen: setDrawerIsOpen }) => {
                 </IconButton>
                 {/* <Divider orientation="vertical" flexItem  /> */}
                 <Container align="center" maxWidth="md" >
-                    <InputPostUrl />
+                    {children}
                 </Container>
                 <img src={logo} className="App-logo" alt="logo" style={{ maxWidth: '6rem', height: '5vh' }} />
                 {/* <Button onClick={() => setDrawerIsOpen(true)} color="inherit">Drawer</Button> */}

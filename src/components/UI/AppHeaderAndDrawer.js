@@ -2,11 +2,12 @@ import { useState } from 'react';
 import AppHeader from './AppHeader';
 import AppDrawer from './AppDrawer';
 
-const AppHeaderAndDrawer = () => {
+// main reason for this component's existance is to move the "drawerIsOpen" state from <App>
+const AppHeaderAndDrawer = ({ children }) => {
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
     return (
         <>
-            <AppHeader setOpen={setDrawerIsOpen} />
+            <AppHeader setOpen={setDrawerIsOpen} children={children} />
             <AppDrawer open={drawerIsOpen} setOpen={setDrawerIsOpen} />
         </>
     )
