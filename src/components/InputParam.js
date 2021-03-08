@@ -50,7 +50,7 @@ const InputParam = ({ id, name, postValues, setPostValues }) => {
                 onChange={(e) => setInputVal(e.target.value)}
             />
             {showHelper ? (
-                <InputParamHelper inputName={name} setShowHelper={setShowHelper} setInputVal={setInputVal} />
+                <InputParamHelper name={name} setShowHelper={setShowHelper} setInputVal={setInputVal} />
             ) : ''}
         </fieldset>
     )

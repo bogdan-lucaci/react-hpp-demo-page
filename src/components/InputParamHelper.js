@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import useAppContext from '../AppContextHook';
-import DATA_FORM_MODEL from '../data/DataFormModel';
+//import DATA_FORM_MODEL from '../data/DataFormModel';
 import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 
 
@@ -48,9 +48,9 @@ const getHelperData = (_data, inputName) => {
 
 };
 
-const hasHelper = (name) => DATA_FORM_MODEL.helpers.filter(x => x.for === name).length ? true : false;
+//const hasHelper = (name) => DATA_FORM_MODEL.helpers.filter(x => x.for === name).length ? true : false;
 
-const InputParamHelper = ({ inputName, setShowHelper, setInputVal }) => {
+const InputParamHelper = ({ name: inputName, setShowHelper, setInputVal }) => {
     const _data = useAppContext('DataContext');
     const helperHasData = getHelperData(_data, inputName).length ? true : false;
 
