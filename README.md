@@ -5,7 +5,7 @@
 > **`DATA_RAW.js`** is not available inside this repository for security reasons
 
 ### Functionalities so far:
-- *`< to be updated >`*
+- *< to be updated >*
 - UI - dark/ligt mode theme switch
 - UI - panel presenting a POST to be submitted overview (params alphabetically ordered)
 
