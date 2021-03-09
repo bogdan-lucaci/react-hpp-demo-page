@@ -5,12 +5,25 @@
 > **`DATA_RAW.js`** is not available inside this repository for security reasons
 
 ### Functionalities so far:
--  *to be updated*
+- *to be updated*
+- UI - dark/ligt mode theme switch
+- UI - panel presenting a POST to be submitted overview (params alphabetically ordered)
+
+### Functionalities to come:
+- toggle accordion areas based on POST URL value
+- connect POST URL list value to **MerchantID helper** list
+- connect **MerchantID** value to **SiteID helper** list
+- save and restore form data from **localStorage**
+- set POST URL and populate form by URL params
 
 ### Components overview
+
+v0.1 - 2021/03/09
 ![Overview of props and states for all components](./APP_structure.svg)
 
+
 ### ----------
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
