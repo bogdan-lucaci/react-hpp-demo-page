@@ -14,7 +14,10 @@ import PostOverview from './components/PostOverview';
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [postValues, setPostValues] = useState({});
-  const [formAction, setFormAction] = useState('');
+  const [postUrlData, setPostUrlData] = useState({
+    formAction: null,
+    postUrlName: null
+  });
 
   useEffect(
     () => {
@@ -28,8 +31,8 @@ const App = () => {
       <Box mb={2}>
         <AppHeaderAndDrawer>
 
-          <InputPostUrl setFormAction={setFormAction} />
-          
+          <InputPostUrl setPostUrlData={setPostUrlData} />
+
         </AppHeaderAndDrawer>
       </Box>
 
@@ -50,7 +53,7 @@ const App = () => {
                 <Form
                   postValues={postValues}
                   setPostValues={setPostValues}
-                  formAction={formAction}
+                  postUrlData={postUrlData}
                 />
 
               </Box>

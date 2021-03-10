@@ -1,10 +1,11 @@
 let formModel = {
     areas: [
-        { id: 1, name: "Mandatory" },
-        { id: 2, name: "Flow Control" },
-        { id: 3, name: "Optional" },
+        { id: 1, name: "Mandatory", collapseFor: [] },
+        { id: 2, name: "Flow Control", collapseFor: ['demo', 'live'] },
+        { id: 3, name: "Optional", collapseFor: ['demo', 'live'] },
         {
-            id: 4, name: "Method Specific", subArea: [
+            id: 4, name: "Method Specific", collapseFor: ['demo', 'live'], 
+            subArea: [
                 { id: 1, name: "Alipay" },
                 { id: 2, name: "Cards" },
                 { id: 3, name: "DLocal - India" },
@@ -13,22 +14,24 @@ let formModel = {
                 { id: 6, name: "Union Pay" },
             ]
         },
-        { id: 5, name: "Payouts" },
+        { id: 5, name: "Payouts", collapseFor: ['demo', 'live'] },
         {
-            id: 6, name: "Recurrent Payments", subArea: [
+            id: 6, name: "Recurrent Payments", collapseFor: ['demo', 'live'],
+            subArea: [
                 { id: 1, name: "SlimPay" },
                 { id: 2, name: "Skrill" },
                 { id: 3, name: "Pay by mobile (Fortumo)" },
             ]
         },
         {
-            id: 7, name: "Refunds", subArea: [
+            id: 7, name: "Refunds", collapseFor: ['demo', 'live'],
+            subArea: [
                 { id: 1, name: "Extra Parameters" },
                 { id: 2, name: "Manual Support Work Details Needed" }
             ]
         },
-        { id: 8, name: "Capture Payments" },
-        { id: 9, name: "Cancel Payments" }
+        { id: 8, name: "Capture Payments", collapseFor: ['demo', 'live'] },
+        { id: 9, name: "Cancel Payments", collapseFor: ['demo', 'live'] }
     ],
     params: [
         //{name: "Post URL", isPaymentParam: false, area: [1]},

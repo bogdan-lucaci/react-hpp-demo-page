@@ -3,14 +3,25 @@ import useAppContext from '../AppContextHook';
 import { Box, ButtonGroup, Container, Select, Button } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
-const InputPostUrl = ({ setFormAction }) => {
+
+
+const InputPostUrl = ({ setPostUrlData }) => {
     const _data = useAppContext('DataContext');
-
     const PostURLs = _data.getPostURLs();
-
-    // set App state "formAction" with the initial URL select dropdown value
     const urlList = useRef();
-    useEffect(() => setFormAction(urlList.current.value));
+    const getOptionName = (select) => select.options[select.selectedIndex].getAttribute('data-name');
+
+    const setFormActionAndName = (select) => {
+        setPostUrlData({
+            formAction: select.value,
+            postUrlName: getOptionName(select)
+        })
+
+    };
+
+    useEffect(() => {
+        setFormActionAndName(urlList.current);
+    }, [urlList.current]);
 
     return (
         <Box
@@ -34,7 +45,7 @@ const InputPostUrl = ({ setFormAction }) => {
                 style={{ width: "100%" }}
             >
                 <Select
-                    onChange={(e) => setFormAction(e.target.value)}
+                    onChange={(e) => setFormActionAndName(e.target)}
                     //labelId="demo-simple-select-helper-label"
                     //id="demo-simple-select-helper"
                     //IconComponent = {Person}
@@ -56,7 +67,7 @@ const InputPostUrl = ({ setFormAction }) => {
                 //style={{width: "75%"}}
                 >
                     {PostURLs.map(x => (
-                        <option key={x.ID} value={x.URL}>{x.DisplayName} | {x.URL}</option>
+                        <option key={x.ID} data-name={x.Name} value={x.URL}>{x.DisplayName} | {x.URL}</option>
                     ))}
                 </Select>
                 <Button
