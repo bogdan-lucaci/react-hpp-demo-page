@@ -19,11 +19,10 @@
 ### Components overview
 
 v0.2 - 2021/03/10
-![Overview of props and states for all components](AppDiagram/APP_structure_v0.2.svg)
 <img src="AppDiagram/APP_structure_v0.2.svg">
 
 ##### Previous versions:
-- ![v0.1 - 2021/03/09](AppDiagram/APP_structure_v0.1.svg)
+- [v0.1 - 2021/03/09](AppDiagram/APP_structure_v0.1.svg)
 
 
 ### ----------
