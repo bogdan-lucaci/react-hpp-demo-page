@@ -13,8 +13,10 @@
 
 ### Functionalities to come:
 
+- clear **MerchantID** value when POST URL value changes
 - connect **MerchantID** value to **SiteID helper** list
 - add custom actions with icons to inputs (clear input, regenerate random val, etc)
+- add default values for some inputs according to POST URL value
 - save and restore form data from **localStorage**
 - set POST URL and populate form by URL params
 
