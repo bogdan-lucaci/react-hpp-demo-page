@@ -22,7 +22,10 @@ const App = () => {
   useEffect(
     () => {
       console.log('APP rendered!');
-      return (setTimeout(() => setIsLoading(false), 500))
+      return (() => {
+        if (postUrlData.postUrlName)
+          setTimeout(() => setIsLoading(false), 500)
+      })
     }
   );
 
@@ -87,8 +90,8 @@ const App = () => {
 
       {/* <BlockUI theme={theme} open={isLoading} /> */}
       <BlockUI open={isLoading} />
-
     </>
+
   );
 }
 

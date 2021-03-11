@@ -37,6 +37,7 @@ let formModel = {
         //{name: "Post URL", isPaymentParam: false, area: [1]},
         // Mandatory
         { name: "MerchantID", isPaymentParam: true, area: [1] },
+        { name: "MerchantTransactionID", isPaymentParam: true, area: [1] },
         { name: "Amount", isPaymentParam: true, area: [1] },
         { name: "Currency", isPaymentParam: true, area: [1] },
         { name: "ReturnURL", isPaymentParam: true, area: [1] },

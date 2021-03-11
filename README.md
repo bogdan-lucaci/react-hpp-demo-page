@@ -9,10 +9,12 @@
 - UI - dark/ligt mode theme switch
 - UI - panel presenting a POST to be submitted overview (params alphabetically ordered)
 - toggle accordion areas based on POST URL value ***(\<InputPostUrl\>)*** and Form Data Model ***(src/data/DataFormModel.js)***
+- connect **POST URL** list value to **MerchantID helper** list
 
 ### Functionalities to come:
-- connect POST URL list value to **MerchantID helper** list
+
 - connect **MerchantID** value to **SiteID helper** list
+- add custom actions with icons to inputs (clear input, regenerate random val, etc)
 - save and restore form data from **localStorage**
 - set POST URL and populate form by URL params
 
