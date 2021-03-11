@@ -15,6 +15,8 @@
 ### Functionalities to come:
 
 - connect **MerchantID** value to **SiteID helper** list
+- set **Signature** value according to MerchantID / SiteID combination
+- add the ability to specify a custom POST URL
 - add custom actions with icons to inputs (clear input, regenerate random val, etc)
 - add default values for some inputs according to POST URL value
 - save and restore form data from **localStorage**

@@ -12,10 +12,14 @@ const InputPostUrl = ({ setPostUrlData }) => {
     const getOptionName = (select) => select.options[select.selectedIndex].getAttribute('data-name');
 
     const setFormActionAndName = (select) => {
-        setPostUrlData({
-            formAction: select.value,
-            postUrlName: getOptionName(select)
-        })
+        if (getOptionName(select) !== 'custom') {
+            setPostUrlData({
+                formAction: select.value,
+                postUrlName: getOptionName(select)
+            })
+        } else {
+            alert('not implemented yet!');
+        }
 
     };
 
