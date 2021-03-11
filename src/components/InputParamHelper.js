@@ -1,12 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import useAppContext from '../AppContextHook';
-//import DATA_FORM_MODEL from '../data/DataFormModel';
+import DATA_FORM_MODEL from '../data/DataFormModel';
 import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 
 
-
-const getHelperData = (_data, inputName) => {
-
+const getHelperData = (_data, inputName, postUrlName) => {
     switch (inputName) {
         case 'Country':
             return (
@@ -30,7 +28,7 @@ const getHelperData = (_data, inputName) => {
             break;
         case 'MerchantID':
             return (
-                _data.getMerchantsForEnv("test").map(merchant => (
+                _data.getMerchantsForEnv(postUrlName).map(merchant => (
                     {
                         id: merchant.ID,
                         val: (merchant.ID + ' | ' + merchant.Alias)
@@ -48,40 +46,51 @@ const getHelperData = (_data, inputName) => {
 
 };
 
-//const hasHelper = (name) => DATA_FORM_MODEL.helpers.filter(x => x.for === name).length ? true : false;
 
-const InputParamHelper = ({ name: inputName, setShowHelper, setInputVal }) => {
+const InputParamHelper = ({ name: inputName, setShowHelper, setInputVal, postUrlName }) => {
     const _data = useAppContext('DataContext');
-    const helperHasData = getHelperData(_data, inputName).length ? true : false;
+    const inputHasHelper = DATA_FORM_MODEL.helpers.filter(x => x.for === inputName).length ? true : false;
+    const inputHasData = getHelperData(_data, inputName, postUrlName).length ? true : false;
+    const inputHelperData = getHelperData(_data, inputName, postUrlName);
+    const helperSelect = useRef();
 
     useEffect(() => {
-        return setShowHelper(helperHasData)
-    }, []);
+        if (postUrlName)
+            setShowHelper(inputHasHelper && inputHasData);
+
+        if (helperSelect.current) {
+            if (inputHelperData.length === 1) {
+                setInputVal(helperSelect.current.value)
+            }
+
+            helperSelect.current.selectedIndex = -1;
+        }
+    }, [postUrlName]);
 
     const handleChange = (e) => {
         // if (e.target.value) {
-            setInputVal(e.target.value);
+        setInputVal(e.target.value);
+        helperSelect.current.selectedIndex = -1;
         //}
     };
 
     return (
         <>
-            {!helperHasData ? '' :
+            {!inputHasData ? '' :
                 <select
+                    ref={helperSelect}
                     style={{
-                        width: '10%',
+                        width: '9%',
                         height: '1.5rem', border: 'none', borderRadius: '.25rem',
                         backgroundColor: grey[600],
                         borderLeft: '2px solid ' + grey[500]
                     }}
                     onChange={handleChange}
                 >
-                    <option key="no-value" value=""></option >
-                    {
-                        getHelperData(_data, inputName).map(x =>
-                            <option key={x.id} value={x.id}>{x.val}</option >
-                        )
-                    }
+                    {/* <option key="no-value" value=""></option > */}
+                    {inputHelperData.map(x =>
+                        <option key={x.id} value={x.id}>{x.val}</option >
+                    )}
                 </select>
             }
         </>

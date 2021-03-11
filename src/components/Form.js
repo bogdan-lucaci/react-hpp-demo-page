@@ -54,6 +54,7 @@ const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlNam
                                                 name={param.name}
                                                 postValues={postValues}
                                                 setPostValues={setPostValues}
+                                                postUrlName={postUrlName}
                                             />
 
                                         </Grid>

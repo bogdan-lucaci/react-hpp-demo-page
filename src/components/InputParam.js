@@ -22,7 +22,7 @@ const handleValue = (postValues, inputName, inputValue) => {
     return updatedValues;
 }; 
 
-const InputParam = ({ id, name, postValues, setPostValues }) => {
+const InputParam = ({ id, name, postValues, setPostValues, postUrlName }) => {
     const [showHelper, setShowHelper] = useState(true);
 
     // we do this so we may pass down to InputParaamHelper this action
@@ -39,7 +39,7 @@ const InputParam = ({ id, name, postValues, setPostValues }) => {
                 autoComplete="off"
                 autoComplete="new-password"
                 style={{
-                    width: showHelper ? '90%' : '100%',
+                    width: showHelper ? '91%' : '100%',
                     height: '1.5rem', border: 'none', borderRadius: '.25rem',
                     backgroundColor: grey[600]
                 }}
@@ -50,7 +50,12 @@ const InputParam = ({ id, name, postValues, setPostValues }) => {
                 onChange={(e) => setInputVal(e.target.value)}
             />
             {showHelper ? (
-                <InputParamHelper name={name} setShowHelper={setShowHelper} setInputVal={setInputVal} />
+                <InputParamHelper 
+                    name={name} 
+                    setInputVal={setInputVal}
+                    postUrlName={postUrlName}
+                    setShowHelper={setShowHelper}
+                />
             ) : ''}
         </fieldset>
     )
