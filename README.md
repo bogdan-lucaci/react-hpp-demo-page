@@ -10,10 +10,10 @@
 - UI - panel presenting a POST to be submitted overview (params alphabetically ordered)
 - toggle accordion areas based on POST URL value ***(\<InputPostUrl\>)*** and Form Data Model ***(src/data/DataFormModel.js)***
 - connect **POST URL** list value to **MerchantID helper** list
+- clear **MerchantID** value when POST URL value changes
 
 ### Functionalities to come:
 
-- clear **MerchantID** value when POST URL value changes
 - connect **MerchantID** value to **SiteID helper** list
 - add custom actions with icons to inputs (clear input, regenerate random val, etc)
 - add default values for some inputs according to POST URL value
