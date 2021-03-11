@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 import SETTINGS from '../Settings';
 import InputParamHelper from './InputParamHelper';
@@ -11,7 +11,7 @@ const handleValue = (postValues, inputName, inputValue) => {
         const newPostValues = {};
         // when we need to simulate a parameter sent with no value
         newPostValues[inputName] = inputValue.toLowerCase() !== noValueString ? inputValue : '';
-        updatedValues = {...postValues, ...newPostValues};
+        updatedValues = { ...postValues, ...newPostValues };
     }
     else {
         const newPostValues = { ...postValues };
@@ -20,17 +20,24 @@ const handleValue = (postValues, inputName, inputValue) => {
     }
 
     return updatedValues;
-}; 
+};
 
 const InputParam = ({ id, name, postValues, setPostValues, postUrlName }) => {
     const [showHelper, setShowHelper] = useState(true);
 
-    // we do this so we may pass down to InputParaamHelper this action
     const setInputVal = (val) => {
         setPostValues(
             handleValue(postValues, name, val)
         );
     };
+
+    useEffect(() => {
+        return (() => {
+            // clear merchant ID value wen POST URL val changes
+            if (name === 'MerchantID')
+                setInputVal('');
+        })
+    }, [postUrlName]);
 
     return (
         <fieldset style={{ border: 'none', padding: '.25rem', borderRadius: '.25rem' }}>
@@ -50,8 +57,8 @@ const InputParam = ({ id, name, postValues, setPostValues, postUrlName }) => {
                 onChange={(e) => setInputVal(e.target.value)}
             />
             {showHelper ? (
-                <InputParamHelper 
-                    name={name} 
+                <InputParamHelper
+                    name={name}
                     setInputVal={setInputVal}
                     postUrlName={postUrlName}
                     setShowHelper={setShowHelper}

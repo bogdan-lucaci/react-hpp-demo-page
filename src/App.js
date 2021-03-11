@@ -21,7 +21,7 @@ const App = () => {
 
   useEffect(
     () => {
-      console.log('APP rendered!');
+      console.log('APP rendered!', postValues);
       return (() => {
         if (postUrlData.postUrlName)
           setTimeout(() => setIsLoading(false), 500)
