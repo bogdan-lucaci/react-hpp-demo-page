@@ -3,7 +3,7 @@ import useAppContext from '../AppContextHook';
 import DATA_FORM_MODEL from '../data/DataFormModel';
 import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 
-const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, setShowHelper }) => {
+const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantId, setShowHelper }) => {
     const _data = useAppContext('DataContext');
     const inputHasHelper = DATA_FORM_MODEL.helpers.find(x => x.for === inputName) !== undefined;
     const getHelperData = (inputName, postUrlName) => _data.getHelperData(inputName, postUrlName);

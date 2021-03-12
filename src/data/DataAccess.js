@@ -114,7 +114,7 @@ const DATA_ACCESS = {
                 // )));
                 //console.log('--- for ENV:', envName, ', siteID helper has ' + DATA_ACCESS.getMerchantSitesForEnvAndMerchantId(envName, '1000').length + ' values !');
                 return (
-                    DATA_ACCESS.getMerchantSitesForEnvAndMerchantId(envName, '1000')
+                    DATA_ACCESS.getMerchantSitesForEnvAndMerchantId(envName, merchantId)
                         .filter(site => site.Active === '1')
                         .map(site => (
                             {

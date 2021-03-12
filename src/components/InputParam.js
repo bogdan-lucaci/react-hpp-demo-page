@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 import SETTINGS from '../Settings';
+import DATA_FORM_MODEL from '../data/DataFormModel';
 import InputParamHelper from './InputParamHelper';
 
 const { noValueString } = SETTINGS;
@@ -23,6 +24,7 @@ const handleValue = (postValues, inputName, inputValue) => {
 };
 
 const InputParam = ({ id, name, postValues, setPostValues, postUrlName }) => {
+    const hasHelper = useState(DATA_FORM_MODEL.helpers.find(x => x.for === name) !== undefined);
     const [showHelper, setShowHelper] = useState(false);
 
     const setInputVal = (val) => (
@@ -32,7 +34,7 @@ const InputParam = ({ id, name, postValues, setPostValues, postUrlName }) => {
     );
 
     useEffect(() => {
-        
+
         return (() => {
             // clear merchant ID value wen POST URL val changes
             if (['MerchantID', 'SiteID'].includes(name)) {
@@ -58,13 +60,15 @@ const InputParam = ({ id, name, postValues, setPostValues, postUrlName }) => {
                 value={postValues[name] || ''}
                 onChange={(e) => setInputVal(e.target.value)}
             />
-            <InputParamHelper
-                name={name}
-                setInputVal={setInputVal}
-                postUrlName={postUrlName}
-                merchantID={postValues['MerchantID']}
-                setShowHelper={setShowHelper}
-            />
+            {!hasHelper ? '' :
+                <InputParamHelper
+                    name={name}
+                    setInputVal={setInputVal}
+                    postUrlName={postUrlName}
+                    merchantId={postValues['MerchantID']}
+                    setShowHelper={setShowHelper}
+                />
+            }
         </fieldset>
     )
 };
