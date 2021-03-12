@@ -21,11 +21,16 @@
 - add POST URL to `<PostOverview>`
 - implement **Hash** and **ComputedString**
 - add only desired params to POST body
-- handle all helpers
-- integrate Material UI `<InputParam>`
+- handle all text helpers
+- add image helper for methods
+- add merchant id generator helper
+- add methods list helper to toggle sort order display name / id
+- handle exotic actions (payout, refund, recurrent, capture, cancel)
+- integrate Material UI for `<InputParam>` and `<InputParamHelper>`
 - add custom actions with icons to inputs (clear input, regenerate random val, etc)
 - save and restore form data from **localStorage**
 - set form action and form inputs value from by URL params
+- make `<PostOverview>` editable + affect form inputs values
 
 
 ### Components overview
