@@ -5,13 +5,12 @@ import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, tea
 
 const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantId, setShowHelper }) => {
     const _data = useAppContext('DataContext');
-    const inputHasHelper = DATA_FORM_MODEL.helpers.find(x => x.for === inputName) !== undefined;
     const getHelperData = (inputName, postUrlName) => _data.getHelperData(inputName, postUrlName);
     const helperHasData = getHelperData(inputName, postUrlName).length > 0 ? true : false;
     const helperSelect = useRef();
 
     useEffect(() => {
-        setShowHelper(() => (inputHasHelper && helperHasData));
+        setShowHelper(() => helperHasData);
 
         if (helperSelect.current) {
             if (getHelperData(inputName, postUrlName).length === 1) {
@@ -31,7 +30,7 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
     
     return (
         <>
-            {!(inputHasHelper && helperHasData) ? '' :
+            {!helperHasData ? '' :
                 <select
                     ref={helperSelect}
                     style={{
