@@ -34,7 +34,6 @@ const InputParam = ({ id, name, postValues, setPostValues, postUrlName }) => {
     );
 
     useEffect(() => {
-
         return (() => {
             // clear merchant ID value wen POST URL val changes
             if (['MerchantID', 'SiteID'].includes(name)) {

@@ -19,10 +19,11 @@
 - add the ability to specify a custom POST URL
 - add POST URL to **\<PostOverview\>**
 - implement **Hash** and **ComputedString**
+- send only desired inputs in POST
 - add custom actions with icons to inputs (clear input, regenerate random val, etc)
 - add default values for some inputs according to POST URL value
 - save and restore form data from **localStorage**
-- set POST URL and populate form by URL params
+- set POST URL and populate from by URL params
 
 ### Components overview
 

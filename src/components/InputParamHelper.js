@@ -1,25 +1,38 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import useAppContext from '../AppContextHook';
-import DATA_FORM_MODEL from '../data/DataFormModel';
 import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 
 const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantId, setShowHelper }) => {
     const _data = useAppContext('DataContext');
-    const getHelperData = (inputName, postUrlName) => _data.getHelperData(inputName, postUrlName);
-    const helperHasData = getHelperData(inputName, postUrlName).length > 0 ? true : false;
+    const getHelperData = () => _data.getHelperData(inputName, postUrlName, merchantId);
+    const helperHasData = getHelperData().length > 0 ? true : false;
     const helperSelect = useRef();
 
+    // what happens when POST URL changes
     useEffect(() => {
         setShowHelper(() => helperHasData);
 
         if (helperSelect.current) {
-            if (getHelperData(inputName, postUrlName).length === 1) {
+            if (getHelperData().length === 1) {
                 setInputVal(helperSelect.current.value)
             }
-    
+
             helperSelect.current.selectedIndex = -1;
         }
     }, [postUrlName]);
+
+    // what happens when MerchantID changes
+    useEffect(() => {
+        if (inputName === 'SiteID') {
+            setShowHelper(() => getHelperData().length > 0);
+
+            if (helperSelect.current) {
+                if (getHelperData().length === 1) {
+                    setInputVal(helperSelect.current.value)
+                }
+            }
+        }
+    }, [merchantId]);
 
     const handleChange = (e) => {
         // if (e.target.value) {
@@ -27,7 +40,7 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
         helperSelect.current.selectedIndex = -1;
         //}
     };
-    
+
     return (
         <>
             {!helperHasData ? '' :
@@ -42,7 +55,7 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
                     onChange={handleChange}
                 >
                     {/* <option key="no-value" value=""></option > */}
-                    {getHelperData(inputName, postUrlName).map(x =>
+                    {getHelperData().map(x =>
                         <option key={x.id} value={x.id}>{x.val}</option >
                     )}
                 </select>
