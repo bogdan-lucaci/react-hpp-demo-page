@@ -106,13 +106,6 @@ const DATA_ACCESS = {
                 )
                 break;
             case 'SiteID':
-                // console.log(envName, DATA_ACCESS.getMerchantSitesForEnvAndMerchantId('test', '1000').filter(site => site.Active === '1').map(site => (
-                //     {
-                //         id: site.SiteID,
-                //         val: site.SiteID
-                //     }
-                // )));
-                //console.log('--- for ENV:', envName, ', siteID helper has ' + DATA_ACCESS.getMerchantSitesForEnvAndMerchantId(envName, '1000').length + ' values !');
                 return (
                     DATA_ACCESS.getMerchantSitesForEnvAndMerchantId(envName, merchantId)
                         .filter(site => site.Active === '1')
