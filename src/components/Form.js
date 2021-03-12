@@ -1,11 +1,11 @@
-import DATA_FORM_MODEL from '../data/FormDataModel';
+import FORM_DATA_MODEL from '../data/FormDataModel';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, ButtonGroup, FormControl, FormHelperText, Grid, Input, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, TextField, Typography } from '@material-ui/core/';
 import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import InputParam from './InputParam';
 import { useState, useEffect } from 'react';
 
-const getInputsForArea = (areaId) => DATA_FORM_MODEL.params.filter(param => param.area[0] === areaId);
+const getInputsForArea = (areaId) => FORM_DATA_MODEL.params.filter(param => param.area[0] === areaId);
 
 const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlName } }) => {
     const [collapsedAreas, setCollapsedAreas] = useState([]);
@@ -20,7 +20,7 @@ const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlNam
     useEffect(() => {
         // on InputPostUrl change get which areas should be collapsed
         setCollapsedAreas(
-            DATA_FORM_MODEL.areas
+            FORM_DATA_MODEL.areas
                 .filter((area) => area.collapseFor.includes(postUrlName))
                 .map((area) => area.id)
         );
@@ -35,7 +35,7 @@ const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlNam
             spellCheck="false"
             autoComplete="off"
         >
-            {DATA_FORM_MODEL.areas.map((area) => (
+            {FORM_DATA_MODEL.areas.map((area) => (
                     <Accordion key={area.id}
                         expanded={!collapsedAreas.includes(area.id)}
                         onChange={handleChange(area.id)}

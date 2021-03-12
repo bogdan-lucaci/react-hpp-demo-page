@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 import SETTINGS from '../Settings';
-import DATA_FORM_MODEL from '../data/FormDataModel';
+import FORM_DATA_MODEL from '../data/FormDataModel';
 import InputParamHelper from './InputParamHelper';
 
 const { noValueString } = SETTINGS;
@@ -24,7 +24,7 @@ const handleValue = (postValues, inputName, inputValue) => {
 };
 
 const InputParam = ({ id, name, postValues, setPostValues, postUrlName }) => {
-    const hasHelper = useState(DATA_FORM_MODEL.helpers.find(x => x.for === name) !== undefined);
+    const hasHelper = useState(FORM_DATA_MODEL.helpers.find(x => x.for === name) !== undefined);
     const [showHelper, setShowHelper] = useState(false);
 
     const setInputVal = (val) => (
