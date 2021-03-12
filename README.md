@@ -6,27 +6,27 @@
 
 ### Functionalities so far:
 - *< to be updated >*
-- UI - dark/ligt mode theme switch
-- UI - panel presenting a POST to be submitted overview (params alphabetically ordered)
+- ***UI*** - dark/ligt mode theme switch
+- ***UI*** - added `<PostOverview>` that displays the request's body for the POST to be submitted (params alphabetically ordered)
 - toggle accordion areas based on POST URL value (`<InputPostUrl>`) and `FORM_DATA_MODEL` from ***src/data/FormDataModel.js***
 - connect **POST URL** list value to **MerchantID helper** list
-- clear **MerchantID** value when POST URL value changes
+- handle **MerchantID** and **SiteID** value when POST URL value changes
 - connect **MerchantID** value to **SiteID helper** list
 
 ### Functionalities to come:
 
-- add values to desired inputs according to POST URL value (extend FormDataModel)
+- add default values to specified inputs according to POST URL value (extend FormDataModel)
 - set **Signature** value according to MerchantID / SiteID combination
 - add the ability to specify a custom POST URL
 - add POST URL to `<PostOverview>`
 - implement **Hash** and **ComputedString**
-- add only desired params to POST body
+- add only specified params to POST body
 - handle all text helpers
 - add image helper for methods
 - add merchant id generator helper
 - add methods list helper to toggle sort order display name / id
 - handle exotic actions (payout, refund, recurrent, capture, cancel)
-- integrate Material UI for `<InputParam>` and `<InputParamHelper>`
+- ***UI*** - integrate Material UI for `<InputParam>` and `<InputParamHelper>`
 - add custom actions with icons to inputs (clear input, regenerate random val, etc)
 - save and restore form data from **localStorage**
 - set form action and form inputs value from by URL params
