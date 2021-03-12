@@ -23,19 +23,21 @@ const handleValue = (postValues, inputName, inputValue) => {
 };
 
 const InputParam = ({ id, name, postValues, setPostValues, postUrlName }) => {
-    const [showHelper, setShowHelper] = useState(true);
+    const [showHelper, setShowHelper] = useState(false);
 
-    const setInputVal = (val) => {
-        setPostValues(
+    const setInputVal = (val) => (
+        setPostValues((postValues) => (
             handleValue(postValues, name, val)
-        );
-    };
+        ))
+    );
 
     useEffect(() => {
+        
         return (() => {
             // clear merchant ID value wen POST URL val changes
-            if (name === 'MerchantID')
-                setInputVal('');
+            if (['MerchantID', 'SiteID'].includes(name)) {
+                setInputVal(false);
+            }
         })
     }, [postUrlName]);
 
@@ -56,14 +58,13 @@ const InputParam = ({ id, name, postValues, setPostValues, postUrlName }) => {
                 value={postValues[name] || ''}
                 onChange={(e) => setInputVal(e.target.value)}
             />
-            {showHelper ? (
-                <InputParamHelper
-                    name={name}
-                    setInputVal={setInputVal}
-                    postUrlName={postUrlName}
-                    setShowHelper={setShowHelper}
-                />
-            ) : ''}
+            <InputParamHelper
+                name={name}
+                setInputVal={setInputVal}
+                postUrlName={postUrlName}
+                merchantID={postValues['MerchantID']}
+                setShowHelper={setShowHelper}
+            />
         </fieldset>
     )
 };

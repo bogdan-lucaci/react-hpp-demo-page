@@ -69,6 +69,69 @@ const DATA_ACCESS = {
     getCustomParams: function() {
         return DATA.customParameters;
     },
+
+    // OUT  :   an array of objects containing input's helper's data
+    // [ {"id": "...", "val": "..."}]
+    getHelperData: function (inputName, envName, merchantId ) {
+        //if (inputName === 'SiteID') alert(inputName);
+        switch (inputName) {
+            case 'Country':
+                return (
+                    DATA_ACCESS.getCountries().map(country => (
+                        {
+                            id: country.Code,
+                            val: (country.Code + ' | ' + country.Name)
+                        }
+                    ))
+                )
+                break;
+            case 'Currency':
+                return (
+                    DATA_ACCESS.getCurrencies().map(currency => (
+                        {
+                            id: currency.Code,
+                            val: (currency.Code + ' | ' + currency.Name)
+                        }
+                    ))
+                )
+                break;
+            case 'MerchantID':
+                return (
+                    DATA_ACCESS.getMerchantsForEnv(envName).map(merchant => (
+                        {
+                            id: merchant.ID,
+                            val: (merchant.ID + ' | ' + merchant.Alias)
+                        }
+                    ))
+                )
+                break;
+            case 'SiteID':
+                // console.log(envName, DATA_ACCESS.getMerchantSitesForEnvAndMerchantId('test', '1000').filter(site => site.Active === '1').map(site => (
+                //     {
+                //         id: site.SiteID,
+                //         val: site.SiteID
+                //     }
+                // )));
+                //console.log('--- for ENV:', envName, ', siteID helper has ' + DATA_ACCESS.getMerchantSitesForEnvAndMerchantId(envName, '1000').length + ' values !');
+                return (
+                    DATA_ACCESS.getMerchantSitesForEnvAndMerchantId(envName, '1000')
+                        .filter(site => site.Active === '1')
+                        .map(site => (
+                            {
+                                id: site.SiteID,
+                                val: site.SiteID
+                            }
+                        ))
+                )
+                break;
+    
+            default:
+                return []
+                break;
+    
+        }
+    
+    } 
 };
 
 export default DATA_ACCESS;

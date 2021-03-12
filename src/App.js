@@ -15,19 +15,17 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [postValues, setPostValues] = useState({});
   const [postUrlData, setPostUrlData] = useState({
-    formAction: null,
-    postUrlName: null
+    formAction: 'https://apitest.smart2pay.com/',
+    postUrlName: 'demo'
   });
 
-  useEffect(
-    () => {
-      console.log('APP rendered!', postValues);
-      return (() => {
-        if (postUrlData.postUrlName)
-          setTimeout(() => setIsLoading(false), 500)
-      })
-    }
-  );
+  useEffect(() => {
+    console.log('APP rendered!', postValues);
+    //setIsLoading(true);
+    return (() => {
+      setTimeout(() => setIsLoading(false), 300)
+    })
+  }/*, [postUrlData]*/);
 
   return (
     <>
