@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 import SETTINGS from '../Settings';
-import DATA_FORM_MODEL from '../data/DataFormModel';
+import DATA_FORM_MODEL from '../data/FormDataModel';
 import InputParamHelper from './InputParamHelper';
 
 const { noValueString } = SETTINGS;
