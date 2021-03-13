@@ -22,7 +22,18 @@ const utils = {
 
         return true;
     },
-    renderHTML:(rawHTML) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } }),
+    renderHTML: (rawHTML) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } }),
+    // sort JSON params alphabetically
+    sortParams: obj => {
+        if (Object.keys(obj).length > 0) {
+            let x = JSON.stringify(obj);
+            x = x.substring(1, x.length - 1).split(',').sort();
+            x = JSON.parse("{" + x + "}");
+            return JSON.stringify(x, null, "    ");
+        }
+        else
+            return "{}";
+    }
 }
 
 export default utils;
