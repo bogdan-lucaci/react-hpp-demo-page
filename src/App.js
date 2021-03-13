@@ -67,7 +67,7 @@ const App = () => {
           <Paper>
             <Box p={3} textAlign="left" align="center" height="49.75vh">
 
-              <PostOverview postValues={postValues} />
+              <PostOverview postValues={postValues} postUrlData={postUrlData} />
 
             </Box>
             <Divider />

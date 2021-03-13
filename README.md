@@ -13,10 +13,11 @@
 - handle **MerchantID** and **SiteID** value when POST URL value changes
 - connect **MerchantID** value to **SiteID helper** list
 - display form sub-areas titles according to `FORM_DATA_MODEL` (before the first input assigned to that sub-area)
+- add request header url to `<PostOverview>`
 
 ### Functionalities to come:
 
-- add request header to `<PostOverview>`
+- handle inputs that are not payment params (ignore from POST body, add value to input)
 - add default values to specified inputs according to POST URL value (extend FormDataModel)
 - set **Signature** value according to MerchantID / SiteID combination
 - add the ability to specify a custom POST URL
