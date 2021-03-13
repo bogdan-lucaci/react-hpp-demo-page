@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 const getInputsForArea = (areaId) => FORM_DATA_MODEL.params.filter(param => param.area[0] === areaId);
 
 
-const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlName } }) => {
+const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlName }, appState, setAppState }) => {
     const [collapsedAreas, setCollapsedAreas] = useState([]);
 
     const handleChange = (areaId) => (e, isExpanded) => {
@@ -59,9 +59,12 @@ const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlNam
                                             <InputParam
                                                 id={param.name + (param.area.toString())}
                                                 name={param.name}
+                                                isPaymentParam={param.isPaymentParam}
                                                 postValues={postValues}
                                                 setPostValues={setPostValues}
                                                 postUrlName={postUrlName}
+                                                appState={appState}
+                                                setAppState={setAppState}
                                             />
 
                                         </Grid>

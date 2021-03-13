@@ -23,14 +23,14 @@ const handleValue = (postValues, inputName, inputValue) => {
     return updatedValues;
 };
 
-const InputParam = ({ id, name, postValues, setPostValues, postUrlName }) => {
+const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postUrlName, appState, setAppState }) => {
     const hasHelper = useState(FORM_DATA_MODEL.helpers.find(x => x.for === name) !== undefined);
     const [showHelper, setShowHelper] = useState(false);
 
     const setInputVal = (val) => (
-        setPostValues((postValues) => (
-            handleValue(postValues, name, val)
-        ))
+        isPaymentParam 
+        ? setPostValues((postValues) => ( handleValue(postValues, name, val) ))
+        : setAppState((postValues) => ( handleValue(postValues, name, val) ))
     );
 
     useEffect(() => {
@@ -56,7 +56,7 @@ const InputParam = ({ id, name, postValues, setPostValues, postUrlName }) => {
                 type="text"
                 id={id}
                 name={id}
-                value={postValues[name] || ''}
+                value={(isPaymentParam ? postValues[name] : appState[name]) || ''}
                 onChange={(e) => setInputVal(e.target.value)}
             />
             {!hasHelper ? '' :

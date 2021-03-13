@@ -13,6 +13,7 @@ import PostOverview from './components/PostOverview';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [appState, setAppState] = useState({});
   const [postValues, setPostValues] = useState({});
   const [postUrlData, setPostUrlData] = useState({
     formAction: 'https://apitest.smart2pay.com/',
@@ -55,6 +56,8 @@ const App = () => {
                   postValues={postValues}
                   setPostValues={setPostValues}
                   postUrlData={postUrlData}
+                  appState={appState}
+                  setAppState={setAppState}
                 />
 
               </Box>
@@ -67,7 +70,11 @@ const App = () => {
           <Paper>
             <Box p={3} textAlign="left" align="center" height="49.75vh">
 
-              <PostOverview postValues={postValues} postUrlData={postUrlData} />
+              <PostOverview 
+                postValues={postValues} 
+                postUrlData={postUrlData}
+                appState={appState}
+              />
 
             </Box>
             <Divider />

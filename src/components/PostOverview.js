@@ -12,7 +12,7 @@ const sortParams = text => {
         return "{}";
 };
 
-const PostOverview = ({ postValues, postUrlData }) => (
+const PostOverview = ({ postValues, postUrlData, appState }) => (
     <>
         <Typography variant="h6">
             <Box color="text.disabled">
@@ -34,6 +34,18 @@ const PostOverview = ({ postValues, postUrlData }) => (
         <pre>
             {sortParams(postValues)}
         </pre>
+        <Box mt={5}>
+            <Divider />
+            <Typography variant="h6">
+                <Box color="text.disabled">
+                    App state
+            </Box>
+            </Typography>
+            <Divider />
+            <pre>
+                {sortParams(appState)}
+            </pre>
+        </Box>
     </>
 );
 
