@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Tooltip } from '@material-ui/core';
 import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 import SETTINGS from '../Settings';
 import FORM_DATA_MODEL from '../data/FormDataModel';
@@ -28,9 +29,9 @@ const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postU
     const [showHelper, setShowHelper] = useState(false);
 
     const setInputVal = (val) => (
-        isPaymentParam 
-        ? setPostValues((postValues) => ( handleValue(postValues, name, val) ))
-        : setAppState((postValues) => ( handleValue(postValues, name, val) ))
+        isPaymentParam
+            ? setPostValues((postValues) => (handleValue(postValues, name, val)))
+            : setAppState((postValues) => (handleValue(postValues, name, val)))
     );
 
     useEffect(() => {
@@ -43,32 +44,36 @@ const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postU
     }, [postUrlName]);
 
     return (
-        <fieldset style={{ border: 'none', padding: '.25rem', borderRadius: '.25rem' }}>
-            <legend htmlFor={id} style={{ color: teal[600] }}>{name}</legend>
-            <input
-                autoComplete="off"
-                autoComplete="new-password"
-                style={{
-                    width: showHelper ? '91%' : '100%',
-                    height: '1.5rem', border: 'none', borderRadius: '.25rem',
-                    backgroundColor: grey[600]
-                }}
-                type="text"
-                id={id}
-                name={id}
-                value={(isPaymentParam ? postValues[name] : appState[name]) || ''}
-                onChange={(e) => setInputVal(e.target.value)}
-            />
-            {!hasHelper ? '' :
-                <InputParamHelper
-                    name={name}
-                    setInputVal={setInputVal}
-                    postUrlName={postUrlName}
-                    merchantId={postValues['MerchantID']}
-                    setShowHelper={setShowHelper}
-                />
-            }
-        </fieldset>
+        <>
+            <Tooltip title={isPaymentParam ? '' : `NOT a payment param!`} placement="bottom" arrow>
+                <fieldset style={{ border: 'none', padding: '.25rem', borderRadius: '.25rem', border: !isPaymentParam ? `1px dotted ${grey[700]}` : 'none' }}>
+                    <legend htmlFor={id} style={{ color: teal[600] }}>{name}</legend>
+                    <input
+                        autoComplete="off"
+                        autoComplete="new-password"
+                        style={{
+                            width: showHelper ? '91%' : '100%',
+                            height: '1.5rem', border: 'none', borderRadius: '.25rem',
+                            backgroundColor: grey[600]
+                        }}
+                        type="text"
+                        id={id}
+                        name={id}
+                        value={(isPaymentParam ? postValues[name] : appState[name]) || ''}
+                        onChange={(e) => setInputVal(e.target.value)}
+                    />
+                    {!hasHelper ? '' :
+                        <InputParamHelper
+                            name={name}
+                            setInputVal={setInputVal}
+                            postUrlName={postUrlName}
+                            merchantId={postValues['MerchantID']}
+                            setShowHelper={setShowHelper}
+                        />
+                    }
+                </fieldset>
+            </Tooltip>
+        </>
     )
 };
 
