@@ -12,9 +12,11 @@
 - connect **POST URL** list value to **MerchantID helper** list
 - handle **MerchantID** and **SiteID** value when POST URL value changes
 - connect **MerchantID** value to **SiteID helper** list
+- display form sub-areas titles according to `FORM_DATA_MODEL` (before the first input assigned to that sub-area)
 
 ### Functionalities to come:
 
+- add request header to `<PostOverview>`
 - add default values to specified inputs according to POST URL value (extend FormDataModel)
 - set **Signature** value according to MerchantID / SiteID combination
 - add the ability to specify a custom POST URL
@@ -27,10 +29,13 @@
 - add methods list helper to toggle sort order display name / id
 - handle exotic actions (payout, refund, recurrent, capture, cancel)
 - ***UI*** - integrate Material UI for `<InputParam>` and `<InputParamHelper>`
-- add custom actions with icons to inputs (clear input, regenerate random val, etc)
+- ***UI*** - add live filter to form to search inputs
+- add custom actions with icons to inputs (clear input, generate random val, etc)
 - save and restore form data from **localStorage**
 - set form action and form inputs value from by URL params
 - make `<PostOverview>` editable + affect form inputs values
+- allow to paste and parse a REST message body JSON + display the response
+- allow import of postmen collections
 
 
 ### Components overview

@@ -3,9 +3,11 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Button, ButtonGroup
 import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import InputParam from './InputParam';
+import FormSubAreaTitle from './FormSubAreaTitle';
 import { useState, useEffect } from 'react';
 
 const getInputsForArea = (areaId) => FORM_DATA_MODEL.params.filter(param => param.area[0] === areaId);
+
 
 const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlName } }) => {
     const [collapsedAreas, setCollapsedAreas] = useState([]);
@@ -36,17 +38,22 @@ const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlNam
             autoComplete="off"
         >
             {FORM_DATA_MODEL.areas.map((area) => (
-                    <Accordion key={area.id}
-                        expanded={!collapsedAreas.includes(area.id)}
-                        onChange={handleChange(area.id)}
-                    >
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography>{area.name}</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Grid container spacing={1}>
-                                {getInputsForArea(area.id).map((param) => {
-                                    return (
+                <Accordion key={area.id}
+                    expanded={!collapsedAreas.includes(area.id)}
+                    onChange={handleChange(area.id)}
+                >
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                        <Typography>{area.name}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Grid container spacing={1}>
+                            {getInputsForArea(area.id).map((param) => {
+                                return (
+                                    <>
+                                        {/* check if a form sub-area starts and if we should display a title */}
+                                        {area.id === param.area[0] && param.area[1] &&
+                                            <FormSubAreaTitle param={param} />
+                                        }
                                         <Grid key={param.name + (param.area.toString())} item xs={12} sm={6}>
 
                                             <InputParam
@@ -58,12 +65,13 @@ const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlNam
                                             />
 
                                         </Grid>
-                                    )
-                                })}
-                            </Grid>
-                        </AccordionDetails>
-                    </Accordion>
-                )
+                                    </>
+                                )
+                            })}
+                        </Grid>
+                    </AccordionDetails>
+                </Accordion>
+            )
             )}
         </form>
     )
