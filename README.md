@@ -7,13 +7,13 @@
 ### Functionalities so far:
 - *< to be updated >*
 - ***UI*** - dark/ligt mode theme switch
-- ***UI*** - added `<PostOverview>` that displays the request's body for the POST to be submitted (params alphabetically ordered)
+- ***UI*** - added `<OverviewPost>` that displays the request's body for the POST to be submitted (params alphabetically ordered)
 - toggle accordion areas based on POST URL value (`<InputPostUrl>`) and `FORM_DATA_MODEL` from ***src/data/FormDataModel.js***
 - connect **POST URL** list value to **MerchantID helper** list
 - handle **MerchantID** and **SiteID** value when POST URL value changes
 - connect **MerchantID** value to **SiteID helper** list
 - display form sub-areas titles according to `FORM_DATA_MODEL` (before the first input assigned to that sub-area)
-- add request header url to `<PostOverview>`
+- add request header url to `<OverviewPost>`
 
 ### Functionalities to come:
 
@@ -21,7 +21,7 @@
 - add default values to specified inputs according to POST URL value (extend FormDataModel)
 - set **Signature** value according to MerchantID / SiteID combination
 - add the ability to specify a custom POST URL
-- add POST URL to `<PostOverview>`
+- add POST URL to `<OverviewPost>`
 - implement **Hash** and **ComputedString**
 - add only specified params to POST body
 - handle all text helpers
@@ -34,7 +34,7 @@
 - add custom actions with icons to inputs (clear input, generate random val, etc)
 - save and restore form data from **localStorage**
 - set form action and form inputs value from by URL params
-- make `<PostOverview>` editable + affect form inputs values
+- make `<OverviewPost>` editable + affect form inputs values
 - allow to paste and parse a REST message body JSON + display the response
 - allow import of postmen collections
 

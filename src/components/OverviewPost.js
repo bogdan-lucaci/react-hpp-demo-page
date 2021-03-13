@@ -12,7 +12,7 @@ const sortParams = text => {
         return "{}";
 };
 
-const PostOverview = ({ postValues, postUrlData, appState }) => (
+const OverviewPost = ({ postValues, postUrlData, appState }) => (
     <>
         <Typography variant="h6">
             <Box color="text.disabled">
@@ -49,4 +49,4 @@ const PostOverview = ({ postValues, postUrlData, appState }) => (
     </>
 );
 
-export default PostOverview;
+export default OverviewPost;

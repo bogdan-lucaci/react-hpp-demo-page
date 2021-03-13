@@ -8,7 +8,7 @@ import BlockUI from './components/UI/Backdrop';
 import AppHeaderAndDrawer from './components/UI/AppHeaderAndDrawer';
 import Form from './components/Form';
 import InputPostUrl from './components/InputPostUrl';
-import PostOverview from './components/PostOverview';
+import OverviewPost from './components/OverviewPost';
 
 
 const App = () => {
@@ -70,7 +70,7 @@ const App = () => {
           <Paper>
             <Box p={3} textAlign="left" align="center" height="49.75vh">
 
-              <PostOverview 
+              <OverviewPost 
                 postValues={postValues} 
                 postUrlData={postUrlData}
                 appState={appState}
