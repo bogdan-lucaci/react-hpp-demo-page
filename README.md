@@ -13,22 +13,27 @@
 - handle **MerchantID** and **SiteID** value when POST URL value changes
 - connect **MerchantID** value to **SiteID helper** list
 - display form sub-areas titles according to `FORM_DATA_MODEL` (before the first input assigned to that sub-area)
-- add request header url to `<OverviewPost>`
+- ***UI*** - add POST URL (form action) to `<OverviewPost>`
+- handle inputs that are not payment params (ignore from POST body, add value to input)
+- add tooltips to inputs according to FORM_DATA_MODEL and param type
+- generate new MTID on POST URL value change and on input label click
 
 ### Functionalities to come:
 
-- handle inputs that are not payment params (ignore from POST body, add value to input)
-- add default values to specified inputs according to POST URL value (extend FormDataModel)
 - set **Signature** value according to MerchantID / SiteID combination
 - add the ability to specify a custom POST URL
 - add POST URL to `<OverviewPost>`
 - implement **Hash** and **ComputedString**
+- handle read only inputs (like 'ComputedString')
 - add only specified params to POST body
 - handle all text helpers
 - add image helper for methods
 - add merchant id generator helper
 - add methods list helper to toggle sort order display name / id
 - handle exotic actions (payout, refund, recurrent, capture, cancel)
+- ***UI*** move inputs that are not payment params related to the left drawer as actions with icons
+- add default values to specified inputs according to POST URL value (extend FormDataModel) or select first option from helper (?)
+- ***UI*** - use Material UI list to upgrade POST URL dropdown list
 - ***UI*** - integrate Material UI for `<InputParam>` and `<InputParamHelper>`
 - ***UI*** - add live filter to form to search inputs
 - add custom actions with icons to inputs (clear input, generate random val, etc)

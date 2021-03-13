@@ -24,9 +24,21 @@ const handleValue = (postValues, inputName, inputValue) => {
     return updatedValues;
 };
 
+const handleTooltip = (name, isPaymentParam) => {
+    if (!isPaymentParam)
+        return 'NOT a payment param!'
+    else
+        return FORM_DATA_MODEL.params.find(param => param.name === name).tooltip || ''
+};
+
 const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postUrlName, appState, setAppState }) => {
     const hasHelper = useState(FORM_DATA_MODEL.helpers.find(x => x.for === name) !== undefined);
     const [showHelper, setShowHelper] = useState(false);
+
+    const generateNewMTID = () => {
+        if (name === 'MerchantTransactionID') 
+            setInputVal(Math.floor((Math.random() * 1000000000000) + 1).toString())
+    };
 
     const setInputVal = (val) => (
         isPaymentParam
@@ -35,6 +47,7 @@ const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postU
     );
 
     useEffect(() => {
+        generateNewMTID();
         return (() => {
             // clear merchant ID value wen POST URL val changes
             if (['MerchantID', 'SiteID'].includes(name)) {
@@ -45,9 +58,11 @@ const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postU
 
     return (
         <>
-            <Tooltip title={isPaymentParam ? '' : `NOT a payment param!`} placement="bottom" arrow>
-                <fieldset style={{ border: 'none', padding: '.25rem', borderRadius: '.25rem', border: !isPaymentParam ? `1px dotted ${grey[700]}` : 'none' }}>
-                    <legend htmlFor={id} style={{ color: teal[600] }}>{name}</legend>
+            <Tooltip title={handleTooltip(name, isPaymentParam)} placement="bottom" arrow>
+                <fieldset style={{ border: 'none', padding: '.25rem', borderRadius: '.25rem', border: (!isPaymentParam ? `1px dotted ${grey[700]}` : 'none') }}>
+                    <legend htmlFor={id} style={{ cursor: (name === 'MerchantTransactionID' ? 'pointer' : 'inherit'), color: teal[600] }} onClick={generateNewMTID} >
+                        {name}
+                    </legend>
                     <input
                         autoComplete="off"
                         autoComplete="new-password"

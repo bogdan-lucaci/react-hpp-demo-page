@@ -37,11 +37,11 @@ let formModel = {
         //{name: "Post URL", isPaymentParam: false, area: [1]},
         // Mandatory
         { name: "MerchantID", isPaymentParam: true, area: [1] },
-        { name: "MerchantTransactionID", isPaymentParam: true, area: [1] },
+        { name: "MerchantTransactionID", isPaymentParam: true, area: [1], tooltip: "Click label to generate a new MTID" },
         { name: "Amount", isPaymentParam: true, area: [1] },
         { name: "Currency", isPaymentParam: true, area: [1] },
         { name: "ReturnURL", isPaymentParam: true, area: [1] },
-        { name: "Country", isPaymentParam: true, area: [1] },
+        { name: "Country", isPaymentParam: true, area: [1], tooltip: "Not Mandatory but RECOMMENDED" },
         { name: "Hash", isPaymentParam: true, area: [1] },
         { name: "ComputedString", isPaymentParam: false, area: [1] },
 

@@ -15,7 +15,11 @@ import OverviewApp from './components/OverviewApp';
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [appState, setAppState] = useState({});
-  const [postValues, setPostValues] = useState({});
+  const [postValues, setPostValues] = useState({
+    'Amount': '100',
+    'Currency': 'EUR',
+    'ReturnURL': 'https://demo.smart2pay.com/redirect.php'
+  });
   const [postUrlData, setPostUrlData] = useState({
     formAction: 'https://apitest.smart2pay.com/',
     postUrlName: 'demo'
