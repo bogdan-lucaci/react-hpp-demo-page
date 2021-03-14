@@ -23,7 +23,7 @@ const utils = {
         return true;
     },
     renderHTML: (rawHTML) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } }),
-    // sort JSON params alphabetically
+    // OUT  :   a string containing a JSON sorted alphabetically (only first level)
     sortParams: obj => {
         if (Object.keys(obj).length > 0) {
             let x = JSON.stringify(obj);
