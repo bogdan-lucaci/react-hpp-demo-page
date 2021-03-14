@@ -3,21 +3,24 @@ import { Tooltip } from '@material-ui/core';
 import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 import SETTINGS from '../Settings';
 import FORM_DATA_MODEL from '../data/FormDataModel';
+import useAppContext from '../AppContextHook';
+import utils from '../utils/utils';
 import InputParamHelper from './InputParamHelper';
 
 const { noValueString } = SETTINGS;
 
-const handleValue = (postValues, inputName, inputValue) => {
+// append or delete param to postValues
+const handleValue = (currObj, name, val) => {
     let updatedValues;
-    if (inputValue) {
+    if (val) {
         const newPostValues = {};
         // when we need to simulate a parameter sent with no value
-        newPostValues[inputName] = inputValue.toLowerCase() !== noValueString ? inputValue : '';
-        updatedValues = { ...postValues, ...newPostValues };
+        newPostValues[name] = val.toLowerCase() !== noValueString ? val : '';
+        updatedValues = { ...currObj, ...newPostValues };
     }
     else {
-        const newPostValues = { ...postValues };
-        delete newPostValues[inputName];
+        const newPostValues = { ...currObj };
+        delete newPostValues[name];
         updatedValues = { ...newPostValues };
     }
 
@@ -31,30 +34,54 @@ const handleTooltip = (name, isPaymentParam) => {
         return FORM_DATA_MODEL.params.find(param => param.name === name).tooltip || ''
 };
 
+const getComputedString = (postValues, signature) => {
+    const postValuesSorted = JSON.parse(utils.sortParams(postValues));
+    return Object.keys(postValuesSorted).reduce((computedString, param) => {
+        const computedStringWithoutSig = computedString + param.toLowerCase() + postValues[param].toLowerCase();
+        // signature must be added at the end
+        return (computedStringWithoutSig || '')
+    }, '') + (signature || '')
+}
+
 const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postUrlName, appState, setAppState }) => {
     const hasHelper = useState(FORM_DATA_MODEL.helpers.find(x => x.for === name) !== undefined);
     const [showHelper, setShowHelper] = useState(false);
-
-    const generateNewMTID = () => {
-        if (name === 'MerchantTransactionID') 
-            setInputVal(Math.floor((Math.random() * 1000000000000) + 1).toString())
-    };
+    const _data = useAppContext('DataContext');
 
     const setInputVal = (val) => (
         isPaymentParam
-            ? setPostValues((postValues) => (handleValue(postValues, name, val)))
-            : setAppState((postValues) => (handleValue(postValues, name, val)))
+            ? setPostValues(postValues => handleValue(postValues, name, val))
+            : setAppState(appState => handleValue(appState, name, val))
     );
 
+    // generate new MTID and clear MerchantID and SiteID when POST URL value changes
+    const generateNewMTID = () => {
+        if (name === 'MerchantTransactionID') 
+            setInputVal(Math.floor((Math.random() * 1000000000000) + 1).toString())
+    };    
     useEffect(() => {
         generateNewMTID();
         return (() => {
-            // clear merchant ID value wen POST URL val changes
             if (['MerchantID', 'SiteID'].includes(name)) {
                 setInputVal(false);
             }
         })
     }, [postUrlName]);
+
+    // clear SiteID when MerchantID value changes
+    useEffect(() => {
+        setPostValues(postValues => handleValue(postValues, 'SiteID', false ));
+    }, [postValues['MerchantID']]);
+
+    // update signature if MerchantID or SiteID value changes
+    useEffect(() => {
+        setAppState(currAppState => handleValue(currAppState, 'Signature', appState['Signature'] = _data.getSignatureForEnvAndMerchantAndSite(postUrlName, postValues['MerchantID'], postValues['SiteID']) ));
+    }, [postValues['MerchantID'], postValues['SiteID']]);
+
+    // update ComputedString for all changes
+    useEffect(() => {
+        setAppState(currAppState => handleValue(currAppState, 'ComputedString', appState['ComputedString'] = getComputedString(postValues, appState['Signature'])));
+    }, [postValues]); 
 
     return (
         <>

@@ -11,8 +11,8 @@ let _settings = {
 const DATA_ACCESS = {
     // OUT  :   an array of postURL objects
     // [ {"ID":"1" , "DisplayName":"...", "Name":"...", "URL":"..."}, {...}, ... etc ]
-    getPostURLs: function() {
-        return DATA.postURLs.map(function(elem) {
+    getPostURLs: function () {
+        return DATA.postURLs.map(function (elem) {
             return {
                 'ID': elem.ID,
                 'Name': elem.Name,
@@ -23,9 +23,9 @@ const DATA_ACCESS = {
     },
     // OUT  :   an array of merchant objects for a given environment:
     // [ {"ID": "...", "Alias": "...", "Signature": "..."}, {...}, ... etc ]
-    getMerchantsForEnv: function(envName) {
+    getMerchantsForEnv: function (envName) {
         let envObj = DATA.postURLs.filter(
-            function(item, index, self) {
+            function (item, index, self) {
                 return item['Name'] === envName;
             },
         )[0];
@@ -33,46 +33,65 @@ const DATA_ACCESS = {
     },
     // OUT  :   an array of site objects for a given environment and merchant id:
     // [ {"MerchantID": "...", "SiteID": "...", "Active": "...", "Signature": "...", "Environment": "..."}, {...}, ... etc ]
-    getMerchantSitesForEnvAndMerchantId: function(env, merchantId) {
+    getMerchantSitesForEnvAndMerchantId: function (env, merchantId) {
         return DATA.siteids.filter(
-            function(item, index, self) {
+            function (item, index, self) {
                 return item['Environment'] === env && item['MerchantID'] == merchantId;
             },
         );
     },
     // OUT  :   an array of method objects:
     // [ {"ID":".." , "DisplayName":"..." , "LogoURL":"..."}, {...}, ... etc ]
-    getMethods: function() {
+    getMethods: function () {
         return DATA.paymentMethods;
     },
     // OUT  :   an array of method option objects for a given merchant id:
     // [ {"ID":"..." , "DisplayName":"...", "MethodID":"...", "LogoURL":"..."}, {...}, ... etc ]
-    getMethodOptionsForMethod: function(methodId) {
+    getMethodOptionsForMethod: function (methodId) {
         return DATA.methodOptions.filter(
-            function(item, index, self) {
+            function (item, index, self) {
                 return item['MethodID'] == methodId;
             },
         );
     },
     // OUT  :   an array of country objects:
     // [ {"ID":".." , "Code":"...", "Name":"..."}, {...}, ... etc ]
-    getCountries: function() {
+    getCountries: function () {
         return DATA.countries;
     },
     // OUT  :   an array of currency objects:
     // [ {"Code":"..." , "Name":"..." }, {...}, ... etc ]
-    getCurrencies: function() {
+    getCurrencies: function () {
         return DATA.currencies;
     },
     // OUT  :   an array of custom parameters objects
     // [ {"label":"...", "value":"..."}, {...}, ... etc ]
-    getCustomParams: function() {
+    getCustomParams: function () {
         return DATA.customParameters;
     },
 
+    // OUT  :   a string containing site's signature if present OR merchant's signature 
+    getSignatureForEnvAndMerchantAndSite: (envName, merchantId, siteId) => {
+        if (envName) {
+            const merchant = DATA_ACCESS.getMerchantsForEnv(envName)
+                .find(merchant => merchant.ID === merchantId);
+            const site = DATA_ACCESS.getMerchantSitesForEnvAndMerchantId(envName, merchantId)
+                .find(site => site.SiteID === siteId);
+
+            if (siteId) {
+                return (site && site['Signature']) || (merchant && merchant['Signature']);
+            }
+            else if (merchantId)
+                return (merchant && merchant['Signature']) || '';
+            else
+                return '';
+        }
+        else 
+            return '';
+    },    
     // OUT  :   an array of objects containing input's helper's data
     // [ {"id": "...", "val": "..."}]
-    getHelperData: function (inputName, envName, merchantId ) {
+    getHelperData: function (inputName, envName, merchantId) {
         //if (inputName === 'SiteID') alert(inputName);
         switch (inputName) {
             case 'Country':
@@ -117,14 +136,14 @@ const DATA_ACCESS = {
                         ))
                 )
                 break;
-    
+
             default:
                 return []
                 break;
-    
+
         }
-    
-    } 
+
+    }
 };
 
 export default DATA_ACCESS;

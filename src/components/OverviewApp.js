@@ -5,7 +5,7 @@ const OverviewPost = ({ appState }) => (
     <Box>
         <Typography variant="h6">
             <Box color="text.disabled">
-                App state
+                App helpers
         </Box>
         </Typography>
         <Divider light={true}/>
