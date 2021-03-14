@@ -22,8 +22,9 @@
 
 ### Functionalities to come:
 
-- implement **Signature** and **ComputedString** as separate components
+- ***UI*** - move `<OverviewPost>` and `<OverviewApp>` to a Material UI permanent right drawer that collapses on smaller breakpoints
 - handle **Hash**
+- implement **Signature** and **ComputedString** as separate components
 - add the ability to specify a custom POST URL
 - hide/show inputs according to POST URL value (? -> needed only for **Signature** atm)
 - send only specified params to POST body
@@ -32,7 +33,7 @@
 - add merchant id generator helper
 - add methods list helper to toggle sort order display name / id
 - handle exotic actions (payout, refund, recurrent, capture, cancel)
-- ***UI*** - move `<OverviewPost>` and `<OverviewApp>` to a Material UI permanent right drawer that collapses on smaller breakpoints
+
 - ***UI*** - move inputs that are not payment params related to the left drawer as actions with icons (**DisplayInsideIframe**, **IframeOverlaySource**)
 - add default values to specified inputs according to POST URL value (extend FormDataModel) or select first option from helper (?)
 - ***UI*** - use Material UI list to upgrade POST URL dropdown list
