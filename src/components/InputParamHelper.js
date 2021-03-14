@@ -14,7 +14,7 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
 
         if (helperSelect.current) {
             if (getHelperData().length === 1) {
-                setInputVal(helperSelect.current.value)
+                setInputVal(helperSelect.current.options[1].value)
             }
 
             helperSelect.current.selectedIndex = -1;
@@ -28,7 +28,7 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
 
             if (helperSelect.current) {
                 if (getHelperData().length === 1) {
-                    setInputVal(helperSelect.current.value)
+                    setInputVal(helperSelect.current.options[1].value)
                 }
             }
         }
@@ -54,7 +54,7 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
                     }}
                     onChange={handleChange}
                 >
-                    {/* <option key="no-value" value=""></option > */}
+                    <option key="no-value" value=""></option >
                     {getHelperData().map(x =>
                         <option key={x.id} value={x.id}>{x.val}</option >
                     )}

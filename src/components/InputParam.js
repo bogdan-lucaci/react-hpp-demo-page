@@ -9,7 +9,7 @@ import InputParamHelper from './InputParamHelper';
 
 const { noValueString } = SETTINGS;
 
-// append or delete param to postValues
+// append or delete (if no val) param to postValues
 const handleValue = (currObj, name, val) => {
     let updatedValues;
     if (val) {

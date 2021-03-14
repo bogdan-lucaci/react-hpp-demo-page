@@ -18,12 +18,12 @@
 - add tooltips to inputs according to FORM_DATA_MODEL and param type
 - generate new MTID on POST URL value change and on input label click
 - set **Signature** value according to POST URL / **MerchantID** / **SiteID** combination
-- handle **ComputedString** value
+- update **ComputedString** for all param changes
 
 ### Functionalities to come:
 
 - implement **Signature** and **ComputedString** as separate components
-- implement **Hash**
+- handle **Hash**
 - add the ability to specify a custom POST URL
 - hide/show inputs according to POST URL value (? -> needed only for **Signature** atm)
 - send only specified params to POST body
