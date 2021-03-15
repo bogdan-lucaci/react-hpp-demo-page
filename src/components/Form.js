@@ -1,3 +1,4 @@
+import React from 'react';
 import FORM_DATA_MODEL from '../data/FormDataModel';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, ButtonGroup, FormControl, FormHelperText, Grid, Input, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, TextField, Typography } from '@material-ui/core/';
 import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
@@ -49,12 +50,12 @@ const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlNam
                         <Grid container spacing={1}>
                             {getInputsForArea(area.id).map((param) => {
                                 return (
-                                    <>
+                                    <React.Fragment key={param.name + (param.area.toString())} >
                                         {/* check if a form sub-area starts and if we should display a title */}
                                         {area.id === param.area[0] && param.area[1] &&
                                             <FormSubAreaTitle param={param} />
                                         }
-                                        <Grid key={param.name + (param.area.toString())} item xs={12} sm={6}>
+                                        <Grid item xs={12} sm={6}>
 
                                             <InputParam
                                                 id={param.name + (param.area.toString())}
@@ -68,7 +69,7 @@ const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlNam
                                             />
 
                                         </Grid>
-                                    </>
+                                    </React.Fragment>
                                 )
                             })}
                         </Grid>

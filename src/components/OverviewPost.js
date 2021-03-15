@@ -9,7 +9,7 @@ const getJsonMarkup = (jsonString, { keyColor, valColor }) => {
         <>
             {"{"}
             {Object.keys(json).map(param => (
-                <Box>
+                <Box key={param}>
                     &nbsp;&nbsp;&nbsp;<span style={{ color: keyColor }}>{param}</span> : <span style={{ color: valColor }}>{json[param]}</span>
                 </Box>
             ))}
