@@ -81,7 +81,7 @@ const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postU
     // update ComputedString for all changes
     useEffect(() => {
         setAppState(currAppState => handleValue(currAppState, 'ComputedString', appState['ComputedString'] = getComputedString(postValues, appState['Signature'])));
-    }, [postValues]); 
+    }, [postValues[names]]); 
 
     return (
         <>
