@@ -3,47 +3,39 @@ import useAppContext from '../AppContextHook';
 import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 
 const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantId, setShowHelper }) => {
-    const _data = useAppContext('DataContext');
-    const getHelperData = () => _data.getHelperData(inputName, postUrlName, merchantId);
-    const helperHasData = getHelperData().length > 0 ? true : false;
-    const helperSelect = useRef();
+    const DATA_ACCESS = useAppContext('DataContext');
+    const helperData = DATA_ACCESS.getHelperData(inputName, postUrlName, merchantId);
+    const helperSelect = useRef(false);
 
-    // what happens when POST URL changes
+    // initial render
     useEffect(() => {
-        setShowHelper(() => helperHasData);
+        // tell parent component to update markup for helpers
+        setShowHelper(() => helperData.length > 0)
+    }, []);
+
+    // helpers behaviour when POST URL or MerchantID changes
+    useEffect(() => {
+        // tell parent component to update markup for merchant and site helpers visibility
+        if (['MerchantID', 'SiteID'].includes(inputName))
+            setShowHelper(() => helperData.length > 0);
 
         if (helperSelect.current) {
-            if (getHelperData().length === 1) {
+            // select helper value if helper list's length is 1
+            if (helperData.length === 1)
                 setInputVal(helperSelect.current.options[1].value)
-            }
-
+            // deselect helper list
             helperSelect.current.selectedIndex = -1;
         }
-    }, [postUrlName]);
-
-    // what happens when MerchantID changes
-    useEffect(() => {
-        if (inputName === 'SiteID') {
-            setShowHelper(() => getHelperData().length > 0);
-
-            if (helperSelect.current) {
-                if (getHelperData().length === 1) {
-                    setInputVal(helperSelect.current.options[1].value)
-                }
-            }
-        }
-    }, [merchantId]);
+    }, [postUrlName, merchantId]);
 
     const handleChange = (e) => {
-        // if (e.target.value) {
         setInputVal(e.target.value);
         helperSelect.current.selectedIndex = -1;
-        //}
     };
 
     return (
         <>
-            {!helperHasData ? '' :
+            {helperData.length > 0 &&
                 <select
                     ref={helperSelect}
                     style={{
@@ -55,7 +47,7 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
                     onChange={handleChange}
                 >
                     <option key="no-value" value=""></option >
-                    {getHelperData().map(x =>
+                    {helperData.map(x =>
                         <option key={x.id} value={x.id}>{x.val}</option >
                     )}
                 </select>

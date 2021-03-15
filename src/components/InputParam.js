@@ -61,16 +61,18 @@ const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postU
     };    
     useEffect(() => {
         generateNewMTID();
-        return (() => {
-            if (['MerchantID', 'SiteID'].includes(name)) {
+        return () => {
+            if (['MerchantID', 'SiteID'].includes(name)) 
                 setInputVal(false);
-            }
-        })
+        }
     }, [postUrlName]);
 
     // clear SiteID when MerchantID value changes
     useEffect(() => {
-        setPostValues(postValues => handleValue(postValues, 'SiteID', false ));
+        return () => {
+            if (name === 'SiteID') 
+                setInputVal(false);
+        }
     }, [postValues['MerchantID']]);
 
     // update signature if MerchantID or SiteID value changes
