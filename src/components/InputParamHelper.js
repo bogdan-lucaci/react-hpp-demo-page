@@ -7,18 +7,7 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
     const helperData = DATA_ACCESS.getHelperData(inputName, postUrlName, merchantId);
     const helperSelect = useRef(false);
 
-    // initial render
-    useEffect(() => {
-        // tell parent component to update markup for helpers
-        setShowHelper(() => helperData.length > 0)
-    }, []);
-
-    // helpers behaviour when POST URL or MerchantID changes
-    useEffect(() => {
-        // tell parent component to update markup for merchant and site helpers visibility
-        if (['MerchantID', 'SiteID'].includes(inputName))
-            setShowHelper(() => helperData.length > 0);
-
+    const helperBehaviour = () => {
         if (helperSelect.current) {
             // select helper value if helper list's length is 1
             if (helperData.length === 1)
@@ -26,7 +15,31 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
             // deselect helper list
             helperSelect.current.selectedIndex = -1;
         }
-    }, [postUrlName, merchantId]);
+    }
+
+    // initial render
+    useEffect(() => {
+        // tell parent component to update markup for helpers
+        setShowHelper(() => helperData.length > 0)
+    }, []);
+
+    // helpers behaviour when MerchantID changes
+    useEffect(() => {
+        // tell parent component to update markup for site helpers visibility
+        if (['SiteID'].includes(inputName)) {
+            setShowHelper(() => helperData.length > 0);
+            helperBehaviour();
+        }
+    }, [merchantId]);
+
+    // helpers behaviour when POST URL changes
+    useEffect(() => {
+        // tell parent component to update markup for merchant and site helpers visibility
+        if (['MerchantID', 'SiteID'].includes(inputName)) {
+            setShowHelper(() => helperData.length > 0);
+            helperBehaviour();
+        }
+    }, [postUrlName]);
 
     const handleChange = (e) => {
         setInputVal(e.target.value);

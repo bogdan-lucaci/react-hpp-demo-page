@@ -36,11 +36,12 @@ const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postU
     const hasHelper = FORM_DATA_MODEL.helpers.find(x => x.for === name) !== undefined;
     const [showHelper, setShowHelper] = useState(false);
 
-    const setInputVal = (val) => (
-        isPaymentParam
-            ? setPostValues(postValues => handleValue(postValues, name, val))
-            : setAppState(appState => handleValue(appState, name, val))
-    );
+    const setInputVal = (val) => {
+        if (isPaymentParam)
+            setPostValues(postValues => handleValue(postValues, name, val))
+        else
+            setAppState(appState => handleValue(appState, name, val))
+    };
 
     // generate new MTID and clear MerchantID and SiteID when POST URL value changes
     const generateNewMTID = () => {
