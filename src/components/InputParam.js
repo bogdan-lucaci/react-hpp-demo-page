@@ -44,7 +44,7 @@ const getComputedString = (postValues, signature) => {
 }
 
 const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postUrlName, appState, setAppState }) => {
-    const hasHelper = useState(FORM_DATA_MODEL.helpers.find(x => x.for === name) !== undefined);
+    const hasHelper = FORM_DATA_MODEL.helpers.find(x => x.for === name) !== undefined;
     const [showHelper, setShowHelper] = useState(false);
     const _data = useAppContext('DataContext');
 
@@ -104,7 +104,7 @@ const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postU
                         value={(isPaymentParam ? postValues[name] : appState[name]) || ''}
                         onChange={(e) => setInputVal(e.target.value)}
                     />
-                    {!hasHelper ? '' :
+                    {hasHelper &&
                         <InputParamHelper
                             name={name}
                             setInputVal={setInputVal}
