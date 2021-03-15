@@ -37,7 +37,7 @@ let formModel = {
         //{name: "Post URL", isPaymentParam: false, area: [1]},
         // Mandatory
         { name: "MerchantID", isPaymentParam: true, area: [1] },
-        { name: "Signature", isPaymentParam: false, area: [1] }, // comment if we want to remove it from form
+        //{ name: "Signature", isPaymentParam: false, area: [1] }, // comment if we want to remove it from form
         { name: "MerchantTransactionID", isPaymentParam: true, area: [1], tooltip: "Click label to generate a new MTID" },
         { name: "Amount", isPaymentParam: true, area: [1] },
         { name: "Currency", isPaymentParam: true, area: [1] },

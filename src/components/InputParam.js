@@ -3,8 +3,6 @@ import { Tooltip } from '@material-ui/core';
 import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 import SETTINGS from '../Settings';
 import FORM_DATA_MODEL from '../data/FormDataModel';
-import useAppContext from '../AppContextHook';
-import utils from '../utils/utils';
 import InputParamHelper from './InputParamHelper';
 
 const { noValueString } = SETTINGS;
@@ -34,19 +32,9 @@ const handleTooltip = (name, isPaymentParam) => {
         return FORM_DATA_MODEL.params.find(param => param.name === name).tooltip || ''
 };
 
-const getComputedString = (postValues, signature) => {
-    const postValuesSorted = JSON.parse(utils.sortParams(postValues));
-    return Object.keys(postValuesSorted).reduce((computedString, param) => {
-        const computedStringWithoutSig = computedString + param.toLowerCase() + postValues[param].toLowerCase();
-        // signature must be added at the end
-        return (computedStringWithoutSig || '')
-    }, '') + (signature || '')
-}
-
 const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postUrlName, appState, setAppState }) => {
     const hasHelper = FORM_DATA_MODEL.helpers.find(x => x.for === name) !== undefined;
     const [showHelper, setShowHelper] = useState(false);
-    const _data = useAppContext('DataContext');
 
     const setInputVal = (val) => (
         isPaymentParam
@@ -75,15 +63,7 @@ const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postU
         }
     }, [postValues['MerchantID']]);
 
-    // update signature if MerchantID or SiteID value changes
-    useEffect(() => {
-        setAppState(currAppState => handleValue(currAppState, 'Signature', appState['Signature'] = _data.getSignatureForEnvAndMerchantAndSite(postUrlName, postValues['MerchantID'], postValues['SiteID']) ));
-    }, [postValues['MerchantID'], postValues['SiteID']]);
 
-    // update ComputedString for all changes
-    useEffect(() => {
-        setAppState(currAppState => handleValue(currAppState, 'ComputedString', appState['ComputedString'] = getComputedString(postValues, appState['Signature'])));
-    }, [postValues[name]]); 
 
     return (
         <>

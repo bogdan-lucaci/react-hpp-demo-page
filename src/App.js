@@ -11,6 +11,8 @@ import InputPostUrl from './components/InputPostUrl';
 import OverviewPost from './components/OverviewPost';
 import OverviewApp from './components/OverviewApp';
 
+import useAppContext from './AppContextHook';
+import getComputedString from './services/getComputedString';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,14 +26,15 @@ const App = () => {
     formAction: 'https://apitest.smart2pay.com/',
     postUrlName: 'demo'
   });
+  const DATA_ACCESS = useAppContext('DataContext');
+  const signature = DATA_ACCESS.getSignatureForEnvAndMerchantAndSite(postUrlData['postUrlName'], postValues['MerchantID'], postValues['SiteID']);
+  const computedString = getComputedString(postValues, signature);
 
   useEffect(() => {
-    console.log('APP rendered!', postValues);
-    //setIsLoading(true);
-    return (() => {
-      setTimeout(() => setIsLoading(false), 300)
-    })
-  }/*, [postUrlData]*/);
+    //console.log('APP rendered!', postValues);
+    setIsLoading(true);
+    setTimeout(() => setIsLoading(false), 500)
+  }, [postUrlData['formAction']]);
 
   return (
     <>
@@ -75,15 +78,21 @@ const App = () => {
           <Paper>
             <Box p={3} textAlign="left" align="center" height="49.75vh">
 
-              <OverviewPost 
-                postValues={postValues} 
+              <OverviewPost
+                postValues={postValues}
                 postUrlData={postUrlData}
               />
 
             </Box>
             <Divider />
             <Box p={3} textAlign="left" align="center" height="49.75vh">
-              <OverviewApp appState={appState} />
+              <OverviewApp 
+                appState={{
+                  ...appState,
+                  'Signature': signature,
+                  'Computed String': computedString
+                }} 
+              />
               {/* <DisplaySubmitted 
                 history={history} 
                 setFormValues={setFormValues} 

@@ -47,6 +47,9 @@
 - allow import of postmen collections
 - ***UI*** - add POST URL to `<OverviewPost>` (?)
 
+### Issues:
+- **MerchantID** cand not be edited if the environment has only one merchant assigned
+
 
 
 ### Components overview
