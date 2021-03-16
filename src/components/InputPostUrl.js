@@ -1,9 +1,7 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import useAppContext from '../AppContextHook';
 import { Box, ButtonGroup, Container, Select, Button } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-
-
 
 const InputPostUrl = ({ setPostUrlData }) => {
     const _data = useAppContext('DataContext');
@@ -88,6 +86,6 @@ const InputPostUrl = ({ setPostUrlData }) => {
             </ButtonGroup>
         </Box>
     )
-}
+};
 
-export default InputPostUrl;
+export default React.memo(InputPostUrl);
