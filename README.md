@@ -20,31 +20,31 @@
 - set **Signature** value according to POST URL / **MerchantID** / **SiteID** combination
 - update **ComputedString** for all param changes
 - remove **Signature** and **ComputedString** from AppState / PostValues objects
+- handle **Hash**
 
 ### Functionalities to come:
 
 - ***UI*** - move `<OverviewPost>` and `<OverviewApp>` to a Material UI permanent right drawer that collapses on smaller breakpoints
-- handle **Hash**
 - add the ability to specify a custom POST URL
-- send only specified params to request body
+- send only specified params in request
+- handle exotic actions (payout, refund, recurrent, capture, cancel)
 - handle all text helpers
 - add image helper for methods
 - add MTID generator helper as an icon integrated inside input
+- add custom actions with icons to inputs (clear input, generate random val, etc)
 - add methods list helper to toggle sort order display name / id
-- handle exotic actions (payout, refund, recurrent, capture, cancel)
 - ***UI*** - move inputs that are not payment params related to the left drawer as actions with icons (**DisplayInsideIframe**, **IframeOverlaySource**)
-- add default values to specified inputs according to POST URL value (extend FormDataModel) or select first option from helper (?)
 - ***UI*** - use Material UI list to upgrade POST URL dropdown list
 - ***UI*** - integrate Material UI for `<InputParam>` and `<InputParamHelper>`
 - ***UI*** - add live filter to form to search inputs
-- add custom actions with icons to inputs (clear input, generate random val, etc)
 - save and restore form data from **localStorage**
-- set form action and form inputs value from by URL params
+- set form action and form inputs value by URL params
 - make `<OverviewPost>` editable + affect form inputs values
-- allow to paste and parse a REST message body JSON + display the response
+- allow to load and parse a REST message body JSON + display the response
 - allow import of postmen collections
 - ***UI*** - add POST URL to `<OverviewPost>` (?)
 - hide/show inputs according to POST URL value (?)
+- add default values to specified inputs according to POST URL value (extend FormDataModel) or select first option from helper (?)
 
 ### Issues:
 - *< to be updated >*
