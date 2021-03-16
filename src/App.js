@@ -13,6 +13,7 @@ import OverviewApp from './components/OverviewApp';
 
 import useAppContext from './AppContextHook';
 import getComputedString from './services/getComputedString';
+const sha256 = require('hash.js/lib/hash/sha/256');
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -27,6 +28,7 @@ const App = () => {
     postUrlName: 'demo'
   });
   const DATA_ACCESS = useAppContext('DataContext');
+
   // get signature only when MerchantID / SiteID val changes
   const signature = useMemo(
     () => DATA_ACCESS.getSignatureForEnvAndMerchantAndSite(postUrlData['postUrlName'], postValues['MerchantID'], postValues['SiteID']),
@@ -38,13 +40,28 @@ const App = () => {
     () => getComputedString(postValues, signature),
     [postValues, signature]
   );
-  
-  // console.log('APP rendered!'/*, postValues*/);
+  // cache postValues without hash when computedString changes
+  const postValuesWithoutHash = useMemo(() => {
+    const newPostValues = { ...postValues };
+    delete newPostValues['Hash'];
+    return { ...newPostValues };
+  }, [computedString]);
+  // set hash to postValues when any other value except hash changes
+  useEffect(() => {
+    setPostValues(postValues => ({
+        ...postValues,
+        'Hash': sha256().update(computedString).digest('hex')
+      })
+    );
+  }, [postValuesWithoutHash]);
+
+  // block UI with loader for various events
   useEffect(() => {
     setIsLoading(true);
     setTimeout(() => setIsLoading(false), 500)
   }, [postUrlData['formAction']]);
 
+  //console.log('APP rendered!', postValues);
   return (
     <>
       <Box mb={2}>
@@ -95,12 +112,12 @@ const App = () => {
             </Box>
             <Divider />
             <Box p={3} textAlign="left" align="center" height="29.75vh">
-              <OverviewApp 
+              <OverviewApp
                 appState={{
                   ...appState,
                   'Signature': signature,
                   'Computed String': computedString
-                }} 
+                }}
               />
               {/* <DisplaySubmitted 
                 history={history} 
