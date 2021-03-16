@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import SETTINGS from './Settings';
 
 import { Typography, Divider, Box, Container, Paper, Grid, Button, AppBar, Drawer, Toolbar, IconButton, Select } from '@material-ui/core';
@@ -27,11 +27,20 @@ const App = () => {
     postUrlName: 'demo'
   });
   const DATA_ACCESS = useAppContext('DataContext');
-  const signature = DATA_ACCESS.getSignatureForEnvAndMerchantAndSite(postUrlData['postUrlName'], postValues['MerchantID'], postValues['SiteID']);
-  const computedString = getComputedString(postValues, signature);
-
+  // get signature only when MerchantID / SiteID val changes
+  const signature = useMemo(
+    () => DATA_ACCESS.getSignatureForEnvAndMerchantAndSite(postUrlData['postUrlName'], postValues['MerchantID'], postValues['SiteID']),
+    [postValues['MerchantID'], postValues['SiteID']]
+  );
+  // get computedString only when postValues or signature changes 
+  // (not when theme context changes for e.g.)
+  const computedString = useMemo(
+    () => getComputedString(postValues, signature),
+    [postValues, signature]
+  );
+  
+  // console.log('APP rendered!'/*, postValues*/);
   useEffect(() => {
-    //console.log('APP rendered!', postValues);
     setIsLoading(true);
     setTimeout(() => setIsLoading(false), 500)
   }, [postUrlData['formAction']]);
@@ -85,7 +94,7 @@ const App = () => {
 
             </Box>
             <Divider />
-            <Box p={3} textAlign="left" align="center" height="49.75vh">
+            <Box p={3} textAlign="left" align="center" height="29.75vh">
               <OverviewApp 
                 appState={{
                   ...appState,
