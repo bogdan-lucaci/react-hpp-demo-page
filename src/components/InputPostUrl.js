@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import useAppContext from '../AppContextHook';
 import { Box, ButtonGroup, Container, Select, Button } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
@@ -88,4 +88,4 @@ const InputPostUrl = ({ setPostUrlData }) => {
     )
 };
 
-export default React.memo(InputPostUrl);
+export default InputPostUrl;
