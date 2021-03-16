@@ -26,11 +26,10 @@
 - ***UI*** - move `<OverviewPost>` and `<OverviewApp>` to a Material UI permanent right drawer that collapses on smaller breakpoints
 - handle **Hash**
 - add the ability to specify a custom POST URL
-- hide/show inputs according to POST URL value (? -> needed only for **Signature** atm)
-- send only specified params to POST body
+- send only specified params to request body
 - handle all text helpers
 - add image helper for methods
-- add merchant id generator helper
+- add MTID generator helper as an icon integrated inside input
 - add methods list helper to toggle sort order display name / id
 - handle exotic actions (payout, refund, recurrent, capture, cancel)
 - ***UI*** - move inputs that are not payment params related to the left drawer as actions with icons (**DisplayInsideIframe**, **IframeOverlaySource**)
@@ -45,6 +44,7 @@
 - allow to paste and parse a REST message body JSON + display the response
 - allow import of postmen collections
 - ***UI*** - add POST URL to `<OverviewPost>` (?)
+- hide/show inputs according to POST URL value (?)
 
 ### Issues:
 - *< to be updated >*

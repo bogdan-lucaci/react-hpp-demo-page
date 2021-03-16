@@ -17,7 +17,7 @@ const getJsonMarkup = (jsonString, { keyColor, valColor }) => {
     )
 };
 
-const OverviewPost = ({ appState }) => {
+const OverviewApp = ({ appState }) => {
     const palette = useAppContext('ThemeContext')['theme']['palette'];
     return (
         <Box>
@@ -39,4 +39,4 @@ const OverviewPost = ({ appState }) => {
     )
 };
 
-export default OverviewPost;
+export default OverviewApp;

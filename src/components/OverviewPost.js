@@ -1,3 +1,4 @@
+import React from 'react';
 import { Typography, Box, Divider } from '@material-ui/core';
 import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 import useAppContext from '../AppContextHook';
@@ -50,5 +51,5 @@ const OverviewPost = ({ postValues, postUrlData }) => {
         </>
     )
 };
-
-export default OverviewPost;
+// <OverviewPost> should not update when appState changes for e.g.
+export default React.memo(OverviewPost);
