@@ -4,8 +4,8 @@ import { Box, ButtonGroup, Container, Select, Button } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 const InputPostUrl = ({ setPostUrlData }) => {
-    const _data = useAppContext('DataContext');
-    const PostURLs = _data.getPostURLs();
+    const DATA_access = useAppContext('DataContext');
+    const PostURLs = DATA_access.getPostURLs();
     const urlList = useRef();
     const getOptionName = (select) => select.options[select.selectedIndex].getAttribute('data-name');
 
