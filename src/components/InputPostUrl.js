@@ -3,27 +3,31 @@ import useAppContext from '../AppContextHook';
 import { Box, ButtonGroup, Select, Button } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
-const InputPostUrl = ({ setPostUrlData }) => {
-    const DATA_access = useAppContext('DataContext');
-    const PostURLs = DATA_access.getPostURLs();
-    const urlList = useRef();
-    const getOptionName = (select) => select.options[select.selectedIndex].getAttribute('data-name');
-
-    const setFormActionAndName = (select) => {
-        if (getOptionName(select) !== 'custom') {
+const setFormActionAndName = (select, setPostUrlData) => {
+    if (setPostUrlData) {
+        const optionName = select.options[select.selectedIndex].getAttribute('data-name');
+        if (optionName !== 'custom') {
             setPostUrlData({
                 formAction: select.value,
-                postUrlName: getOptionName(select)
+                postUrlName: optionName
             })
         } else {
             alert('not implemented yet!');
         }
+    }
+};
 
-    };
+const InputPostUrl = ({ setPostUrlData }) => {
+    const DATA_access = useAppContext('DataContext');
+    const PostURLs = DATA_access.getPostURLs();
+    const urlList = useRef(false);
 
     useEffect(() => {
-        setFormActionAndName(urlList.current);
-    }, [urlList.current]);
+        if (urlList.current)
+            setFormActionAndName(urlList.current, setPostUrlData);
+        else
+            urlList.current = true;
+    }, [urlList.current.selectedIndex, setPostUrlData]);
 
     return (
         <Box
@@ -47,7 +51,7 @@ const InputPostUrl = ({ setPostUrlData }) => {
                 style={{ width: "100%" }}
             >
                 <Select
-                    onChange={(e) => setFormActionAndName(e.target)}
+                    onChange={(e) => setFormActionAndName(e.target, setPostUrlData)}
                     //labelId="demo-simple-select-helper-label"
                     //id="demo-simple-select-helper"
                     //IconComponent = {Person}
