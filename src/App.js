@@ -67,7 +67,7 @@ const App = () => {
       <Box mb={2}>
         <AppHeaderAndDrawer>
             <InputPostUrl setPostUrlData={setPostUrlData} />
-            <FormSubmitButton />
+            <FormSubmitButton formAction={postUrlData['formAction']} />
         </AppHeaderAndDrawer>
       </Box>
 

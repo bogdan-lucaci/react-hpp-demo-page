@@ -1,11 +1,35 @@
 import { Box, Button } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
-const handleSubmit = () => {
-    document.forms["HppPostForm"].requestSubmit()
+const post_to_url = (action, params, method) => {
+    method = method || "post";
+
+    const form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", action);
+
+    params.forEach(param => {
+        const hiddenField = document.createElement("input");
+        hiddenField.setAttribute('type', 'hidden');
+        hiddenField.setAttribute('name', param.name);
+        hiddenField.setAttribute('value', param.value);
+        form.appendChild(hiddenField);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
+const handleSubmit = (formAction) => {
+    const paramsWithValue = [...document.forms["HppPostForm"].elements].filter(x => x.tagName !== 'FIELDSET' && x.value);
+    const paramsWithValueSorted = paramsWithValue.sort( (a, b) => a.name.localeCompare(b.name) );
+    // const paramsWithoutValue = [...document.forms["HppPostForm"].elements].filter(x => x.tagName !== 'FIELDSET' && !x.value);
+    // paramsWithoutValue.forEach(x => x.disabled=true);
+
+    post_to_url(formAction, paramsWithValueSorted);
 };
 
-const SubmitButton = (props) => {
+const SubmitButton = ({formAction, ...props}) => {
 
     return (
         <Button
@@ -16,7 +40,7 @@ const SubmitButton = (props) => {
             disableElevation
             color="primary"
             endIcon={<OpenInNewIcon color="disabled" />}
-            onClick={handleSubmit}
+            onClick={() => handleSubmit(formAction)}
         >
             <Box px={3}>Pay</Box>
         </Button>
