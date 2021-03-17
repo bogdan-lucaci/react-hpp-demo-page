@@ -27,7 +27,7 @@ const InputPostUrl = ({ setPostUrlData }) => {
             setFormActionAndName(urlList.current, setPostUrlData);
         else
             urlList.current = true;
-    }, [urlList.current.selectedIndex, setPostUrlData]);
+    }, [urlList.current.selectedIndex]);
 
     return (
         <Box

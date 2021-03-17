@@ -65,16 +65,15 @@ const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postU
     }, [postValues['MerchantID']]);
 
 
-
     return (
         <>
             <Tooltip title={handleTooltip(name, isPaymentParam)} placement="bottom" arrow>
-                <fieldset style={{ border: 'none', padding: '.25rem', borderRadius: '.25rem', border: (!isPaymentParam ? `1px dotted ${grey[700]}` : 'none') }}>
-                    <legend htmlFor={id} style={{ cursor: (name === 'MerchantTransactionID' ? 'pointer' : 'inherit'), color: teal[600] }} onClick={generateNewMTID} >
+                <fieldset style={{ border: (!isPaymentParam ? `1px dotted ${grey[700]}` : 'none'), padding: '.25rem', borderRadius: '.25rem' }}>
+                    <legend htmlFor={id} style={{ cursor: (name === 'MerchantTransactionID' ? 'pointer' : 'inherit'), color: teal[600] }} onClick={name === 'MerchantTransactionID' ? generateNewMTID : null} >
                         {name}
                     </legend>
                     <input
-                        autoComplete="off"
+                        //autoComplete="off"
                         autoComplete="new-password"
                         style={{
                             width: showHelper ? '91%' : '100%',

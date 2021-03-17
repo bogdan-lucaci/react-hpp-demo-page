@@ -2,33 +2,34 @@ import { useEffect, useRef } from 'react';
 import useAppContext from '../AppContextHook';
 import { grey } from '@material-ui/core/colors';
 
+const helperBehaviour = (select, dataLength, setInputVal) => {
+    if (select) {
+        // select helper value if helper list's length is 1
+        if (dataLength === 1)
+            setInputVal(select.options[1].value)
+        // deselect helper list
+        select.selectedIndex = -1;
+    }
+};
+
 const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantId, setShowHelper }) => {
     const DATA_ACCESS = useAppContext('DataContext');
     const helperData = DATA_ACCESS.getHelperData(inputName, postUrlName, merchantId);
-    const helperSelect = useRef(false);
-
-    const helperBehaviour = () => {
-        if (helperSelect.current) {
-            // select helper value if helper list's length is 1
-            if (helperData.length === 1)
-                setInputVal(helperSelect.current.options[1].value)
-            // deselect helper list
-            helperSelect.current.selectedIndex = -1;
-        }
-    }
+    const dataLength = helperData.length;
+    const helperSelect = useRef();
 
     // initial render
     useEffect(() => {
         // tell parent component to update markup for helpers
-        setShowHelper(() => helperData.length > 0)
+        setShowHelper(() => dataLength > 0)
     }, []);
 
     // helpers behaviour when MerchantID changes
     useEffect(() => {
         // tell parent component to update markup for site helpers visibility
-        if (['SiteID'].includes(inputName)) {
-            setShowHelper(() => helperData.length > 0);
-            helperBehaviour();
+        if (inputName === 'SiteID') {
+            setShowHelper(() => dataLength > 0);
+            helperBehaviour(helperSelect.current, dataLength, setInputVal);
         }
     }, [merchantId]);
 
@@ -36,8 +37,8 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
     useEffect(() => {
         // tell parent component to update markup for merchant and site helpers visibility
         if (['MerchantID', 'SiteID'].includes(inputName)) {
-            setShowHelper(() => helperData.length > 0);
-            helperBehaviour();
+            setShowHelper(() => dataLength > 0);
+            helperBehaviour(helperSelect.current, dataLength, setInputVal);
         }
     }, [postUrlName]);
 
@@ -48,7 +49,7 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
 
     return (
         <>
-            {helperData.length > 0 &&
+            {dataLength > 0 &&
                 <select
                     ref={helperSelect}
                     style={{
@@ -67,6 +68,6 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
             }
         </>
     )
-}
+};
 
 export default InputParamHelper;
