@@ -1,12 +1,10 @@
 import DATA from './DATA_RAW.js';
 
-
-
-let _settings = {
-    //ignoredIDs: ['ActionName_list', 'addAliPayArticles', 'addKlarnaArticles', 'addYandexArticles', 'addRefundArticles', 'amountToggleON', 'amountToggleOFF', 'Capture_list', 'computedString', 'Country_list', 'Currency_list', 'currencyToggleON', 'currencyToggleOFF', 'displayInsideIframe', 'IframeOverlayMaskSource', 'IsOffline_list', 'MerchantID_list', 'MethodID_list', 'MethodID_sortList', 'MethodOptionID_list', 'noHash', 'pasteImport', 'pasteExport', 'pasteParamsBtn', 'pasteParamsWrap', 'pastedParams', 'pasteBtnApply', 'pasteSave', 'pasteDelete', 'pasteList', 'pasteCreateFromForm', 'pasteActionFeedback', 'pasteExportedData', 'pasteSelectText', 'PostURL', 'PostURL_custom', 'RedirectInIframe_list', 'MerchantRedirectInIframe_list', 's2pOverlayMask', 'SiteID_list', 'SkipHPP_list', 'Signature', 'embed-lightbox', 'sc-IframeOverlayMaskSource', 'sc-iframeEmbedWidth', 'sc-iframeEmbedHeight'],
-    ignoredValues: ['', 'undefined', undefined, 'Pay', /* 'NOVALUE' */, null, 'NOVALUE', 'novalue'],
-    ignoredValuesForHash: ['NOVALUE', 'novalue']
-};
+// let _settings = {
+//     //ignoredIDs: ['ActionName_list', 'addAliPayArticles', 'addKlarnaArticles', 'addYandexArticles', 'addRefundArticles', 'amountToggleON', 'amountToggleOFF', 'Capture_list', 'computedString', 'Country_list', 'Currency_list', 'currencyToggleON', 'currencyToggleOFF', 'displayInsideIframe', 'IframeOverlayMaskSource', 'IsOffline_list', 'MerchantID_list', 'MethodID_list', 'MethodID_sortList', 'MethodOptionID_list', 'noHash', 'pasteImport', 'pasteExport', 'pasteParamsBtn', 'pasteParamsWrap', 'pastedParams', 'pasteBtnApply', 'pasteSave', 'pasteDelete', 'pasteList', 'pasteCreateFromForm', 'pasteActionFeedback', 'pasteExportedData', 'pasteSelectText', 'PostURL', 'PostURL_custom', 'RedirectInIframe_list', 'MerchantRedirectInIframe_list', 's2pOverlayMask', 'SiteID_list', 'SkipHPP_list', 'Signature', 'embed-lightbox', 'sc-IframeOverlayMaskSource', 'sc-iframeEmbedWidth', 'sc-iframeEmbedHeight'],
+//     ignoredValues: ['', 'undefined', undefined, 'Pay', /* 'NOVALUE' */, null, 'NOVALUE', 'novalue'],
+//     ignoredValuesForHash: ['NOVALUE', 'novalue']
+// };
 
 const DATA_ACCESS = {
     // OUT  :   an array of postURL objects
@@ -36,7 +34,7 @@ const DATA_ACCESS = {
     getMerchantSitesForEnvAndMerchantId: function (env, merchantId) {
         return DATA.siteids.filter(
             function (item, index, self) {
-                return item['Environment'] === env && item['MerchantID'] == merchantId;
+                return item['Environment'] === env && item['MerchantID'] === merchantId;
             },
         );
     },
@@ -50,7 +48,7 @@ const DATA_ACCESS = {
     getMethodOptionsForMethod: function (methodId) {
         return DATA.methodOptions.filter(
             function (item, index, self) {
-                return item['MethodID'] == methodId;
+                return item['MethodID'] === methodId;
             },
         );
     },
@@ -103,7 +101,6 @@ const DATA_ACCESS = {
                         }
                     ))
                 )
-                break;
             case 'Currency':
                 return (
                     DATA_ACCESS.getCurrencies().map(currency => (
@@ -113,7 +110,6 @@ const DATA_ACCESS = {
                         }
                     ))
                 )
-                break;
             case 'MerchantID':
                 return (
                     DATA_ACCESS.getMerchantsForEnv(envName).map(merchant => (
@@ -123,7 +119,6 @@ const DATA_ACCESS = {
                         }
                     ))
                 )
-                break;
             case 'SiteID':
                 return (
                     DATA_ACCESS.getMerchantSitesForEnvAndMerchantId(envName, merchantId)
@@ -135,11 +130,9 @@ const DATA_ACCESS = {
                             }
                         ))
                 )
-                break;
 
             default:
                 return []
-                break;
 
         }
 

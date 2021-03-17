@@ -1,6 +1,5 @@
 import FORM_DATA_MODEL from '../data/FormDataModel';
 import { Divider, Grid } from '@material-ui/core';
-import { useEffect } from 'react';
 
 const getSubAreaForAreaAndParam = (areaId, paramArea) => (
     FORM_DATA_MODEL.areas

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import useAppContext from '../AppContextHook';
-import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
+import { grey } from '@material-ui/core/colors';
 
 const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantId, setShowHelper }) => {
     const DATA_ACCESS = useAppContext('DataContext');

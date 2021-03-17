@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Tooltip } from '@material-ui/core';
-import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
+import { grey, teal } from '@material-ui/core/colors';
 import SETTINGS from '../Settings';
 import FORM_DATA_MODEL from '../data/FormDataModel';
 import InputParamHelper from './InputParamHelper';

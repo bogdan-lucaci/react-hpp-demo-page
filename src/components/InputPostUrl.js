@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import useAppContext from '../AppContextHook';
-import { Box, ButtonGroup, Container, Select, Button } from '@material-ui/core';
+import { Box, ButtonGroup, Select, Button } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 const InputPostUrl = ({ setPostUrlData }) => {

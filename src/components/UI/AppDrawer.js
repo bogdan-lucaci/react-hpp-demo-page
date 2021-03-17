@@ -1,4 +1,4 @@
-import { Typography, Divider, Box, Container, Paper, Grid, Button, AppBar, Drawer, Toolbar, IconButton, Select } from '@material-ui/core';
+import { Divider, Box, Drawer, IconButton } from '@material-ui/core';
 import { ChevronLeft } from '@material-ui/icons';
 import ThemeSwitch from './ThemeSwitch';
 import useAppContext from '../../AppContextHook';

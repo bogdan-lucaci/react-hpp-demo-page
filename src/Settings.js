@@ -1,4 +1,4 @@
-export default {
+const settings =  {
     // used to simulate a parameter sent with no value
     noValueString: "novalue",
     ignoredValues: ["", "undefined", undefined, "Pay", null, "NOVALUE", "novalue"],
@@ -6,3 +6,5 @@ export default {
     //allowedTags: ['INPUT', 'SELECT', 'TEXTAREA'],
     //postForm: document.getElementById('s2pform'),
 };
+
+export default settings;
