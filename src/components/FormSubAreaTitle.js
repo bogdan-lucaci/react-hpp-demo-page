@@ -1,11 +1,11 @@
 import FORM_DATA_MODEL from '../data/FormDataModel';
 import { Divider, Grid } from '@material-ui/core';
 
-const getSubAreaForAreaAndParam = (areaId, paramArea) => (
-    FORM_DATA_MODEL.areas
-        .filter(area => area.id === paramArea[0])
-        .find(subArea => subArea.id === paramArea[1])
-);
+// const getSubAreaForAreaAndParam = (areaId, paramArea) => (
+//     FORM_DATA_MODEL.areas
+//         .filter(area => area.id === paramArea[0])
+//         .find(subArea => subArea.id === paramArea[1])
+// );
 const getSubAreasForArea = (areaId) => {
     let x = FORM_DATA_MODEL.areas
         .filter(area => area.id === areaId && area.subArea && area.subArea.length)
