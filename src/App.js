@@ -43,9 +43,8 @@ const App = () => {
   );
   // cache postValues without hash when computedString changes
   const postValuesWithoutHash = useMemo(() => {
-    const newPostValues = { ...postValues };
-    delete newPostValues['Hash'];
-    return { ...newPostValues };
+    const { Hash, ...newPostValues } = postValues;
+    return newPostValues;
   }, [computedString]);
   // set hash to postValues when any other value except hash changes
   useEffect(() => {
