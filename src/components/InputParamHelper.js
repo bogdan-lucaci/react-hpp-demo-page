@@ -7,8 +7,6 @@ const helperBehaviour = (select, dataLength, setInputVal) => {
         // select helper value if helper list's length is 1
         if (dataLength === 1)
             setInputVal(select.options[1].value)
-        // deselect helper list
-        select.selectedIndex = -1;
     }
 };
 
@@ -22,6 +20,9 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
     useEffect(() => {
         // tell parent component to update markup for helpers
         setShowHelper(() => dataLength > 0)
+        // deselect helper list
+        if (helperSelect.current) 
+            helperSelect.current.selectedIndex = -1;
     }, []);
 
     // helpers behaviour when MerchantID changes
