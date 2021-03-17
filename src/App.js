@@ -59,7 +59,7 @@ const App = () => {
   useEffect(() => {
     setIsLoading(true);
     setTimeout(() => setIsLoading(false), 500)
-  }, [postUrlData['formAction']]);
+  }, [postUrlData['postUrlName']]);
 
   //console.log('APP rendered!', postValues);
   return (
