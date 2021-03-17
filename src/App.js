@@ -8,6 +8,7 @@ import BlockUI from './components/UI/Backdrop';
 import AppHeaderAndDrawer from './components/UI/AppHeaderAndDrawer';
 import Form from './components/Form';
 import InputPostUrl from './components/InputPostUrl';
+import FormSubmitButton from './components/FormSubmitBtn';
 import OverviewPost from './components/OverviewPost';
 import OverviewApp from './components/OverviewApp';
 
@@ -66,9 +67,8 @@ const App = () => {
     <>
       <Box mb={2}>
         <AppHeaderAndDrawer>
-
-          <InputPostUrl setPostUrlData={setPostUrlData} />
-
+            <InputPostUrl setPostUrlData={setPostUrlData} />
+            <FormSubmitButton />
         </AppHeaderAndDrawer>
       </Box>
 

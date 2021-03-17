@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Box, ButtonGroup } from '@material-ui/core';
 import AppHeader from './AppHeader';
 import AppDrawer from './AppDrawer';
 
@@ -7,7 +8,32 @@ const AppHeaderAndDrawer = ({ children }) => {
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
     return (
         <>
-            <AppHeader setOpen={setDrawerIsOpen} children={children} />
+            <AppHeader setOpen={setDrawerIsOpen} >
+                <Box
+                    //border={1}
+                    //borderColor="grey.400"            
+                    borderRadius={12}
+                    //bgcolor="text.disabled"
+                    //bgcolor="primary.light"
+                    p="1rem"
+                    // display="flex"
+                    // justifyContent="center"
+                    // alignItems="center"
+                    width="100%"
+
+                >
+                    <ButtonGroup
+                        size="large"
+                        color="primary"
+                        fullWidth={true}
+                        aria-label="large outlined primary button group"
+                        style={{ width: "100%" }}
+                        variant="outlined"
+                    >
+                        {children}
+                    </ButtonGroup>
+                </Box>
+            </AppHeader>
             <AppDrawer open={drawerIsOpen} setOpen={setDrawerIsOpen} />
         </>
     )
