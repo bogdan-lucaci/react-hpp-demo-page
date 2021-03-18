@@ -22,11 +22,8 @@ const post_to_url = (action, params, method) => {
 }
 
 const handleSubmit = (postValues, formAction) => {
-    const postValuesSorted = JSON.parse(utils.sortParams(postValues));
+    const postValuesSorted = JSON.parse(utils.sortParamsByFormModel(postValues));
     const paramsWithValueSorted = Object.keys(postValuesSorted).map(param => ({name: param, value: postValues[param]}));
-    //const paramsWithValueSorted = paramsWithValue.sort( (a, b) => a.name.localeCompare(b.name) );
-    // const paramsWithoutValue = [...document.forms["HppPostForm"].elements].filter(x => x.tagName !== 'FIELDSET' && !x.value);
-    // paramsWithoutValue.forEach(x => x.disabled=true);
 
     post_to_url(formAction, paramsWithValueSorted);
 };

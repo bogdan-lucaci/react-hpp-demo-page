@@ -21,11 +21,13 @@
 - update **ComputedString** for all param changes
 - remove **Signature** and **ComputedString** from AppState / PostValues objects
 - handle **Hash**
+- change the order of params inside request body based on `FORM_DATA_MODEL`
+- handle submit
 
 ### Functionalities to come:
 
 - ***UI*** - move `<OverviewPost>` and `<OverviewApp>` to a Material UI permanent right drawer that collapses on smaller breakpoints
-- add the ability to specify a custom POST URL
+- specify a custom POST URL as form action
 - send only specified params in request
 - handle exotic actions (payout, refund, recurrent, capture, cancel)
 - handle all text helpers

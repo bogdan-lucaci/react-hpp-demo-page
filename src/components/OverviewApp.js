@@ -29,7 +29,7 @@ const OverviewApp = ({ appState }) => {
             <Divider light={true} />
             <pre>
                 {getJsonMarkup(
-                    utils.sortParams(appState), {
+                    utils.sortParamsByName(appState), {
                     keyColor: palette.success.main,
                     valColor: palette.text.icon
                 }

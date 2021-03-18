@@ -1,7 +1,7 @@
 import utils from '../utils/utils';
 
 const getComputedString = (postValues, signature) => {
-    const postValuesSorted = JSON.parse(utils.sortParams(postValues));
+    const postValuesSorted = JSON.parse(utils.sortParamsByFormModel(postValues));
     const computedString = Object.keys(postValuesSorted)
         .filter(param => param !== 'Hash')
         .reduce((computedString, param) => {

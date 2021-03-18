@@ -42,7 +42,7 @@ const OverviewPost = ({ postValues, postUrlData }) => {
             <Divider light={true} />
             <pre>
                 {getJsonMarkup(
-                    utils.sortParams(postValues), {
+                    utils.sortParamsByFormModel(postValues), {
                         keyColor: palette.success.main,
                         valColor: palette.text.icon
                     }

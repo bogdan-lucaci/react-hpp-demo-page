@@ -1,4 +1,5 @@
 import React from 'react';
+import FORM_DATA_MODEL from '../data/FormDataModel';
 
 const utils = {
     objectsAreEqual: (object1, object2) => {
@@ -23,8 +24,8 @@ const utils = {
         return true;
     },
     renderHTML: (rawHTML) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } }),
-    // OUT  :   a string containing a JSON sorted alphabetically (only first level)
-    sortParams: obj => {
+    // OUT  :   a string containing a JSON with keys sorted alphabetically (only first level)
+    sortParamsByName: obj => {
         if (Object.keys(obj).length > 0) {
             let x = JSON.stringify(obj);
             x = x.substring(1, x.length - 1).split(',').sort();
@@ -33,6 +34,17 @@ const utils = {
         }
         else
             return "{}";
+    },
+    // OUT  :   a string containing a JSON with keys sorted in the same order as params are described inside FORM_DATA_MODEL
+    sortParamsByFormModel: (obj) => {
+        let sortedObj = {};
+        if (Object.keys(obj).length > 0) {
+            FORM_DATA_MODEL.params.forEach(paramFromDataModel => {
+                const x = Object.keys(obj).find(paramName => paramName === paramFromDataModel.name);
+                if (x) sortedObj[x] = obj[x];
+            });
+        }
+        return JSON.stringify(sortedObj);
     }
 }
 
