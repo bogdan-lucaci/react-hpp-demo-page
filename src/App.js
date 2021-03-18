@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import SETTINGS from './Settings';
 
 import { Typography, Divider, Box, Container, Paper, Grid } from '@material-ui/core';
@@ -12,9 +12,8 @@ import FormSubmitButton from './components/FormSubmitBtn';
 import OverviewPost from './components/OverviewPost';
 import OverviewApp from './components/OverviewApp';
 
-import useAppContext from './AppContextHook';
-import getComputedString from './services/getComputedString';
-const sha256 = require('hash.js/lib/hash/sha/256');
+import useComputedString from './services/useComputedString';
+
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,32 +27,15 @@ const App = () => {
     formAction: 'https://apitest.smart2pay.com/',
     postUrlName: 'demo'
   });
-  const DATA_ACCESS = useAppContext('DataContext');
 
-  // get signature only when MerchantID / SiteID val changes
-  const signature = useMemo(
-    () => DATA_ACCESS.getSignatureForEnvAndMerchantAndSite(postUrlData['postUrlName'], postValues['MerchantID'], postValues['SiteID']),
-    [postValues['MerchantID'], postValues['SiteID']]
-  );
-  // get computedString only when postValues or signature changes 
-  // (not when theme context changes for e.g.)
-  const computedString = useMemo(
-    () => getComputedString(postValues, signature),
-    [postValues, signature]
-  );
-  // cache postValues without hash when computedString changes
-  const postValuesWithoutHash = useMemo(() => {
-    const { Hash, ...newPostValues } = postValues;
-    return newPostValues;
-  }, [computedString]);
-  // set hash to postValues when any other value except hash changes
+  // get hash from custom hook "useComputedString" 
+  const hash = useComputedString(postUrlData, postValues, appState, setAppState);
   useEffect(() => {
     setPostValues(postValues => ({
-        ...postValues,
-        'Hash': sha256().update(computedString).digest('hex')
-      })
-    );
-  }, [postValuesWithoutHash]);
+      ...postValues,
+      'Hash': hash
+    }))
+  }, hash);
 
   // block UI with loader for various events
   useEffect(() => {
@@ -66,8 +48,8 @@ const App = () => {
     <>
       <Box mb={2}>
         <AppHeaderAndDrawer>
-            <InputPostUrl setPostUrlData={setPostUrlData} />
-            <FormSubmitButton formAction={postUrlData['formAction']} postValues={postValues} />
+          <InputPostUrl setPostUrlData={setPostUrlData} />
+          <FormSubmitButton formAction={postUrlData['formAction']} postValues={postValues} />
         </AppHeaderAndDrawer>
       </Box>
 
@@ -114,8 +96,8 @@ const App = () => {
               <OverviewApp
                 appState={{
                   ...appState,
-                  'Signature': signature,
-                  'Computed String': computedString
+                  // 'Signature': signature,
+                  // 'Computed String': computedString
                 }}
               />
               {/* <DisplaySubmitted 
