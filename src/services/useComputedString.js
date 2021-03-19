@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import utils from '../utils/utils';
 import useAppContext from '../AppContextHook';
 

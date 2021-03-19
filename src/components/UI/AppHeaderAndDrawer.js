@@ -9,7 +9,7 @@ const AppHeaderAndDrawer = ({ children }) => {
     return (
         <>
             <AppHeader setOpen={setDrawerIsOpen} >
-                <Box
+                {/* <Box
                     //border={1}
                     //borderColor="grey.400"            
                     borderRadius={12}
@@ -29,10 +29,10 @@ const AppHeaderAndDrawer = ({ children }) => {
                         aria-label="large outlined primary button group"
                         style={{ width: "100%" }}
                         variant="outlined"
-                    >
+                    > */}
                         {children}
-                    </ButtonGroup>
-                </Box>
+                    {/* </ButtonGroup>
+                </Box> */}
             </AppHeader>
             <AppDrawer open={drawerIsOpen} setOpen={setDrawerIsOpen} />
         </>
