@@ -23,24 +23,24 @@
 - handle **Hash**
 - change the order of params inside request body based on `FORM_DATA_MODEL`
 - handle submit
+- send only specified params in request
+- specify a custom POST URL as form action
 
 ### Functionalities to come:
 
 - ***UI*** - move `<OverviewPost>` and `<OverviewApp>` to a Material UI permanent right drawer that collapses on smaller breakpoints
-- specify a custom POST URL as form action
-- send only specified params in request
 - handle exotic actions (payout, refund, recurrent, capture, cancel)
 - handle all text helpers
 - add image helper for methods
 - add MTID generator helper as an icon integrated inside input
 - add custom actions with icons to inputs (clear input, generate random val, etc)
 - add methods list helper to toggle sort order display name / id
+- save and restore form data from **localStorage**
+- set form action and form inputs value by URL params
 - ***UI*** - move inputs that are not payment params related to the left drawer as actions with icons (**DisplayInsideIframe**, **IframeOverlaySource**)
 - ***UI*** - use Material UI list to upgrade POST URL dropdown list
 - ***UI*** - integrate Material UI for `<InputParam>` and `<InputParamHelper>`
 - ***UI*** - add live filter to form to search inputs
-- save and restore form data from **localStorage**
-- set form action and form inputs value by URL params
 - make `<OverviewPost>` editable + affect form inputs values
 - allow to load and parse a REST message body JSON + display the response
 - allow import of postmen collections
