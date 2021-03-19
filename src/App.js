@@ -7,7 +7,9 @@ import { Alert } from '@material-ui/lab';
 import BlockUI from './components/UI/Backdrop';
 import AppHeaderAndDrawer from './components/UI/AppHeaderAndDrawer';
 import Form from './components/Form';
-import InputPostUrl from './components/InputPostUrl';
+// import InputPostUrl from './components/InputPostUrl';
+import ToButtonGroup from './components/UI/ToButtonGroup';
+import FormActionSelector from './components/FormActionSelector';
 import FormSubmitButton from './components/FormSubmitBtn';
 import OverviewPost from './components/OverviewPost';
 import OverviewApp from './components/OverviewApp';
@@ -48,15 +50,15 @@ const App = () => {
     <>
       <Box mb={2}>
         <AppHeaderAndDrawer>
-          <InputPostUrl setPostUrlData={setPostUrlData} />
-          <FormSubmitButton formAction={postUrlData['formAction']} postValues={postValues} />
+          <h1>GlobalPay Demo</h1>
+          {/* <InputPostUrl setPostUrlData={setPostUrlData} />
+          <FormSubmitButton formAction={postUrlData['formAction']} postValues={postValues} /> */}
         </AppHeaderAndDrawer>
       </Box>
 
       <Grid container>
         <Grid item xs={12} sm={8}>
           <Container maxWidth="sm">
-            {/* <Paper> */}
             <Box p={0} mb={2}>
               <Box mb={1}>
                 <Alert severity="info">
@@ -64,6 +66,12 @@ const App = () => {
                     To simulate sending a parameter with no value in POST, please type "{SETTINGS.noValueString.toUpperCase()}" (case insesitive) in the desired input
                   </Typography>
                 </Alert>
+              </Box>
+              <Box mb={1}>
+                <ToButtonGroup>
+                  <FormActionSelector setPostUrlData={setPostUrlData} />
+                  <FormSubmitButton formAction={postUrlData['formAction']} postValues={postValues} />
+                </ToButtonGroup>
               </Box>
               <Box align="left">
 
@@ -84,7 +92,7 @@ const App = () => {
         <Grid item xs={12} sm={4}>
           <Paper>
             <Box p={3} textAlign="left" align="center" height="49.75vh">
-
+            
               <OverviewPost
                 postValues={postValues}
                 postUrlData={postUrlData}

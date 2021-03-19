@@ -1,7 +1,7 @@
 import { Container, AppBar, Toolbar, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import useAppContext from '../../AppContextHook';
-import logo from '../../res/logo.svg';
+import logo from '../../res/logo_noPadding.svg';
 import '../../res/logo.css';
 
 const AppHeader = ({ setOpen: setDrawerIsOpen, children }) => {
@@ -13,15 +13,15 @@ const AppHeader = ({ setOpen: setDrawerIsOpen, children }) => {
                 <IconButton onClick={() => setDrawerIsOpen(true)} color="inherit" aria-label="Menu" style={{ marginLeft: -12, marginRight: 20, }}>
                     <MenuIcon />
                 </IconButton>
-
                 {/* <Divider orientation="vertical" flexItem  /> */}
-                <Container align="center" maxWidth="md" >
+
+                <Container align="center" maxWidth="md" style={{color: theme.palette.primary.main}} >
                     {children}
                 </Container>
+                
                 <IconButton onClick={() => setDrawerIsOpen(true)} color="inherit" aria-label="Menu" style={{ marginLeft: -12, marginRight: 20, }}>
-                    <img src={logo} className="App-logo" alt="logo" style={{ maxWidth: '8rem', height: '5vh' }} />
+                    <img src={logo} className="App-logo" alt="logo" style={{ height: '2rem' }} />
                 </IconButton>
-                {/* <Button onClick={() => setDrawerIsOpen(true)} color="inherit">Drawer</Button> */}
             </Toolbar>
         </AppBar>
     )
