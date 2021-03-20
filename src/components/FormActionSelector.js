@@ -64,7 +64,10 @@ const FormActionSelector = ({ formAction, postValues, setPostUrlData,  ...childP
                 disabled={ urlName !== 'custom' }
                 value={options.find(url => url.ID === selectedIndex.toString()).URL || value}
                 margin="dense"
-                style={{ width: "50%" }}
+                style={{ width: '50%' }}
+                inputProps={{
+                    style: { textAlign: 'center', fontSize: '80%', padding: '10px 6px' }
+                }}
                 onClick={urlName !== 'custom' ? handleToggle : null}
                 onChange={(e) => {
                     setValue(e.target.value);
