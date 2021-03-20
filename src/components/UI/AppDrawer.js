@@ -1,9 +1,8 @@
 import { Divider, Box, Drawer, IconButton } from '@material-ui/core';
-import { ChevronLeft } from '@material-ui/icons';
-import ThemeSwitch from './ThemeSwitch';
+import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import useAppContext from '../../AppContextHook';
 
-const AppHeaderDrawer = ({open, setOpen}) => {
+const AppHeaderDrawer = ({open, setOpen, position, children}) => {
     const {theme} = useAppContext('ThemeContext');
     
     return (
@@ -12,19 +11,23 @@ const AppHeaderDrawer = ({open, setOpen}) => {
             style={theme.AppBar}
             variant="persistent" 
             open={open} 
-            anchor="left"
+            anchor={position}
+            PaperProps={{ elevation: 5 }} 
+            SlideProps={{
+                style: { maxWidth: '30%' }
+            }}            
         >
-            <Box m={1} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Box m={1} style={{ display: 'flex', alignItems: 'center', justifyContent: position === 'left' ? 'center' : 'flex-start' }}>
                 <IconButton onClick={() => setOpen(false)}>
-                    <ChevronLeft />
+                    {position === 'left' && <ChevronLeft />}
+                    {position === 'right' && <ChevronRight />}
                 </IconButton>
             </Box>
             <Divider />
             <Box pt={1}>
-                {/* <ThemeSwitch currentThemeName={themename} currentTheme={theme} onclick={setThemeName} /> */}
-                <ThemeSwitch />
+                {children}
             </Box>
-            <Divider />
+            
         </Drawer>
     )
 };

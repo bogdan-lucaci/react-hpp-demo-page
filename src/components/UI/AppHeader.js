@@ -4,13 +4,13 @@ import useAppContext from '../../AppContextHook';
 import logo from '../../res/logo_noPadding.svg';
 import '../../res/logo.css';
 
-const AppHeader = ({ setOpen: setDrawerIsOpen, children }) => {
+const AppHeader = ({ setLeftDrawerIsOpen, setRightDrawerIsOpen, children }) => {
     const { theme } = useAppContext('ThemeContext');
 
     return (
         <AppBar position="static" style={theme.AppBar}>
             <Toolbar>
-                <IconButton onClick={() => setDrawerIsOpen(true)} color="inherit" aria-label="Menu" style={{ marginLeft: -12, marginRight: 20, }}>
+                <IconButton onClick={() => {setLeftDrawerIsOpen(true); setRightDrawerIsOpen(false);}} color="inherit" aria-label="Menu" style={{ marginLeft: -12, marginRight: 20, }}>
                     <MenuIcon />
                 </IconButton>
                 {/* <Divider orientation="vertical" flexItem  /> */}
@@ -19,7 +19,7 @@ const AppHeader = ({ setOpen: setDrawerIsOpen, children }) => {
                     {children}
                 </Container>
                 
-                <IconButton onClick={() => setDrawerIsOpen(true)} color="inherit" aria-label="Menu" style={{ marginLeft: -12, marginRight: 20, }}>
+                <IconButton onClick={() => {setRightDrawerIsOpen(true); setLeftDrawerIsOpen(false);}} color="inherit" aria-label="Menu" style={{ marginRight: -12, marginLeft: 20}}>
                     <img src={logo} className="App-logo" alt="logo" style={{ height: '2rem' }} />
                 </IconButton>
             </Toolbar>

@@ -8,21 +8,19 @@ import InputParamHelper from './InputParamHelper';
 const { noValueString } = SETTINGS;
 
 // append or delete (if no val) param to postValues
-const handleValue = (currObj, name, val) => {
-    let updatedValues;
+const handleValue = (name, val, isPaymentParam, setPostValues, setAppState) => {
     if (val) {
-        const newPostValues = {};
-        // when we need to simulate a parameter sent with no value
-        newPostValues[name] = val.toLowerCase() !== noValueString ? val : '';
-        updatedValues = { ...currObj, ...newPostValues };
+        if (isPaymentParam)
+            setPostValues(prevPostValues => ({...prevPostValues, [name]: (val.toLowerCase() !== noValueString ? val : '')}))
+        else
+            setAppState(prevAppState => ({...prevAppState, [name]: val}))
     }
     else {
-        const newPostValues = { ...currObj };
-        delete newPostValues[name];
-        updatedValues = { ...newPostValues };
+        if (isPaymentParam)
+            setPostValues(prevPostValues => {const updatedPostValues = {...prevPostValues}; delete updatedPostValues[name]; return { ...updatedPostValues}})
+        else
+            setAppState(prevAppState => {const updatedAppState = {...prevAppState}; delete updatedAppState[name]; return { ...updatedAppState}})
     }
-
-    return updatedValues;
 };
 
 const handleTooltip = (name, isPaymentParam) => {
@@ -36,16 +34,11 @@ const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postU
     const hasHelper = FORM_DATA_MODEL.helpers.find(x => x.for === name) !== undefined;
     const [showHelper, setShowHelper] = useState(false);
 
-    const setInputVal = (val) => {
-        if (isPaymentParam)
-            setPostValues(postValues => handleValue(postValues, name, val))
-        else
-            setAppState(appState => handleValue(appState, name, val))
-    };
+    const setInputVal = (val) => handleValue(name, val, isPaymentParam, setPostValues, setAppState);
 
     // generate new MTID and clear MerchantID and SiteID when POST URL value changes
     const generateNewMTID = () => {
-        if (name === 'MerchantTransactionID') 
+        if (name === 'MerchantTransactionID')
             setInputVal(Math.floor((Math.random() * 1000000000000) + 1).toString())
     };    
     useEffect(() => {

@@ -49,7 +49,16 @@ const App = () => {
   return (
     <>
       <Box mb={2}>
-        <AppHeaderAndDrawer>
+        <AppHeaderAndDrawer
+          rightDrawer={
+            <OverviewApp
+              appState={{
+                ...appState,
+                // 'Signature': signature,
+                // 'Computed String': computedString
+              }}
+            />}
+        >
           <h1>GlobalPay Demo</h1>
           {/* <InputPostUrl setPostUrlData={setPostUrlData} />
           <FormSubmitButton formAction={postUrlData['formAction']} postValues={postValues} setIsLoading={setIsLoading}/> */}
@@ -91,8 +100,8 @@ const App = () => {
         </Grid>
         <Grid item xs={12} sm={4}>
           <Paper>
-            <Box p={3} textAlign="left" align="center" height="49.75vh">
-            
+            <Box p={3} textAlign="left" align="center">
+
               <OverviewPost
                 postValues={postValues}
                 postUrlData={postUrlData}
@@ -100,7 +109,7 @@ const App = () => {
 
             </Box>
             <Divider />
-            <Box p={3} textAlign="left" align="center" height="29.75vh">
+            <Box p={3} textAlign="left" align="center" /*height="29.75vh"*/>
               <OverviewApp
                 appState={{
                   ...appState,

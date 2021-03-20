@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { ButtonGroup, Paper } from '@material-ui/core';
 
-const FormActionSelectorAndSubmitBtn = ({ children }) => {
+const ToButtonGroup = ({ children }) => {
     const anchorRef = useRef(null);
     const [elevation, setElevation] = useState(1);
 
@@ -26,4 +26,4 @@ const FormActionSelectorAndSubmitBtn = ({ children }) => {
     )
 };
 
-export default FormActionSelectorAndSubmitBtn;
+export default ToButtonGroup;

@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { Box, ButtonGroup } from '@material-ui/core';
+import { Box, Divider } from '@material-ui/core';
 import AppHeader from './AppHeader';
 import AppDrawer from './AppDrawer';
 
+import ThemeSwitch from './ThemeSwitch';
+
 // main reason for this component's existance is to move the "drawerIsOpen" state from <App>
-const AppHeaderAndDrawer = ({ children }) => {
-    const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+const AppHeaderAndDrawer = ({ children, rightDrawer }) => {
+    const [leftDrawerIsOpen, setLeftDrawerIsOpen] = useState(false);
+    const [rightDrawerIsOpen, setRightDrawerIsOpen] = useState(false);
     return (
         <>
-            <AppHeader setOpen={setDrawerIsOpen} >
+            <AppHeader setLeftDrawerIsOpen={setLeftDrawerIsOpen} setRightDrawerIsOpen={setRightDrawerIsOpen} >
                 {/* <Box
                     //border={1}
                     //borderColor="grey.400"            
@@ -34,7 +37,15 @@ const AppHeaderAndDrawer = ({ children }) => {
                     {/* </ButtonGroup>
                 </Box> */}
             </AppHeader>
-            <AppDrawer open={drawerIsOpen} setOpen={setDrawerIsOpen} />
+            <AppDrawer open={leftDrawerIsOpen} setOpen={setLeftDrawerIsOpen} position="left">
+                <ThemeSwitch />
+                <Divider />
+            </AppDrawer>
+            <AppDrawer open={rightDrawerIsOpen} setOpen={setRightDrawerIsOpen}  position="right">
+                <Box align="left" pl={2} pr={2} >
+                    {rightDrawer}
+                </Box>
+            </AppDrawer>
         </>
     )
 }
