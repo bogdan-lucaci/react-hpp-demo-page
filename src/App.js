@@ -52,7 +52,7 @@ const App = () => {
         <AppHeaderAndDrawer>
           <h1>GlobalPay Demo</h1>
           {/* <InputPostUrl setPostUrlData={setPostUrlData} />
-          <FormSubmitButton formAction={postUrlData['formAction']} postValues={postValues} /> */}
+          <FormSubmitButton formAction={postUrlData['formAction']} postValues={postValues} setIsLoading={setIsLoading}/> */}
         </AppHeaderAndDrawer>
       </Box>
 
@@ -70,7 +70,7 @@ const App = () => {
               <Box mb={1}>
                 <ToButtonGroup>
                   <FormActionSelector setPostUrlData={setPostUrlData} />
-                  <FormSubmitButton formAction={postUrlData['formAction']} postValues={postValues} />
+                  <FormSubmitButton formAction={postUrlData['formAction']} postValues={postValues} setIsLoading={setIsLoading} />
                 </ToButtonGroup>
               </Box>
               <Box align="left">
