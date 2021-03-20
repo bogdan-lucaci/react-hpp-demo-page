@@ -23,17 +23,48 @@ const utils = {
 
         return true;
     },
+    getUrlParamsNamesArray: () => String(document.location).split('?')[1].split('&').map(paramPair => paramPair.split('=')[0].toLowerCase()),
+    getUrlParamsObj: () => {
+        const url = String(document.location);
+
+        if (url.indexOf('?') !== -1) {
+            const paramPairs = String(url.split('?')[1]).split('&');
+            // add params found in url to  params obj
+            return (
+                paramPairs.reduce((paramObj, paramPair) => {
+                    paramObj[paramPair.split('=')[0].toLowerCase()] = paramPair.split('=')[1];
+                    return paramObj;
+                }, {})
+            );
+        }
+        return {};
+    },    
+    getUrlParamsObjAsString: () => {
+        const url = String(document.location);
+
+        if (url.indexOf('?') !== -1) {
+            const paramPairs = String(url.split('?')[1]).split('&');
+            // add params found in url to  params obj
+            return JSON.stringify(
+                paramPairs.reduce((paramObj, paramPair) => {
+                    paramObj[paramPair.split('=')[0].toLowerCase()] = paramPair.split('=')[1];
+                    return paramObj;
+                }, {})
+            );
+        }
+        return '{}';
+    },    
     renderHTML: (rawHTML) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } }),
     // OUT  :   a string containing a JSON with keys sorted alphabetically (only first level)
     sortParamsByName: obj => {
         if (Object.keys(obj).length > 0) {
             let x = JSON.stringify(obj);
             x = x.substring(1, x.length - 1).split(',').sort();
-            x = JSON.parse("{" + x + "}");
-            return JSON.stringify(x, null, "    ");
+            x = JSON.parse('{' + x + '}');
+            return JSON.stringify(x, null, '    ');
         }
         else
-            return "{}";
+            return '{}';
     },
     // OUT  :   a string containing a JSON with keys sorted in the same order as params are described inside FORM_DATA_MODEL
     sortParamsByFormModel: (obj) => {

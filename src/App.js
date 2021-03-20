@@ -16,6 +16,8 @@ import OverviewApp from './components/OverviewApp';
 
 import useComputedString from './services/useComputedString';
 
+import utils from './utils/utils';
+import FORM_DATA_MODEL from './data/FormDataModel';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,6 +31,24 @@ const App = () => {
     formAction: 'https://apitest.smart2pay.com/',
     postUrlName: 'demo'
   });
+
+  // get and set URL params
+  useEffect(() => {
+    const urlParams = utils.getUrlParamsObj();
+
+    const urlParamsObj = FORM_DATA_MODEL.params.reduce((paramsObj, param) => {
+      const formModelParamFromUrl = Object.keys(urlParams).find(urlParamName =>
+        urlParamName.toLowerCase() === param.name.toLowerCase()
+        && param.name !== 'MerchantTransactionID'
+      );
+
+      if (formModelParamFromUrl)
+        paramsObj[param.name] = urlParams[formModelParamFromUrl];
+      return paramsObj;
+    }, {});
+
+    setPostValues(prevPostValues => ({ ...prevPostValues, ...urlParamsObj }));
+  }, []);
 
   // get hash from custom hook "useComputedString" 
   const hash = useComputedString(postUrlData, postValues, appState, setAppState);

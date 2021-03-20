@@ -20,22 +20,40 @@ const getJsonMarkup = (jsonString, { keyColor, valColor }) => {
 const OverviewApp = ({ appState }) => {
     const palette = useAppContext('ThemeContext')['theme']['palette'];
     return (
-        <Box>
-            <Typography variant="h6">
-                <Box color="text.disabled">
-                    App helpers
-        </Box>
-            </Typography>
-            <Divider light={true} />
-            <pre>
-                {getJsonMarkup(
-                    utils.sortParamsByName(appState), {
-                    keyColor: palette.success.main,
-                    valColor: palette.text.icon
-                }
-                )}
-            </pre>
-        </Box>
+        <>
+            <Box>
+                <Typography variant="h6">
+                    <Box color="text.disabled">
+                        App helpers
+                </Box>
+                </Typography>
+                <Divider light={true} />
+                <pre>
+                    {getJsonMarkup(
+                        utils.sortParamsByName(appState), {
+                        keyColor: palette.success.main,
+                        valColor: palette.text.icon
+                    }
+                    )}
+                </pre>
+            </Box>
+            <Box mt={2}>
+                <Typography variant="h6">
+                    <Box color="text.disabled">
+                        URL params
+                    </Box>
+                </Typography>
+                <Divider light={true} />
+                <pre>
+                    {getJsonMarkup(
+                        utils.getUrlParamsObjAsString(), {
+                        keyColor: palette.success.main,
+                        valColor: palette.text.icon
+                    }
+                    )}
+                </pre>
+            </Box>
+        </>
     )
 };
 
