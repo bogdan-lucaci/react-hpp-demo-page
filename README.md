@@ -25,6 +25,8 @@
 - handle submit
 - send only specified params in request
 - specify a custom POST URL as form action
+- set form action and form inputs value by URL params
+- ***UI*** - use Material UI list to upgrade POST URL dropdown list
 
 ### Functionalities to come:
 
@@ -36,11 +38,10 @@
 - add custom actions with icons to inputs (clear input, generate random val, etc)
 - add methods list helper to toggle sort order display name / id
 - save and restore form data from **localStorage**
-- set form action and form inputs value by URL params
 - ***UI*** - move inputs that are not payment params related to the left drawer as actions with icons (**DisplayInsideIframe**, **IframeOverlaySource**)
-- ***UI*** - use Material UI list to upgrade POST URL dropdown list
 - ***UI*** - integrate Material UI for `<InputParam>` and `<InputParamHelper>`
 - ***UI*** - add live filter to form to search inputs
+- ***UI*** - display `postValues` as a UI blocker when submitting form
 - make `<OverviewPost>` editable + affect form inputs values
 - allow to load and parse a REST message body JSON + display the response
 - allow import of postmen collections
