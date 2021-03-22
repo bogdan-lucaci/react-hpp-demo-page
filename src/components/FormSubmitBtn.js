@@ -1,6 +1,7 @@
 import { Box, Button } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import utils from '../utils/utils';
+import { addToHistory } from './PostsHistory';
 
 const post_to_url = (action, params, method) => {
     method = method || "post";
@@ -21,17 +22,47 @@ const post_to_url = (action, params, method) => {
     form.submit();
 }
 
-const handleSubmit = (postValues, formAction, setIsLoading) => {
-    const postValuesSorted = JSON.parse(utils.sortParamsByFormModel(postValues));
-    const paramsWithValueSorted = Object.keys(postValuesSorted).map(param => ({name: param, value: postValues[param]}));
 
-    setIsLoading(true);
-    setTimeout(() => {
-        post_to_url(formAction, paramsWithValueSorted);
-    }, 0);
-};
+// const saveSubmit = (postValues, formAction) => {
+//     let isUnique = history.filter(x => (
+//         utils.objectsAreEqual(x.value, postValues)
+//     )).length ? false : true;
+//     if (isUnique) {
+//         setHistory(currHistory => currHistory.concat([{
+//             name: new Date().toLocaleString().toString(),
+//             val: { ...postValues },
+//             url: formAction
+//         }]));
+//     }
+//     else {
+//         alert('This params combination is already saved!');
+//         // setAlertText('This params combination is already saved!');
+//         // setAlertType('info');
+//         // setAlertOpen(true);
+//     }
+// };
 
-const SubmitButton = ({postValues, formAction, setIsLoading, ...props}) => {
+const SubmitButton = ({ postValues, postUrlData, setIsLoading, ...props }) => {
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const postValuesSorted = JSON.parse(utils.sortParamsByFormModel(postValues));
+        if (Object.keys(postValuesSorted).length) {
+            const paramsWithValueSorted = Object.keys(postValuesSorted).map(param => ({ name: param, value: postValues[param] }));
+            setIsLoading(true);
+            setTimeout(() => {
+                addToHistory(postValues, postUrlData);
+                post_to_url(postUrlData['formAction'], paramsWithValueSorted);
+            }, 0);
+        }
+        else {
+            alert('Form must have at least one value!');
+            // setAlertText('Form must have at least one value!');
+            // setAlertType('warning');
+            // setAlertOpen(true);
+        }
+    };
 
     return (
         <Button
@@ -42,9 +73,9 @@ const SubmitButton = ({postValues, formAction, setIsLoading, ...props}) => {
             disableElevation
             color="primary"
             endIcon={<OpenInNewIcon color="disabled" />}
-            onClick={() => handleSubmit(postValues, formAction, setIsLoading)}
+            onClick={handleSubmit}
         >
-            <Box px={3}>Pay</Box>
+            Pay
         </Button>
     )
 }
