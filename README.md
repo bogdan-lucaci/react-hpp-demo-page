@@ -25,12 +25,13 @@
 - handle submit
 - send only specified params in request
 - specify a custom POST URL as form action
-- set form action and form inputs value by URL params
+- set form inputs value by URL params
 - ***UI*** - use Material UI list to upgrade POST URL dropdown list
-- save all submitted requests to localStorage and display them as a list inside right drawer (+ allow to delete entries)
+- save all submitted requests to localStorage and display them as a Material UI list inside right drawer (+ allow to delete entries)
 
 ### Functionalities to come:
 
+- set form action value by URL params
 - ***UI*** - history list -> add scrollbar and handle right drawer width on smaller breakpoints + convert confirmation alert to Material UI dialog
 - ***UI*** - add a Material UI dialog component to a new context to be available when other components need confirmation dialogs for e.g.
 - ***UI*** - move `<OverviewPost>` and `<OverviewApp>` to a Material UI permanent right drawer that collapses on smaller breakpoints
