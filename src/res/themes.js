@@ -28,7 +28,7 @@ const DarkTheme = createMuiTheme({
             main: teal[500],
         },
         secondary: {
-            main: pink[900],
+            main: pink[500],
         },
     },
     overrides: {

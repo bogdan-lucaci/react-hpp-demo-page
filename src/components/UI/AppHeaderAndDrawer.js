@@ -6,7 +6,7 @@ import AppDrawer from './AppDrawer';
 import ThemeSwitch from './ThemeSwitch';
 
 // main reason for this component's existance is to move the "drawerIsOpen" state from <App>
-const AppHeaderAndDrawer = ({ children, rightDrawer }) => {
+const AppHeaderAndDrawer = ({ children, leftDrawer, rightDrawer }) => {
     const [leftDrawerIsOpen, setLeftDrawerIsOpen] = useState(false);
     const [rightDrawerIsOpen, setRightDrawerIsOpen] = useState(false);
     return (
@@ -40,6 +40,9 @@ const AppHeaderAndDrawer = ({ children, rightDrawer }) => {
             <AppDrawer open={leftDrawerIsOpen} setOpen={setLeftDrawerIsOpen} position="left">
                 <ThemeSwitch />
                 <Divider />
+                <Box align="left" pl={2} pr={2} >
+                    {leftDrawer}
+                </Box>
             </AppDrawer>
             <AppDrawer open={rightDrawerIsOpen} setOpen={setRightDrawerIsOpen}  position="right">
                 <Box align="left" pl={2} pr={2} >

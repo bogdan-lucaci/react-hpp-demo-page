@@ -18,6 +18,7 @@ import useComputedString from './services/useComputedString';
 
 import utils from './utils/utils';
 import FORM_DATA_MODEL from './data/FormDataModel';
+import PostsHistory from './components/PostsHistory';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -65,19 +66,26 @@ const App = () => {
     setTimeout(() => setIsLoading(false), 500)
   }, [postUrlData['postUrlName']]);
 
-  //console.log('APP rendered!', postValues);
+  // console.log('APP rendered!', postValues);
   return (
     <>
       <Box mb={2}>
         <AppHeaderAndDrawer
+          // leftDrawer={<></>}
           rightDrawer={
-            <OverviewApp
-              appState={{
-                ...appState,
-                // 'Signature': signature,
-                // 'Computed String': computedString
-              }}
-            />}
+            <>
+              <PostsHistory
+                setPostValues={setPostValues}
+                setPostUrlData={setPostUrlData}
+              />
+              <OverviewApp
+                appState={{
+                  ...appState,
+                  // 'Signature': signature,
+                  // 'Computed String': computedString
+                }}
+              />
+            </>}
         >
           <h1>GlobalPay Demo</h1>
           {/* <InputPostUrl setPostUrlData={setPostUrlData} />
@@ -92,14 +100,21 @@ const App = () => {
               <Box mb={1}>
                 <Alert severity="info">
                   <Typography variant="caption">
-                    To simulate sending a parameter with no value in POST, please type "{SETTINGS.noValueString.toUpperCase()}" (case insesitive) in the desired input
+                    To simulate sending a parameter with no value, please type "{SETTINGS.noValueString.toUpperCase()}" (case insesitive) in the desired input
                   </Typography>
                 </Alert>
               </Box>
               <Box mb={1}>
                 <ToButtonGroup>
-                  <FormActionSelector setPostUrlData={setPostUrlData} />
-                  <FormSubmitButton formAction={postUrlData['formAction']} postValues={postValues} setIsLoading={setIsLoading} />
+                  <FormActionSelector
+                    postUrlData={postUrlData}
+                    setPostUrlData={setPostUrlData}
+                  />
+                  <FormSubmitButton
+                    postUrlData={postUrlData}
+                    postValues={postValues}
+                    setIsLoading={setIsLoading}
+                  />
                 </ToButtonGroup>
               </Box>
               <Box align="left">

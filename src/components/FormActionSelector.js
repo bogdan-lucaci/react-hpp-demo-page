@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Box, Button, ClickAwayListener, Grow, OutlinedInput, Paper, Popper, MenuItem, MenuList } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import DATA_ACCESS from '../data/DataAccess';
@@ -6,15 +6,19 @@ import useAppContext from '../AppContextHook';
 
 const options = DATA_ACCESS.getPostURLs();
 
-const FormActionSelector = ({ formAction, postValues, setPostUrlData,  ...childProps }) => {
+const FormActionSelector = ({ formAction, postValues, postUrlData, setPostUrlData,  ...childProps }) => {
+    
     const [open, setOpen] = useState(false);
     const anchorRef = useRef(null);
     const [selectedIndex, setSelectedIndex] = useState(1);
-    const [value, setValue] = useState('');
-    const [urlName, setUrlName] = useState('');
+    const [value, setValue] = useState(postUrlData['formAction']);
+    const [urlName, setUrlName] = useState(postUrlData['postUrlName']);
     const { theme } = useAppContext('ThemeContext');
-    const DATA_ACCESS = useAppContext('DataContext');
-    const options = DATA_ACCESS.getPostURLs();
+
+    useEffect(() => {
+        setValue(() => postUrlData['formAction']);
+        setUrlName(() => postUrlData['postUrlName']);
+    }, [postUrlData]);
 
     const handleMenuItemClick = (event, index, name, url, setPostUrlData) => {
         setSelectedIndex(index || 1);
@@ -44,7 +48,7 @@ const FormActionSelector = ({ formAction, postValues, setPostUrlData,  ...childP
     return (
         <>
             <Button {...childProps} disabled="true" style={{ width: "30%" }}>
-                {options.find(url => url.ID === selectedIndex.toString()).Name.toUpperCase()}
+                {urlName /*|| options.find(url => url.ID === selectedIndex.toString()).Name.toUpperCase()*/}
             </Button>
             <Button
                 {...childProps}
@@ -62,7 +66,7 @@ const FormActionSelector = ({ formAction, postValues, setPostUrlData,  ...childP
             <OutlinedInput
                 {...childProps}
                 disabled={ urlName !== 'custom' }
-                value={options.find(url => url.ID === selectedIndex.toString()).URL || value}
+                value={value/* || options.find(url => url.ID === selectedIndex.toString()).URL */}
                 margin="dense"
                 style={{ width: '50%' }}
                 inputProps={{
