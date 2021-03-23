@@ -119,10 +119,12 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
 
     const applySubmitToPage = ({ date, url: formAction, urlName: postUrlName, val: postValue }) => {
         setPostUrlData(() => ({ formAction, postUrlName }));
-        setPostValues(() => {
-            setAlert({ isOpen: true, text: `Request made on [ <b>${date}</b> ] successfully applied to form!`, type: 'success' });
-            return {...postValue};
-        }); 
+        setTimeout(() => { 
+            setPostValues(() => {
+                setAlert({ isOpen: true, text: `Request made on [ <b>${date}</b> ] successfully applied to form!`, type: 'success' });
+                return {...postValue};
+            }); 
+        }, 0);
     };
 
     const getTooltip = ({ date, url: formAction, urlName, val: postValue }) => {
