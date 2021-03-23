@@ -2,7 +2,7 @@ import { Typography, Box, Divider } from '@material-ui/core';
 import useAppContext from '../AppContextHook';
 import utils from '../utils/utils';
 
-const getJsonMarkup = (jsonString, { keyColor, valColor }) => {
+const getJsonColoredMarkup = (jsonString, { keyColor, valColor }) => {
     let json = JSON.parse(jsonString);
     return (
         <>
@@ -29,7 +29,7 @@ const OverviewApp = ({ appState }) => {
                 </Typography>
                 <Divider light={true} />
                 <pre>
-                    {getJsonMarkup(
+                    {getJsonColoredMarkup(
                         utils.sortParamsByName(appState), {
                         keyColor: palette.success.main,
                         valColor: palette.text.icon
@@ -45,7 +45,7 @@ const OverviewApp = ({ appState }) => {
                 </Typography>
                 <Divider light={true} />
                 <pre>
-                    {getJsonMarkup(
+                    {getJsonColoredMarkup(
                         utils.getUrlParamsObjAsString(), {
                         keyColor: palette.success.main,
                         valColor: palette.text.icon

@@ -21,7 +21,10 @@ background: #DADADA url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEMAAABkC
 
 const DarkTheme = createMuiTheme({
     AppBar: {
-        backgroundColor: '#2a4c5d',
+        backgroundColor: '#11313f',
+        Drawer: {
+            backgroundColor: '#102833',
+        }
     },
     typography: {
         fontSize: 12
@@ -40,7 +43,7 @@ const DarkTheme = createMuiTheme({
             "@global": {
                 body: {
                     //backgroundColor: "#2a4c5d",
-                    backgroundColor: "rgba(0, 27, 40, 1)",
+                    backgroundColor: "rgba(0, 25, 36, 1)",
                     //backgroundImage: "url('data:image/png;base64,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')",
                     //backgroundImage: "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEMAAABkCAMAAADqvX3PAAAAKlBMVEUAAADX19fX19fBwcHT09PX19fW1tbT09PW1tbV1dXOzs7Ozs7BwcHV1dX5uIg2AAAADnRSTlMAPQAKH0czAAApFAAAAHys1goAAAHwSURBVHja7ZfdcuMwCEb1GUIDcd//dZuk2n5rZzCKOzuzFzo3+XNOBAIHtQosxwi0XUw/jjh2qN1pVzV43FJwJIDLuq5tvaNmzxeEZI5wWP/p9v0gypgGYhGH8fL28yyM7ycOJkFlJW3tZDHhRdBjIO22JR6a1BGMgTAWopvr6BC1jSB1MDWyXYfvkpDlg4iiV83lITiuoXZL+U4/ltcNq2MhogaYBWMYjYU8HHfSRdTrCIOLYImemrfz8dMO6DlVGYyFMWz3tmuGY6GgO1ikXVM51JDXurBO0nyEcyPTnvOXvmyb0hzqfV64jUUYw47Re9CZe6EbeC+M39+TcfK/gTFZuxZgOSag7aMASwGkrQW1Y2lLwXRMx3RMx3T8Pw67FpSOcA5RCccOcTMNL05aRw7Fn2kizA7+1VNH6ENAOBgOxiIK888dHPVqh+Q/yeknzQfHkhx+nqyjT0QFzDUd2Skp53lp7PdFnEkYIhzQv/KRzJUV0QdDSON5+S14CEW0vqSTiAPWWDknCLsY0BZxnNP0L/Z9YQEO8yznXZ2yNwfgTu7rNFgj9aamvS9eZljMTNOeoybSGNwQkvZ+3XrCU07t4HmWSBjDLBzEwdSzhMYcRPRZNYmgdjA1FyahcKQIqpKZs8N0TMd0TMd0/BvHF8n9f8tHo7HcAAAAAElFTkSuQmCC')",
                     //backgroundImage: "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAXBAMAAACG4mBhAAAALVBMVEVAQEA5OTk+Pj4/Pz84ODg8PDw5OTk4ODg7Ozs7OztDQ0M5OTk3NzdFRUVISEi5S1dSAAAAD3RSTlMwWjo1YEBVZUpFKlBqJSCof7U2AAACDklEQVR4Xh2RwWvaYBiHXxI+aPSyOmMa5iGuznWOwTczSqp4kKVVcYfvm9IWdjLTpZRdUiS02EM6W4SdFIOHnqy9uJSCGkfGjjvIYJfBTmOX/Sn71vvz8jz8XnDCMnfWRHFDiB6r3XJo78gzDWEVYKHnJ0tMbXze0Qq9hytr+zuKewzhypuP4TKPiganns25d7ivG4Lege6969iipxHXzk5a3s3pdGIrbikL/Zej7gkfGEiao4JHhxX8WtCdEWxVqlonF9tRqL3uflnzAh/cEj8AfF4CPHNqBopHhNO3XjDd0h2tDb6g+0jK31hk11aGZCO2zvBuASrYbavB/NoUR9TIMAuL0UpPwPSFqJ+LVVNW6OpkRP/HhPZe/oJEG2+UMguZDwbJJpIMoeXgze0QoOjXn0WSs0juwV1T/0C94BtzIHRbtQgfyKpkMPyTBZPW5eYSIih2LqIBm0ZjeHrlx21tJnNxsKq0QGjJe17GDOe5xsWB2iAJkET0GZn1Z3++A4sZ9p4W73vSdAyp5TpQcaNJxbsYmZ9dolUlC5wkZruH46itMLx/UO894mYG1wSSsgc04rkiihpCAR6Lo9QynbRAzDBDvSOQ3TJ2y7cvRM6MjFdnEE2nLIW2MXpPfusOqvcSVjp5NIZXl2OTKf2xlL1iQ8pcY84VD//Cmqqwgxp7yoeFo7V6qW/5pK3s/wPxo6keqhNsswAAAABJRU5ErkJggg==')",
@@ -70,7 +73,10 @@ const DarkTheme = createMuiTheme({
 
 const LightTheme = createMuiTheme({
     AppBar: {
-        backgroundColor: '#527180',
+        backgroundColor: '#206789',
+        Drawer: {
+            backgroundColor: '#c1e1f0'
+        }        
     },
     typography: {
         fontSize: 12

@@ -2,8 +2,15 @@ import { useState, useEffect } from 'react';
 import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemSecondaryAction, ListItemText, Typography } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import ReplayIcon from '@material-ui/icons/Replay';
 import { Tooltip } from '@material-ui/core';
+import SimpleBar from 'simplebar-react';
+import 'simplebar/dist/simplebar.min.css';
+import { useConfirm } from 'material-ui-confirm';
+import HelpIcon from '@material-ui/icons/Help';
+import Alert from '@material-ui/lab/Alert';
+import useAppContext from '../AppContextHook';
 
 import ConfirmationDialog from '../components/UI/DialogConfirmation';
 
@@ -43,22 +50,69 @@ const removeFromHistory = (submitDate) => {
     window.localStorage.setItem('history', JSON.stringify(updatedHistory));
 };
 
-const getHistory = () => {
-    const history = JSON.parse(window.localStorage.getItem('history')) || [];
-    console.log(history);
-    return history;
-};
+const getHistory = () => JSON.parse(window.localStorage.getItem('history')) || []
 
-const PostsHistory = ({ setPostValues, setPostUrlData }) => {
+const PostsHistory = ({ setPostValues, setPostUrlData, setAlertOpen, setAlertText, setAlertType }) => {
     const [history, setHistory] = useState([]);
+    const palette = useAppContext('ThemeContext')['theme']['palette'];
+    const confirm = useConfirm();
+    console.log(palette.info);
+    const deleteAllSubmits = () => {
+        confirm({
+            title: (<>
+                <Box display='flex'>
+                    <Box display="flex" alignItems="center" mr={1}>
+                        <HelpIcon fontSize="large" style={{fill:palette.warning.main}} />
+                    </Box>
+                    Are you sure?
+                </Box>
+            </>),            
+            description: (
+                <Alert severity="warning">This will delete <span style={{color:palette.error.main}}><b>ALL</b></span> history!</Alert>
+            ),
+            dialogProps: {maxWidth: 'xs', align: 'center', titleStyle: {textAlign: 'center'},},
+            confirmationButtonProps: {variant: 'contained', color: 'secondary'}
+        })
+            .then(() => {
+                setHistory([]);
+                window.localStorage.removeItem('history');
+            });
+            // .catch(() => { alert('you pressed NO!') });
+    };
 
-    const deleteSubmit = (submitDate) => {
-        if (window.confirm('Are you sure you want to delete submit ' + submitDate + '?')) {
-            setHistory(currHistory => (
-                currHistory.filter(submit => submit.date !== submitDate)
-            ));
-            removeFromHistory(submitDate);
-        }
+    const deleteSubmit = ({date, val, url, urlName}) => {
+        confirm({ 
+            title: (<>
+                <Box display='flex'>
+                    <Box display="flex" alignItems="center" mr={1}>
+                        <HelpIcon fontSize="large" style={{fill:palette.warning.main}} />
+                    </Box>
+                    Are you sure?
+                </Box>
+            </>),
+            description: (<>
+                This will delete from history the request made on <br/><b>{date}</b><br/>
+                <h4><span style={{color: palette.primary.main}}>{urlName.toUpperCase()} - {url}</span></h4>
+                <pre>
+                    {"{"}
+                    {Object.keys(val).map(param => (
+                        <Box key={param}>
+                            &nbsp;&nbsp;&nbsp;<span style={{ color: palette.primary.main }}>{param}</span> : <span>{val[param]}</span>
+                        </Box>
+                    ))}
+                    {"}"}
+                </pre>
+            </>),
+            dialogProps: {maxWidth: 'xs', titleStyle: {textAlign: 'left'},},
+            confirmationButtonProps: {variant: 'contained', color: 'secondary', size: 'large'},
+            cancellationButtonProps: {size: 'large'}
+        })
+            .then(() => {
+                setHistory(currHistory => (
+                    currHistory.filter(submit => submit.date !== date)
+                ));
+                removeFromHistory(date);
+            });        
     };
 
     const applySubmitToPage = ({ url: formAction, urlName: postUrlName, val: postValue }) => {
@@ -66,12 +120,28 @@ const PostsHistory = ({ setPostValues, setPostUrlData }) => {
         setPostValues(() => postValue);
     };
 
-    const getTooltip = ({ url: formAction, urlName, val: postValue }) => (
-        <pre>
-            {urlName.toUpperCase() + ' - ' + formAction}<br /><br />
-            {JSON.stringify(postValue, null, '  ')}
-        </pre>
-    );
+    const getTooltip = ({ date, url: formAction, urlName, val: postValue }) => {
+        const jsonMarkup = (json) => (
+            <>
+                {"{"}
+                {Object.keys(json).map(param => (
+                    <Box key={param}>
+                        &nbsp;&nbsp;&nbsp;<span style={{ color: palette.text.icon }}>{param}</span> : <span>{json[param]}</span>
+                    </Box>
+                ))}
+                {"}"}
+            </>
+        );
+
+        return (
+            <pre style={{ fontSize: '.7rem' }}>
+                <span style={{ color: palette.text.icon }}>{date}</span><br />
+                <span style={{ color: palette.primary.main, fontWeight: 'bold' }}>{urlName.toUpperCase() + ' - ' + formAction}</span><br /><br />
+                {/* {JSON.stringify(postValue, null, '  ')} */}
+                {jsonMarkup(postValue)}
+            </pre>
+        )
+    };
 
     useEffect(() => {
         setHistory(() => getHistory());
@@ -79,34 +149,55 @@ const PostsHistory = ({ setPostValues, setPostUrlData }) => {
 
     return (
         <>
-            <ConfirmationDialog></ConfirmationDialog>
-            <Box mt={2} mb={2}>
-                <Typography variant="h6">
-                    <Box color="text.disabled">
-                        History
-                    </Box>
-                </Typography>
-                <Divider light={true} />
-                <List dense={true} >
-                    {history.map(submittedPost => (
-                        <BootstrapTooltip title={getTooltip(submittedPost)} placement="top" arrow>
-                            <ListItem>
-                                <ListItemIcon>
-                                    <IconButton color="primary" edge="end" onClick={() => applySubmitToPage(submittedPost)}>
-                                        <ReplayIcon />
-                                    </IconButton>
-                                </ListItemIcon>
-                                <ListItemText primary={submittedPost.date/* + ' - ' + submittedPost.url*/} secondary={submittedPost.urlName.toUpperCase()} />
-                                {/* <ListItemSecondaryAction> */}
-                                    <IconButton color="secondary" edge="end" onClick={() => deleteSubmit(submittedPost.date)}>
-                                        <DeleteIcon />
-                                    </IconButton>
-                                {/* </ListItemSecondaryAction> */}
-                            </ListItem>
-                        </BootstrapTooltip >
-                    ))}
+            {/* <ConfirmationDialog></ConfirmationDialog> */}
+            <Box mb={2}>
 
-                </List>
+
+                <Box display='flex'>
+                    <Box color="text.disabled" display="flex" alignItems="center" flexGrow={1}>
+                        <Typography variant="h6">
+                            History
+                        </Typography>
+                    </Box>
+                    <BootstrapTooltip title="Delete ALL history" placement="top" arrow>
+                        <IconButton color="secondary" edge="end" onClick={deleteAllSubmits}>
+                            <DeleteIcon />
+                        </IconButton>
+                    </BootstrapTooltip>
+                </Box>
+
+                <Divider light={true} />
+                <SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: '40vh' }}>
+                    <List dense={true} >
+                        {history.map(submittedPost => (
+                            <BootstrapTooltip key={submittedPost.date} title={getTooltip(submittedPost)} placement="top" arrow>
+                                <ListItem>
+                                    <ListItemIcon>
+                                        <IconButton color="primary" edge="end" onClick={() => applySubmitToPage(submittedPost)}>
+                                            <ReplayIcon />
+                                        </IconButton>
+                                    </ListItemIcon>
+                                    <ListItemText 
+                                        primary={submittedPost.urlName.toUpperCase()}
+                                        primaryTypographyProps={{
+                                            style: {color: palette.text.icon}
+                                        }}
+                                        secondary={submittedPost.date/* + ' - ' + submittedPost.url*/} 
+                                        secondaryTypographyProps={{
+                                            style: {color: palette.primary.main}
+                                        }}
+                                    />
+                                    {/* <ListItemSecondaryAction> */}
+                                    <IconButton color="secondary" edge="end" onClick={() => deleteSubmit(submittedPost)}>
+                                        <DeleteOutlinedIcon />
+                                    </IconButton>
+                                    {/* </ListItemSecondaryAction> */}
+                                </ListItem>
+                            </BootstrapTooltip >
+                        ))}
+
+                    </List>
+                </SimpleBar>
             </Box>
 
         </>

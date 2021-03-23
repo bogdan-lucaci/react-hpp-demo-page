@@ -5,15 +5,16 @@ import App from './App';
 import { AppContext } from './AppContextHook';
 import Theme from './components/UI/Theme';
 import reportWebVitals from './reportWebVitals';
+import { ConfirmProvider } from 'material-ui-confirm';
 
 ReactDOM.render(
-  // <React.StrictMode>
-  <AppContext>
-    <Theme>
-      <App />
-    </Theme>
-  </AppContext>
-  // </React.StrictMode>,
+    <AppContext>
+      <Theme>
+        <ConfirmProvider>
+          <App />
+        </ConfirmProvider>
+      </Theme>
+    </AppContext>
   ,
   document.getElementById('root')
 );

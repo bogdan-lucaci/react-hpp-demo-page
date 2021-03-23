@@ -1,5 +1,6 @@
 import { Divider, Box, Drawer, IconButton } from '@material-ui/core';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
+import useAppContext from '../../AppContextHook';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AppHeaderDrawer = ({ open, setOpen, position, children }) => {
     const classes = useStyles();
+    const { theme } = useAppContext('ThemeContext');
 
     // const downSm = useMediaQuery(theme.breakpoints.down('sm'));    
 
@@ -34,6 +36,7 @@ const AppHeaderDrawer = ({ open, setOpen, position, children }) => {
             PaperProps={{ elevation: 5 }}
             SlideProps={{
                 // style: { maxWidth: downSm ? '75%' : '35%' },
+                style:theme.AppBar.Drawer,
                 classes: {
                     root: classes.root
                 },
