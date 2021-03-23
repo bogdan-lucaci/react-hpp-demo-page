@@ -27,15 +27,17 @@
 - specify a custom POST URL as form action
 - set form inputs value by URL params
 - ***UI*** - use Material UI list to upgrade POST URL dropdown list
-- save all submitted requests to localStorage and display them as a Material UI list inside right drawer (+ allow to delete entries)
-- ***UI*** - made right drawer width responsive
+- ***UI*** - add a Material UI dialog component to a new context to be available when actions inside other componetns need confirmation dialogs
+- add Material UI alerts engine to app
+- HistoryList - save all submitted requests to localStorage and display them as a Material UI list inside right drawer
+- HistoryList - ***UI*** - history list -> add scrollbar and handle right drawer's width on smaller breakpoints + convert confirmation alert to Material UI dialog
+- HistoryList - add 'Delete All' action
+- HistoryList - ***UI*** - add custom scroll bar to history component
 
 ### Functionalities to come:
 
-- ***UI*** - add custom scroll bar to history component
+- History list -> add 'Delete for Period'
 - set form action value by URL params
-- ***UI*** - history list -> add scrollbar and handle right drawer width on smaller breakpoints + convert confirmation alert to Material UI dialog
-- ***UI*** - add a Material UI dialog component to a new context to be available when other components need confirmation dialogs for e.g.
 - ***UI*** - move `<OverviewPost>` and `<OverviewApp>` to a Material UI permanent right drawer that collapses on smaller breakpoints
 - handle exotic actions (payout, refund, recurrent, capture, cancel)
 - handle all text helpers

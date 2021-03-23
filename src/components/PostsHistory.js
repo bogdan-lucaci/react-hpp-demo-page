@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemSecondaryAction, ListItemText, Typography } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -14,7 +14,7 @@ import useAppContext from '../AppContextHook';
 
 import ConfirmationDialog from '../components/UI/DialogConfirmation';
 
-// bootstrap tooltips
+// 'bootstrap like' tooltips
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 const useStylesBootstrap = makeStyles((theme) => ({
     arrow: {
@@ -52,47 +52,48 @@ const removeFromHistory = (submitDate) => {
 
 const getHistory = () => JSON.parse(window.localStorage.getItem('history')) || []
 
-const PostsHistory = ({ setPostValues, setPostUrlData, setAlertOpen, setAlertText, setAlertType }) => {
+const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
     const [history, setHistory] = useState([]);
     const palette = useAppContext('ThemeContext')['theme']['palette'];
     const confirm = useConfirm();
-    console.log(palette.info);
+
     const deleteAllSubmits = () => {
         confirm({
             title: (<>
                 <Box display='flex'>
                     <Box display="flex" alignItems="center" mr={1}>
-                        <HelpIcon fontSize="large" style={{fill:palette.warning.main}} />
+                        <HelpIcon fontSize="large" style={{ fill: palette.warning.main }} />
                     </Box>
                     Are you sure?
                 </Box>
-            </>),            
+            </>),
             description: (
-                <Alert severity="warning">This will delete <span style={{color:palette.error.main}}><b>ALL</b></span> history!</Alert>
+                <Alert severity="warning">This will delete <span style={{ color: palette.error.main }}><b>ALL</b></span> history!</Alert>
             ),
-            dialogProps: {maxWidth: 'xs', align: 'center', titleStyle: {textAlign: 'center'},},
-            confirmationButtonProps: {variant: 'contained', color: 'secondary'}
+            dialogProps: { maxWidth: 'xs', align: 'center', titleStyle: { textAlign: 'center' }, },
+            confirmationButtonProps: { variant: 'contained', color: 'secondary' }
         })
-            .then(() => {
-                setHistory([]);
-                window.localStorage.removeItem('history');
-            });
-            // .catch(() => { alert('you pressed NO!') });
+        .then(() => {
+            setHistory([]);
+            setAlert({ isOpen: true, text: 'All history cleared!', type: 'success' });
+            window.localStorage.removeItem('history');
+        });
+        // .catch(() => { alert('you pressed NO!') });
     };
 
-    const deleteSubmit = ({date, val, url, urlName}) => {
-        confirm({ 
+    const deleteSubmit = ({ date, val, url, urlName }) => {
+        confirm({
             title: (<>
                 <Box display='flex'>
                     <Box display="flex" alignItems="center" mr={1}>
-                        <HelpIcon fontSize="large" style={{fill:palette.warning.main}} />
+                        <HelpIcon fontSize="large" style={{ fill: palette.warning.main }} />
                     </Box>
                     Are you sure?
                 </Box>
             </>),
             description: (<>
-                This will delete from history the request made on <br/><b>{date}</b><br/>
-                <h4><span style={{color: palette.primary.main}}>{urlName.toUpperCase()} - {url}</span></h4>
+                This will delete from history the request made on <br /><b>{date}</b><br />
+                <h4><span style={{ color: palette.primary.main }}>{urlName.toUpperCase()} - {url}</span></h4>
                 <pre>
                     {"{"}
                     {Object.keys(val).map(param => (
@@ -103,21 +104,25 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlertOpen, setAlertTex
                     {"}"}
                 </pre>
             </>),
-            dialogProps: {maxWidth: 'xs', titleStyle: {textAlign: 'left'},},
-            confirmationButtonProps: {variant: 'contained', color: 'secondary', size: 'large'},
-            cancellationButtonProps: {size: 'large'}
+            dialogProps: { maxWidth: 'xs', titleStyle: { textAlign: 'left' }, },
+            confirmationButtonProps: { variant: 'contained', color: 'secondary', size: 'large' },
+            cancellationButtonProps: { size: 'large' }
         })
-            .then(() => {
-                setHistory(currHistory => (
-                    currHistory.filter(submit => submit.date !== date)
-                ));
-                removeFromHistory(date);
-            });        
+        .then(() => {
+            setHistory(currHistory => (
+                currHistory.filter(submit => submit.date !== date)
+            ));
+            setAlert({ isOpen: true, text: `Request made on <b>${date}</b> successfully deleted!`, type: 'success' });
+            removeFromHistory(date);
+        });
     };
 
-    const applySubmitToPage = ({ url: formAction, urlName: postUrlName, val: postValue }) => {
+    const applySubmitToPage = ({ date, url: formAction, urlName: postUrlName, val: postValue }) => {
         setPostUrlData(() => ({ formAction, postUrlName }));
-        setPostValues(() => postValue);
+        setPostValues(() => {
+            setAlert({ isOpen: true, text: `Request made on [ <b>${date}</b> ] successfully applied to form!`, type: 'success' });
+            return {...postValue};
+        }); 
     };
 
     const getTooltip = ({ date, url: formAction, urlName, val: postValue }) => {
@@ -151,8 +156,6 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlertOpen, setAlertTex
         <>
             {/* <ConfirmationDialog></ConfirmationDialog> */}
             <Box mb={2}>
-
-
                 <Box display='flex'>
                     <Box color="text.disabled" display="flex" alignItems="center" flexGrow={1}>
                         <Typography variant="h6">
@@ -160,48 +163,56 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlertOpen, setAlertTex
                         </Typography>
                     </Box>
                     <BootstrapTooltip title="Delete ALL history" placement="top" arrow>
-                        <IconButton color="secondary" edge="end" onClick={deleteAllSubmits}>
+                        <IconButton disabled={history.length ? false : true} color="secondary" edge="end" onClick={deleteAllSubmits}>
                             <DeleteIcon />
                         </IconButton>
                     </BootstrapTooltip>
                 </Box>
 
                 <Divider light={true} />
-                <SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: '40vh' }}>
-                    <List dense={true} >
-                        {history.map(submittedPost => (
-                            <BootstrapTooltip key={submittedPost.date} title={getTooltip(submittedPost)} placement="top" arrow>
-                                <ListItem>
-                                    <ListItemIcon>
-                                        <IconButton color="primary" edge="end" onClick={() => applySubmitToPage(submittedPost)}>
-                                            <ReplayIcon />
+                {history.length
+                    ?
+                    <SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: '40vh' }}>
+                        <List dense={true} >
+                            {history.map(submittedPost => (
+                                <BootstrapTooltip key={submittedPost.date} title={getTooltip(submittedPost)} placement="top" arrow>
+                                    <ListItem>
+                                        <ListItemIcon>
+                                            <IconButton color="primary" edge="end" onClick={() => applySubmitToPage(submittedPost)}>
+                                                <ReplayIcon />
+                                            </IconButton>
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            primary={submittedPost.urlName.toUpperCase()}
+                                            primaryTypographyProps={{
+                                                style: { color: palette.text.icon }
+                                            }}
+                                            secondary={submittedPost.date/* + ' - ' + submittedPost.url*/}
+                                            secondaryTypographyProps={{
+                                                style: { color: palette.primary.main }
+                                            }}
+                                        />
+                                        {/* <ListItemSecondaryAction> */}
+                                        <IconButton color="secondary" edge="end" onClick={() => deleteSubmit(submittedPost)}>
+                                            <DeleteOutlinedIcon />
                                         </IconButton>
-                                    </ListItemIcon>
-                                    <ListItemText 
-                                        primary={submittedPost.urlName.toUpperCase()}
-                                        primaryTypographyProps={{
-                                            style: {color: palette.text.icon}
-                                        }}
-                                        secondary={submittedPost.date/* + ' - ' + submittedPost.url*/} 
-                                        secondaryTypographyProps={{
-                                            style: {color: palette.primary.main}
-                                        }}
-                                    />
-                                    {/* <ListItemSecondaryAction> */}
-                                    <IconButton color="secondary" edge="end" onClick={() => deleteSubmit(submittedPost)}>
-                                        <DeleteOutlinedIcon />
-                                    </IconButton>
-                                    {/* </ListItemSecondaryAction> */}
-                                </ListItem>
-                            </BootstrapTooltip >
-                        ))}
+                                        {/* </ListItemSecondaryAction> */}
+                                    </ListItem>
+                                </BootstrapTooltip >
+                            ))}
 
-                    </List>
-                </SimpleBar>
+                        </List>
+                    </SimpleBar>
+                    :
+                    <Box mt={1}>
+                        <Alert severity="info">No history recorded yet.</Alert>
+                    </Box>
+                }
             </Box>
 
         </>
     )
 };
 
-export default PostsHistory;
+// <PostsHistory> may always be cached bcause items are added to it only on submit (so the page refreshes)
+export default React.memo(PostsHistory, () => true);

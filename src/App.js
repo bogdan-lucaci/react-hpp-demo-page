@@ -5,6 +5,7 @@ import { Typography, Divider, Box, Container, Paper, Grid } from '@material-ui/c
 import { Alert } from '@material-ui/lab';
 
 import BlockUI from './components/UI/Backdrop';
+import SnackBarAlert from './components/UI/SnackBarAlert';
 import AppHeaderAndDrawer from './components/UI/AppHeaderAndDrawer';
 import Form from './components/Form';
 // import InputPostUrl from './components/InputPostUrl';
@@ -22,16 +23,10 @@ import PostsHistory from './components/PostsHistory';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [alert, setAlert] = useState({ isOpen: false, text: '', type: 'info' });
   const [appState, setAppState] = useState({});
-  const [postValues, setPostValues] = useState({
-    'Amount': '100',
-    'Currency': 'EUR',
-    'ReturnURL': 'https://demo.smart2pay.com/redirect.php'
-  });
-  const [postUrlData, setPostUrlData] = useState({
-    formAction: 'https://apitest.smart2pay.com/',
-    postUrlName: 'demo'
-  });
+  const [postValues, setPostValues] = useState(SETTINGS.initialValues.postValues);
+  const [postUrlData, setPostUrlData] = useState(SETTINGS.initialValues.postUrlData);
 
   // get and set URL params
   useEffect(() => {
@@ -77,6 +72,7 @@ const App = () => {
               <PostsHistory
                 setPostValues={setPostValues}
                 setPostUrlData={setPostUrlData}
+                setAlert={setAlert}
               />
               <OverviewApp
                 appState={{
@@ -165,6 +161,12 @@ const App = () => {
         </Grid>
 
       </Grid>
+
+      <SnackBarAlert
+        open={alert['isOpen']} setOpen={setAlert} 
+        text={alert['text']}
+        severity={alert['type']}
+      />
 
       {/* <BlockUI theme={theme} open={isLoading} /> */}
       <BlockUI open={isLoading} />
