@@ -20,3 +20,7 @@ pre {
   white-space: -o-pre-wrap;
   word-wrap: break-word;
 }
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}

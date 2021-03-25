@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemSecondaryAction, ListItemText, Typography } from '@material-ui/core';
+import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemSecondaryAction, ListItemText, TextField, Typography } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import DeleteSweepIcon from '@material-ui/icons/DeleteSweep';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import EventBusyIcon from '@material-ui/icons/EventBusy';
+import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import ReplayIcon from '@material-ui/icons/Replay';
 import { Tooltip } from '@material-ui/core';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 import { useConfirm } from 'material-ui-confirm';
+import DateTimeRangePicker from '../components/UI/DateTimeRangePicker';
 import HelpIcon from '@material-ui/icons/Help';
 import Alert from '@material-ui/lab/Alert';
 import useAppContext from '../AppContextHook';
@@ -33,7 +38,7 @@ const BootstrapTooltip = (props) => {
 export const addToHistory = (postValues, postUrlData) => {
     const currentHistory = JSON.parse(window.localStorage.getItem('history')) || [];
     const currentSubmit = {
-        date: new Date().toLocaleString().toString(),
+        date: new Date(),
         val: { ...postValues },
         url: postUrlData['formAction'],
         urlName: postUrlData['postUrlName']
@@ -50,15 +55,39 @@ const removeFromHistory = (submitDate) => {
     window.localStorage.setItem('history', JSON.stringify(updatedHistory));
 };
 
-const getHistory = () => JSON.parse(window.localStorage.getItem('history')) || []
+const getHistory = (period) => {
+    const allHistory = JSON.parse(window.localStorage.getItem('history')) || [];
+
+
+    if (period && period.start && period.end && allHistory.length) {
+        const periodStart = new Date(period.start);
+        const periodEnd = new Date(period.end);
+        console.log(allHistory.filter(submit => {
+            const submitDate = new Date(submit.date);
+            console.log(periodEnd > submitDate, submitDate > periodStart);
+            // console.log(submitDate, periodStart, periodEnd);
+            return (periodStart < submitDate < periodEnd)
+        }));
+        return allHistory.filter(submit => {
+            const submitDate = new Date(submit.date);
+            return (periodStart < submitDate && submitDate < periodEnd)
+        });
+    }
+    else 
+        return allHistory;
+};
+
+const getDisplayDate = date => date.toLocaleString('en-GB').slice(0,-3);
 
 const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
     const [history, setHistory] = useState([]);
+    const [visibleHistory, setVisibleHistory] = useState([]);
+    const [visibleHistoryPeriod, setVisibleHistoryPeriod] = useState({start: new Date(Date.now() - 86400000), end: new Date()});
     const palette = useAppContext('ThemeContext')['theme']['palette'];
-    const confirm = useConfirm();
+    const dialog = useConfirm();
 
     const deleteAllSubmits = () => {
-        confirm({
+        dialog({
             title: (<>
                 <Box display='flex'>
                     <Box display="flex" alignItems="center" mr={1}>
@@ -71,7 +100,8 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
                 <Alert severity="warning">This will delete <span style={{ color: palette.error.main }}><b>ALL</b></span> history!</Alert>
             ),
             dialogProps: { maxWidth: 'xs', align: 'center', titleStyle: { textAlign: 'center' }, },
-            confirmationButtonProps: { variant: 'contained', color: 'secondary' }
+            confirmationButtonProps: { size: 'large', variant: 'contained', color: 'secondary' },
+            cancellationButtonProps: { size: 'large' }
         })
         .then(() => {
             setHistory([]);
@@ -82,7 +112,7 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
     };
 
     const deleteSubmit = ({ date, val, url, urlName }) => {
-        confirm({
+        dialog({
             title: (<>
                 <Box display='flex'>
                     <Box display="flex" alignItems="center" mr={1}>
@@ -105,7 +135,7 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
                 </pre>
             </>),
             dialogProps: { maxWidth: 'xs', titleStyle: { textAlign: 'left' }, },
-            confirmationButtonProps: { variant: 'contained', color: 'secondary', size: 'large' },
+            confirmationButtonProps: { size: 'large', variant: 'contained', color: 'secondary' },
             cancellationButtonProps: { size: 'large' }
         })
         .then(() => {
@@ -150,9 +180,47 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
         )
     };
 
+    const handleViewHistoryPeriod = () => {
+        dialog({
+            title: (<>
+                <Box display='flex'>
+                    <Box display="flex" alignItems="center" mr={1}>
+                        <HelpIcon fontSize="large" style={{ fill: palette.info.main }} />
+                    </Box>
+                    History Display Period
+                </Box>
+            </>),
+            description: (
+                <DateTimeRangePicker
+                    idStart="history-start-view-period" 
+                    idEnd="history-end-view-period"
+                    visibleHistoryPeriod={visibleHistoryPeriod}
+                    setVisibleHistoryPeriod={setVisibleHistoryPeriod}
+                />
+            ),
+            dialogProps: { maxWidth: 'xs', align: 'center', titleStyle: { textAlign: 'center' }, },
+            confirmationButtonProps: { disabled: false, size: 'large', variant: 'contained'  },
+            cancellationButtonProps: { size: 'large' }
+        })
+        .then(() => {
+            setVisibleHistoryPeriod({
+                start: new Date(document.getElementById('history-start-view-period').value),
+                end: new Date(document.getElementById('history-end-view-period').value)
+            });
+        });
+    };
+
+
     useEffect(() => {
         setHistory(() => getHistory());
     }, []);
+
+    useEffect(() => {
+        if (visibleHistoryPeriod['start'] && visibleHistoryPeriod['end'] ) {
+            setVisibleHistory(() => getHistory(visibleHistoryPeriod));
+            setAlert({ isOpen: true, text: `History list period updated to [ ${getDisplayDate(visibleHistoryPeriod['start'])} - ${getDisplayDate(visibleHistoryPeriod['end'])} ] !`, type: 'info' });        
+        }
+    }, [visibleHistoryPeriod]);
 
     return (
         <>
@@ -161,50 +229,87 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
                 <Box display='flex'>
                     <Box color="text.disabled" display="flex" alignItems="center" flexGrow={1}>
                         <Typography variant="h6">
-                            History
+                            History 
                         </Typography>
                     </Box>
-                    <BootstrapTooltip title="Delete ALL history" placement="top" arrow>
-                        <IconButton disabled={history.length ? false : true} color="secondary" edge="end" onClick={deleteAllSubmits}>
-                            <DeleteIcon />
+                    <Box mr={1}>
+                        <BootstrapTooltip title="View history for a specific period" placement="top" arrow>
+                            <IconButton disabled={history.length ? false : true} color="primary" edge="end" onClick={handleViewHistoryPeriod}>
+                                <EventAvailableIcon />
+                            </IconButton>
+                        </BootstrapTooltip>
+                    </Box>
+                    {/* <BootstrapTooltip title="View history for a specific period" placement="top" arrow>
+                        <IconButton disabled={history.length ? false : true} color="secondary" edge="end" onClick={() => alert('coming soon')}>
+                            <DateRangeIcon />
                         </IconButton>
-                    </BootstrapTooltip>
+                    </BootstrapTooltip> */}
+                    <Box mr={1}>
+                        <BootstrapTooltip title="Delete history fx`or a specific period" placement="top" arrow>
+                            <IconButton disabled={history.length ? false : true} color="secondary" edge="end" onClick={() => alert('coming soon')}>
+                                <EventBusyIcon />
+                            </IconButton>
+                        </BootstrapTooltip>
+                    </Box>
+                    <Box>
+                        <BootstrapTooltip title="Delete ALL history" placement="top" arrow>
+                            <IconButton disabled={history.length ? false : true} color="secondary" edge="end" onClick={deleteAllSubmits}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </BootstrapTooltip>
+                    </Box>
                 </Box>
 
                 <Divider light={true} />
                 {history.length
                     ?
-                    <SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: '40vh' }}>
-                        <List dense={true} >
-                            {history.map(submittedPost => (
-                                <BootstrapTooltip key={submittedPost.date} title={getTooltip(submittedPost)} placement="top" arrow>
-                                    <ListItem>
-                                        <ListItemIcon>
-                                            <IconButton color="primary" edge="end" onClick={() => applySubmitToPage(submittedPost)}>
-                                                <ReplayIcon />
-                                            </IconButton>
-                                        </ListItemIcon>
-                                        <ListItemText
-                                            primary={submittedPost.urlName.toUpperCase()}
-                                            primaryTypographyProps={{
-                                                style: { color: palette.text.icon }
-                                            }}
-                                            secondary={submittedPost.date/* + ' - ' + submittedPost.url*/}
-                                            secondaryTypographyProps={{
-                                                style: { color: palette.primary.main }
-                                            }}
-                                        />
-                                        {/* <ListItemSecondaryAction> */}
-                                        <IconButton color="secondary" edge="end" onClick={() => deleteSubmit(submittedPost)}>
-                                            <DeleteOutlinedIcon />
-                                        </IconButton>
-                                        {/* </ListItemSecondaryAction> */}
-                                    </ListItem>
-                                </BootstrapTooltip >
-                            ))}
-
-                        </List>
-                    </SimpleBar>
+                    <>
+                        {visibleHistory.length
+                            ?
+                            <>
+                                <Typography align="center" variant="caption" display="block" gutterBottom={true} style={{ color: palette.text.icon }}>
+                                    {(history.length !== visibleHistory.length) 
+                                        ? <Box mt={1}>Showing <b style={{color: palette.secondary.main}}>{visibleHistory.length}</b> of <b style={{color: palette.secondary.main}}>{history.length}</b> entries from [<b style={{color: palette.primary.main}}> {getDisplayDate(visibleHistoryPeriod['start'])} </b>] to [<b style={{color: palette.primary.main}}> {getDisplayDate(visibleHistoryPeriod['end'])} </b>]</Box>
+                                        : <Box mt={1}>Showing all entries</Box>
+                                    }
+                                </Typography>                              
+                                <SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: '40vh' }}>
+                                    <List dense={true} >
+                                        {visibleHistory.reverse().map(submittedPost => (
+                                            <BootstrapTooltip key={submittedPost.date + Math.floor(Math.random() * 100)} title={getTooltip(submittedPost)} placement="top" arrow>
+                                                <ListItem style={{paddingLeft:"0"}}>
+                                                    <ListItemIcon>
+                                                        <IconButton color="primary" edge="end" onClick={() => applySubmitToPage(submittedPost)}>
+                                                            <ReplayIcon />
+                                                        </IconButton>
+                                                    </ListItemIcon>
+                                                    <ListItemText
+                                                        primary={submittedPost.urlName.toUpperCase()}
+                                                        primaryTypographyProps={{
+                                                            style: { color: palette.text.icon }
+                                                        }}
+                                                        secondary={getDisplayDate(new Date(submittedPost.date))/* + ' - ' + submittedPost.url*/}
+                                                        secondaryTypographyProps={{
+                                                            style: { color: palette.primary.main }
+                                                        }}
+                                                    />
+                                                    {/* <ListItemSecondaryAction> */}
+                                                    <IconButton color="secondary" edge="end" onClick={() => deleteSubmit(submittedPost)}>
+                                                        <DeleteOutlinedIcon />
+                                                    </IconButton>
+                                                    {/* </ListItemSecondaryAction> */}
+                                                </ListItem>
+                                            </BootstrapTooltip >
+                                        ))}
+                                    </List>
+                                </SimpleBar>
+                            </>
+                            :
+                            <Box mt={1}>
+                                <Alert severity="info">No history for the specified period.</Alert>
+                            </Box>                            
+                        }
+                    </>
                     :
                     <Box mt={1}>
                         <Alert severity="info">No history recorded yet.</Alert>
