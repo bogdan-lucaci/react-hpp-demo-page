@@ -62,22 +62,17 @@ const getHistory = (period) => {
     if (period && period.start && period.end && allHistory.length) {
         const periodStart = new Date(period.start);
         const periodEnd = new Date(period.end);
-        console.log(allHistory.filter(submit => {
-            const submitDate = new Date(submit.date);
-            console.log(periodEnd > submitDate, submitDate > periodStart);
-            // console.log(submitDate, periodStart, periodEnd);
-            return (periodStart < submitDate < periodEnd)
-        }));
+
         return allHistory.filter(submit => {
             const submitDate = new Date(submit.date);
-            return (periodStart < submitDate && submitDate < periodEnd)
+            return (periodStart <= submitDate && submitDate <= periodEnd)
         });
     }
     else 
         return allHistory;
 };
 
-const getDisplayDate = date => date.toLocaleString('en-GB').slice(0,-3);
+const getDisplayDate = date => date.toLocaleString('en-GB');//.slice(0,-3);
 
 const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
     const [history, setHistory] = useState([]);
@@ -172,7 +167,7 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
 
         return (
             <pre style={{ fontSize: '.7rem' }}>
-                <span style={{ color: palette.text.icon }}>{date}</span><br />
+                <span style={{ color: palette.text.icon }}>{getDisplayDate(new Date(date))}</span><br />
                 <span style={{ color: palette.primary.main, fontWeight: 'bold' }}>{urlName.toUpperCase() + ' - ' + formAction}</span><br /><br />
                 {/* {JSON.stringify(postValue, null, '  ')} */}
                 {jsonMarkup(postValue)}
@@ -239,13 +234,8 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
                             </IconButton>
                         </BootstrapTooltip>
                     </Box>
-                    {/* <BootstrapTooltip title="View history for a specific period" placement="top" arrow>
-                        <IconButton disabled={history.length ? false : true} color="secondary" edge="end" onClick={() => alert('coming soon')}>
-                            <DateRangeIcon />
-                        </IconButton>
-                    </BootstrapTooltip> */}
                     <Box mr={1}>
-                        <BootstrapTooltip title="Delete history fx`or a specific period" placement="top" arrow>
+                        <BootstrapTooltip title="Delete history for a specific period" placement="top" arrow>
                             <IconButton disabled={history.length ? false : true} color="secondary" edge="end" onClick={() => alert('coming soon')}>
                                 <EventBusyIcon />
                             </IconButton>
@@ -269,7 +259,7 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
                             <>
                                 <Typography align="center" variant="caption" display="block" gutterBottom={true} style={{ color: palette.text.icon }}>
                                     {(history.length !== visibleHistory.length) 
-                                        ? <Box mt={1}>Showing <b style={{color: palette.secondary.main}}>{visibleHistory.length}</b> of <b style={{color: palette.secondary.main}}>{history.length}</b> entries from [<b style={{color: palette.primary.main}}> {getDisplayDate(visibleHistoryPeriod['start'])} </b>] to [<b style={{color: palette.primary.main}}> {getDisplayDate(visibleHistoryPeriod['end'])} </b>]</Box>
+                                        ? <Box mt={1}>Showing <b style={{color: palette.secondary.main}}>{visibleHistory.length}</b> of <b style={{color: palette.secondary.main}}>{history.length}</b> entries<br />from [<b style={{color: palette.primary.main}}> {getDisplayDate(visibleHistoryPeriod['start'])} </b>] to [<b style={{color: palette.primary.main}}> {getDisplayDate(visibleHistoryPeriod['end'])} </b>]</Box>
                                         : <Box mt={1}>Showing all entries</Box>
                                     }
                                 </Typography>                              
@@ -306,7 +296,7 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
                             </>
                             :
                             <Box mt={1}>
-                                <Alert severity="info">No history for the specified period.</Alert>
+                                <Alert severity="info">No history for [<b style={{color: palette.primary.main}}> {getDisplayDate(visibleHistoryPeriod['start'])} </b>] to [<b style={{color: palette.primary.main}}> {getDisplayDate(visibleHistoryPeriod['end'])} </b>] period.</Alert>
                             </Box>                            
                         }
                     </>
