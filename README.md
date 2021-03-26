@@ -33,9 +33,11 @@
 - HistoryList - ***UI*** - history list -> add scrollbar and handle right drawer's width on smaller breakpoints + convert confirmation alert to Material UI dialog
 - HistoryList - add 'Delete All' action
 - HistoryList - ***UI*** - add custom scroll bar to history component
+- HistoryList - add 'View History for a specific period' action + add date-time range picker + validations + UI feedback
 
 ### Functionalities to come:
 
+- HistoryList - stop using confirmation provider as a MAterial UI provider when selecting period (to be able to disable OK btn on err)
 - History list -> add 'Delete for Period'
 - set form action value by URL params
 - ***UI*** - move `<OverviewPost>` and `<OverviewApp>` to a Material UI permanent right drawer that collapses on smaller breakpoints
