@@ -37,7 +37,7 @@
 
 ### Functionalities to come:
 
-- HistoryList - stop using confirmation provider as a MAterial UI provider when selecting period (to be able to disable OK btn on err)
+- HistoryList - stop using confirmation provider as a Material UI provider when selecting period (to be able to disable OK btn on err)
 - History list -> add 'Delete for Period'
 - set form action value by URL params
 - ***UI*** - move `<OverviewPost>` and `<OverviewApp>` to a Material UI permanent right drawer that collapses on smaller breakpoints

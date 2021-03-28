@@ -68,16 +68,23 @@ const getHistory = (period) => {
             return (periodStart <= submitDate && submitDate <= periodEnd)
         });
     }
-    else 
+    else
         return allHistory;
 };
 
 const getDisplayDate = date => date.toLocaleString('en-GB');//.slice(0,-3);
 
+// change date format from "dd/MM/yyyy HH:mm" to "yyyy/MM/dd HH:mm"
+const convertDate = dateString => {
+    const dateParts = dateString.split(' ')[0].split('/');
+    return dateParts[2] + '/' + dateParts[1] + '/' + dateParts[0] + ' ' + dateString.split(' ')[1];
+}
+
 const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
     const [history, setHistory] = useState([]);
     const [visibleHistory, setVisibleHistory] = useState([]);
-    const [visibleHistoryPeriod, setVisibleHistoryPeriod] = useState({start: new Date(Date.now() - 86400000), end: new Date()});
+    const [visibleHistoryPeriod, setVisibleHistoryPeriod] = useState({ start: new Date(Date.now() - 86400000), end: new Date() });
+    const [visibleHistoryPeriodTouched, setVisibleHistoryPeriodTouched] = useState(false);
     const palette = useAppContext('ThemeContext')['theme']['palette'];
     const dialog = useConfirm();
 
@@ -98,11 +105,11 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
             confirmationButtonProps: { size: 'large', variant: 'contained', color: 'secondary' },
             cancellationButtonProps: { size: 'large' }
         })
-        .then(() => {
-            setHistory([]);
-            setAlert({ isOpen: true, text: 'All history cleared!', type: 'success' });
-            window.localStorage.removeItem('history');
-        });
+            .then(() => {
+                setHistory([]);
+                setAlert({ isOpen: true, text: 'All history cleared!', type: 'success' });
+                window.localStorage.removeItem('history');
+            });
         // .catch(() => { alert('you pressed NO!') });
     };
 
@@ -117,7 +124,7 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
                 </Box>
             </>),
             description: (<>
-                This will delete from history the request made on <br /><b>{date}</b><br />
+                This will delete from history the request made on <br /><b>{getDisplayDate(new Date(date))}</b><br />
                 <h4><span style={{ color: palette.primary.main }}>{urlName.toUpperCase()} - {url}</span></h4>
                 <pre>
                     {"{"}
@@ -133,22 +140,22 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
             confirmationButtonProps: { size: 'large', variant: 'contained', color: 'secondary' },
             cancellationButtonProps: { size: 'large' }
         })
-        .then(() => {
-            setHistory(currHistory => (
-                currHistory.filter(submit => submit.date !== date)
-            ));
-            setAlert({ isOpen: true, text: `Request made on <b>${date}</b> successfully deleted!`, type: 'success' });
-            removeFromHistory(date);
-        });
+            .then(() => {
+                setHistory(currHistory => (
+                    currHistory.filter(submit => submit.date !== date)
+                ));
+                setAlert({ isOpen: true, text: `Request made on [ <b style={{color: palette.secondary.main}}>${date}</b> ] successfully deleted!`, type: 'success' });
+                removeFromHistory(date);
+            });
     };
 
     const applySubmitToPage = ({ date, url: formAction, urlName: postUrlName, val: postValue }) => {
         setPostUrlData(() => ({ formAction, postUrlName }));
-        setTimeout(() => { 
+        setTimeout(() => {
             setPostValues(() => {
-                setAlert({ isOpen: true, text: `Request made on [ <b>${date}</b> ] successfully applied to form!`, type: 'success' });
-                return {...postValue};
-            }); 
+                setAlert({ isOpen: true, text: `Request made on [ <b>${getDisplayDate(new Date(date))}</b> ] successfully applied to form!`, type: 'success' });
+                return { ...postValue };
+            });
         }, 0);
     };
 
@@ -176,6 +183,7 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
     };
 
     const handleViewHistoryPeriod = () => {
+        setVisibleHistoryPeriodTouched(true);
         dialog({
             title: (<>
                 <Box display='flex'>
@@ -187,22 +195,23 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
             </>),
             description: (
                 <DateTimeRangePicker
-                    idStart="history-start-view-period" 
+                    idStart="history-start-view-period"
                     idEnd="history-end-view-period"
-                    visibleHistoryPeriod={visibleHistoryPeriod}
-                    setVisibleHistoryPeriod={setVisibleHistoryPeriod}
+                    period={visibleHistoryPeriod}
+                    setPeriod={setVisibleHistoryPeriod}
                 />
             ),
             dialogProps: { maxWidth: 'xs', align: 'center', titleStyle: { textAlign: 'center' }, },
-            confirmationButtonProps: { disabled: false, size: 'large', variant: 'contained'  },
+            confirmationButtonProps: { disabled: false, size: 'large', variant: 'contained' },
             cancellationButtonProps: { size: 'large' }
         })
-        .then(() => {
-            setVisibleHistoryPeriod({
-                start: new Date(document.getElementById('history-start-view-period').value),
-                end: new Date(document.getElementById('history-end-view-period').value)
+            .then(() => {
+                const newPeriod = {
+                    start: new Date(convertDate(document.getElementById('history-start-view-period').value)),
+                    end: new Date(convertDate(document.getElementById('history-end-view-period').value))
+                };
+                setVisibleHistoryPeriod(newPeriod);
             });
-        });
     };
 
 
@@ -211,9 +220,9 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
     }, []);
 
     useEffect(() => {
-        if (visibleHistoryPeriod['start'] && visibleHistoryPeriod['end'] ) {
-            setVisibleHistory(() => getHistory(visibleHistoryPeriod));
-            setAlert({ isOpen: true, text: `History list period updated to [ ${getDisplayDate(visibleHistoryPeriod['start'])} - ${getDisplayDate(visibleHistoryPeriod['end'])} ] !`, type: 'info' });        
+        setVisibleHistory(() => getHistory(visibleHistoryPeriod));
+        if (visibleHistoryPeriodTouched) {
+            setAlert({ isOpen: true, text: `History display period updated to [ <b>${getDisplayDate(visibleHistoryPeriod['start'])}</b> - <b>${getDisplayDate(visibleHistoryPeriod['end'])}</b> ] !`, type: 'info' });
         }
     }, [visibleHistoryPeriod]);
 
@@ -224,7 +233,7 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
                 <Box display='flex'>
                     <Box color="text.disabled" display="flex" alignItems="center" flexGrow={1}>
                         <Typography variant="h6">
-                            History 
+                            History
                         </Typography>
                     </Box>
                     <Box mr={1}>
@@ -258,16 +267,16 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
                             ?
                             <>
                                 <Typography align="center" variant="caption" display="block" gutterBottom={true} style={{ color: palette.text.icon }}>
-                                    {(history.length !== visibleHistory.length) 
-                                        ? <Box mt={1}>Showing <b style={{color: palette.secondary.main}}>{visibleHistory.length}</b> of <b style={{color: palette.secondary.main}}>{history.length}</b> entries<br />from [<b style={{color: palette.primary.main}}> {getDisplayDate(visibleHistoryPeriod['start'])} </b>] to [<b style={{color: palette.primary.main}}> {getDisplayDate(visibleHistoryPeriod['end'])} </b>]</Box>
+                                    {(history.length !== visibleHistory.length)
+                                        ? <Box mt={1}>Showing <b style={{ color: palette.secondary.main }}>{visibleHistory.length}</b> of <b style={{ color: palette.secondary.main }}>{history.length}</b> entries<br />from [<b style={{ color: palette.primary.main }}> {getDisplayDate(visibleHistoryPeriod['start'])} </b>] to [<b style={{ color: palette.primary.main }}> {getDisplayDate(visibleHistoryPeriod['end'])} </b>]</Box>
                                         : <Box mt={1}>Showing all entries</Box>
                                     }
-                                </Typography>                              
+                                </Typography>
                                 <SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: '40vh' }}>
                                     <List dense={true} >
                                         {visibleHistory.reverse().map(submittedPost => (
                                             <BootstrapTooltip key={submittedPost.date + Math.floor(Math.random() * 100)} title={getTooltip(submittedPost)} placement="top" arrow>
-                                                <ListItem style={{paddingLeft:"0"}}>
+                                                <ListItem style={{ paddingLeft: "0" }}>
                                                     <ListItemIcon>
                                                         <IconButton color="primary" edge="end" onClick={() => applySubmitToPage(submittedPost)}>
                                                             <ReplayIcon />
@@ -296,8 +305,8 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
                             </>
                             :
                             <Box mt={1}>
-                                <Alert severity="info">No history for [<b style={{color: palette.primary.main}}> {getDisplayDate(visibleHistoryPeriod['start'])} </b>] to [<b style={{color: palette.primary.main}}> {getDisplayDate(visibleHistoryPeriod['end'])} </b>] period.</Alert>
-                            </Box>                            
+                                <Alert severity="info">No history entries from [<b style={{ color: palette.primary.main }}> {getDisplayDate(visibleHistoryPeriod['start'])} </b>] to [<b style={{ color: palette.primary.main }}> {getDisplayDate(visibleHistoryPeriod['end'])} </b>]</Alert>
+                            </Box>
                         }
                     </>
                     :
