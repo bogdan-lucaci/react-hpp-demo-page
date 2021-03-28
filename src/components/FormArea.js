@@ -26,34 +26,32 @@ const FormArea = ({ area, postValues, setPostValues, appState, setAppState, post
             </AccordionSummary>
             <AccordionDetails>
                 {isCollapsed === false &&
-                    <>
-                        <Grid container spacing={1}>
-                            {getInputsForArea(area.id).map((param) => {
-                                return (
-                                    <React.Fragment key={param.name + (param.area.toString())} >
-                                        {/* check if a form sub-area starts and if we should display a title */}
-                                        {area.id === param.area[0] && param.area[1] &&
-                                            <FormSubAreaTitle param={param} />
-                                        }
-                                        <Grid item xs={12} sm={6}>
+                    <Grid container spacing={1}>
+                        {getInputsForArea(area.id).map((param) => {
+                            return (
+                                <React.Fragment key={param.name + (param.area.toString())} >
+                                    {/* check if a form sub-area starts and if we should display a title */}
+                                    {area.id === param.area[0] && param.area[1] &&
+                                        <FormSubAreaTitle param={param} />
+                                    }
+                                    <Grid item xs={12} sm={6}>
 
-                                            <InputParam
-                                                id={param.name + (param.area.toString())}
-                                                name={param.name}
-                                                isPaymentParam={param.isPaymentParam}
-                                                postValues={postValues}
-                                                setPostValues={setPostValues}
-                                                postUrlName={postUrlName}
-                                                appState={appState}
-                                                setAppState={setAppState}
-                                            />
+                                        <InputParam
+                                            id={param.name + (param.area.toString())}
+                                            name={param.name}
+                                            isPaymentParam={param.isPaymentParam}
+                                            postValues={postValues}
+                                            setPostValues={setPostValues}
+                                            postUrlName={postUrlName}
+                                            appState={appState}
+                                            setAppState={setAppState}
+                                        />
 
-                                        </Grid>
-                                    </React.Fragment>
-                                )
-                            })}
-                        </Grid>
-                    </>
+                                    </Grid>
+                                </React.Fragment>
+                            )
+                        })}
+                    </Grid>
                 }
             </AccordionDetails>
         </Accordion>
