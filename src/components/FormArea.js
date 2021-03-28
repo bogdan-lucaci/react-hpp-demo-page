@@ -25,8 +25,8 @@ const FormArea = ({ area, postValues, setPostValues, appState, setAppState, post
                 <Typography>{area.name}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                {/* {isCollapsed === false &&
-                    <> */}
+                {isCollapsed === false &&
+                    <>
                         <Grid container spacing={1}>
                             {getInputsForArea(area.id).map((param) => {
                                 return (
@@ -53,14 +53,11 @@ const FormArea = ({ area, postValues, setPostValues, appState, setAppState, post
                                 )
                             })}
                         </Grid>
-                    {/* </>
-                } */}
+                    </>
+                }
             </AccordionDetails>
         </Accordion>
     )
 };
 
 export default FormArea;
-// export default React.memo(FormArea, (prevVal, nextVal) => {
-//     console.log();
-// });
