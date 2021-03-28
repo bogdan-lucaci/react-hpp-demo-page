@@ -94,4 +94,5 @@ const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postU
     )
 };
 
+//export default React.memo(InputParam, (prevVal, nextVal) => prevVal.name !== nextVal.name && prevVal.val !== nextVal.val);
 export default InputParam;

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SETTINGS from './Settings';
+import FORM_DATA_MODEL from './data/FormDataModel';
+import utils from './utils/utils';
 
 import { Typography, Divider, Box, Container, Paper, Grid } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
@@ -14,12 +16,10 @@ import FormActionSelector from './components/FormActionSelector';
 import FormSubmitButton from './components/FormSubmitBtn';
 import OverviewPost from './components/OverviewPost';
 import OverviewApp from './components/OverviewApp';
+import PostsHistory from './components/PostsHistory';
 
 import useComputedString from './services/useComputedString';
 
-import utils from './utils/utils';
-import FORM_DATA_MODEL from './data/FormDataModel';
-import PostsHistory from './components/PostsHistory';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);

@@ -4,21 +4,6 @@ import { Typography, Box, Divider } from '@material-ui/core';
 import useAppContext from '../AppContextHook';
 import utils from '../utils/utils';
 
-const getJsonMarkup = (jsonString, { keyColor, valColor }) => {
-    let json = JSON.parse(jsonString);
-    return (
-        <>
-            {"{"}
-            {Object.keys(json).map(param => (
-                <Box key={param}>
-                    &nbsp;&nbsp;&nbsp;<span style={{ color: keyColor }}>{param}</span> : <span style={{ color: valColor }}>{json[param]}</span>
-                </Box>
-            ))}
-            {"}"}
-        </>
-    )
-};
-
 const OverviewPost = ({ postValues, postUrlData }) => {
     const palette = useAppContext('ThemeContext')['theme']['palette'];
     return (
@@ -41,7 +26,7 @@ const OverviewPost = ({ postValues, postUrlData }) => {
             </Typography>
             <Divider light={true} />
             <pre>
-                {getJsonMarkup(
+                {utils.getJsonColoredMarkup(
                     utils.sortParamsByFormModel(postValues), {
                         keyColor: palette.success.main,
                         valColor: palette.text.icon
@@ -52,4 +37,5 @@ const OverviewPost = ({ postValues, postUrlData }) => {
     )
 };
 // <OverviewPost> should not update when appState changes for e.g.
-export default React.memo(OverviewPost);
+export default React.memo(OverviewPost, (prevVal, nextVal) => prevVal.postValues === nextVal.postValues);
+//export default OverviewPost;

@@ -1,21 +1,7 @@
+import React from 'react';
 import { Typography, Box, Divider } from '@material-ui/core';
 import useAppContext from '../AppContextHook';
 import utils from '../utils/utils';
-
-const getJsonColoredMarkup = (jsonString, { keyColor, valColor }) => {
-    let json = JSON.parse(jsonString);
-    return (
-        <>
-            {"{"}
-            {Object.keys(json).map(param => (
-                <Box key={param}>
-                    &nbsp;&nbsp;&nbsp;<span style={{ color: keyColor }}>{param}</span> : <span style={{ color: valColor }}>{json[param]}</span>
-                </Box>
-            ))}
-            {"}"}
-        </>
-    )
-};
 
 const OverviewApp = ({ appState }) => {
     const palette = useAppContext('ThemeContext')['theme']['palette'];
@@ -29,7 +15,7 @@ const OverviewApp = ({ appState }) => {
                 </Typography>
                 <Divider light={true} />
                 <pre>
-                    {getJsonColoredMarkup(
+                    {utils.getJsonColoredMarkup(
                         utils.sortParamsByName(appState), {
                         keyColor: palette.success.main,
                         valColor: palette.text.icon
@@ -45,8 +31,8 @@ const OverviewApp = ({ appState }) => {
                 </Typography>
                 <Divider light={true} />
                 <pre>
-                    {getJsonColoredMarkup(
-                        utils.getUrlParamsObjAsString(), {
+                    {utils.getJsonColoredMarkup(
+                        JSON.stringify(utils.getUrlParamsObj()), {
                         keyColor: palette.success.main,
                         valColor: palette.text.icon
                     }
@@ -57,4 +43,6 @@ const OverviewApp = ({ appState }) => {
     )
 };
 
+// 
 export default OverviewApp;
+//export default React.memo(OverviewApp, (prevVal, nextVal) => {console.log(JSON.stringify(prevVal.appState) == JSON.stringify(nextVal).appState, prevVal.appState, nextVal.appState); return prevVal.appState === nextVal.appState});
