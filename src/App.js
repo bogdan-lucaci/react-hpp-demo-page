@@ -30,7 +30,10 @@ const App = () => {
     ...SETTINGS.initialValues.postValues, 
     ...UrlParams.getFormModelObjFromUrl()
   });
-  const [postUrlData, setPostUrlData] = useState(SETTINGS.initialValues.postUrlData);
+  const [postUrlData, setPostUrlData] = useState(
+    // use post url name sent in URL params or fallback to initial values
+    UrlParams.getPostUrlObjFromUrl() || SETTINGS.initialValues.postUrlData
+  );
 
   // get hash from custom hook "useComputedString" 
   const hash = useComputedString(postUrlData, postValues, appState, setAppState);
@@ -39,7 +42,7 @@ const App = () => {
       ...postValues,
       'Hash': hash
     }))
-  }, hash);
+  }, [hash]);
 
   // block UI with loader for various events
   useEffect(() => {

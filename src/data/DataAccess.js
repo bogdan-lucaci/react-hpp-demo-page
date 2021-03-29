@@ -19,6 +19,8 @@ const DATA_ACCESS = {
             };
         });
     },
+    // OUT  :   an object containing the post Url data for a given post URL name
+    getPostURLByName: name => DATA_ACCESS.getPostURLs().find(postUrl => postUrl.Name.toLowerCase() === name.toLowerCase()),
     // OUT  :   an array of merchant objects for a given environment:
     // [ {"ID": "...", "Alias": "...", "Signature": "..."}, {...}, ... etc ]
     getMerchantsForEnv: function (envName) {

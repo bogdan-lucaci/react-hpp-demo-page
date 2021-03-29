@@ -1,4 +1,5 @@
 import FORM_DATA_MODEL from '../data/FormDataModel';
+import DATA_ACCESS from '../data/DataAccess';
 
 const UrlParams = {
     getNamesArray: () => String(document.location).split('?')[1].split('&').map(paramPair => paramPair.split('=')[0].toLowerCase()),
@@ -18,7 +19,7 @@ const UrlParams = {
         }
         return {};
     },    
-    // OUT  :   a part of FORM_DATA_MODEL object containing key / values found in URL params
+    // OUT  :   a part of FORM_DATA_MODEL object containing key / values found in URL params or an empty object
     getFormModelObjFromUrl: () => {
         const urlParams = UrlParams.getObj();
 
@@ -34,6 +35,22 @@ const UrlParams = {
         }, {});        
 
         return urlParamsObj;
+    },
+    // OUT  :   a postUrlData object created from postUrlName found inside URL params (if 'env' param is found)
+    // OUT  :   false boolean if no 'env' param is found (or has no value) inside URL params 
+    getPostUrlObjFromUrl: () => {
+        const postUrlName = UrlParams.getObj()['env'];
+        const postUrlObj = DATA_ACCESS.getPostURLByName(postUrlName);
+        if (postUrlName && postUrlObj) {
+            return (
+                {
+                    postUrlName: DATA_ACCESS.getPostURLByName(postUrlName)['Name'],
+                    formAction: DATA_ACCESS.getPostURLByName(postUrlName)['URL']
+                }
+            )
+        } else {
+            return false;
+        }
     }
 };
 
