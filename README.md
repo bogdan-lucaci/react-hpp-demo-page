@@ -19,7 +19,7 @@
 - generate new MTID on POST URL value change and on input label click
 - set **Signature** value according to POST URL / **MerchantID** / **SiteID** combination
 - update **ComputedString** for all param changes
-- remove **Signature** and **ComputedString** from AppState / PostValues objects
+- remove **Signature** and **ComputedString** from AppHelpers / PostValues objects
 - handle **Hash**
 - change the order of params inside request body based on `FORM_DATA_MODEL`
 - handle submit

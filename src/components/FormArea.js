@@ -9,7 +9,7 @@ import FormSubAreaTitle from './FormSubAreaTitle';
 const getInputsForArea = (areaId) => FORM_DATA_MODEL.params.filter(param => param.area[0] === areaId);
 const areaIsCollapsedForPostUrlName = (areId, postUrlName) => FORM_DATA_MODEL.areas.filter((area) => area.collapseFor.includes(postUrlName)).map((area) => area.id).includes(areId);
 
-const FormArea = ({ area, postValues, setPostValues, appState, setAppState, postUrlName }) => {
+const FormArea = ({ area, postValues, setPostValues, appHelpers, setAppHelpers, postUrlName }) => {
     const [isCollapsed, setIsCollapsed] = useState(areaIsCollapsedForPostUrlName(area.id, postUrlName));
 
     useEffect(() => {
@@ -43,8 +43,8 @@ const FormArea = ({ area, postValues, setPostValues, appState, setAppState, post
                                             postValues={postValues}
                                             setPostValues={setPostValues}
                                             postUrlName={postUrlName}
-                                            appState={appState}
-                                            setAppState={setAppState}
+                                            appHelpers={appHelpers}
+                                            setAppHelpers={setAppHelpers}
                                         />
 
                                     </Grid>
@@ -59,3 +59,8 @@ const FormArea = ({ area, postValues, setPostValues, appState, setAppState, post
 };
 
 export default FormArea;
+// export default React.memo(FormArea, (prevVal, nextVal) => {
+//     // find out from which form aras belong the params that changed value from prevVal.postValues and nextVal.postValues
+//     console.log();
+//     return false
+// });

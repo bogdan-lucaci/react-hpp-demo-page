@@ -15,7 +15,7 @@ const getComputedString = (postValues, signature) => {
     return computedString;
 }
 
-const useComputedString = (postUrlData, postValues, appState, setAppState) => {
+const useComputedString = (postUrlData, postValues, appHelpers, setAppHelpers) => {
     const sha256 = require('hash.js/lib/hash/sha/256');
     const DATA_ACCESS = useAppContext('DataContext');
     // get signature only when MerchantID / SiteID val changes
@@ -31,8 +31,8 @@ const useComputedString = (postUrlData, postValues, appState, setAppState) => {
     );
 
     useEffect(() => {
-        setAppState({
-            ...appState,
+        setAppHelpers({
+            ...appHelpers,
             'Signature': signature,
             'Computed String': computedString
         });

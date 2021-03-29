@@ -4,7 +4,7 @@ import useAppContext from '../AppContextHook';
 import utils from '../utils/utils';
 import UrlParams from '../services/URLParams';
 
-const OverviewApp = ({ appState }) => {
+const OverviewApp = ({ appHelpers }) => {
     const palette = useAppContext('ThemeContext')['theme']['palette'];
     return (
         <>
@@ -17,7 +17,7 @@ const OverviewApp = ({ appState }) => {
                 <Divider light={true} />
                 <pre>
                     {utils.getJsonColoredMarkup(
-                        utils.sortParamsByName(appState), {
+                        utils.sortParamsByName(appHelpers), {
                         keyColor: palette.success.main,
                         valColor: palette.text.icon
                     }
@@ -46,4 +46,4 @@ const OverviewApp = ({ appState }) => {
 
 // 
 export default OverviewApp;
-//export default React.memo(OverviewApp, (prevVal, nextVal) => {console.log(JSON.stringify(prevVal.appState) == JSON.stringify(nextVal).appState, prevVal.appState, nextVal.appState); return prevVal.appState === nextVal.appState});
+//export default React.memo(OverviewApp, (prevVal, nextVal) => {console.log(JSON.stringify(prevVal.appHelpers) == JSON.stringify(nextVal).appHelpers, prevVal.appHelpers, nextVal.appHelpers); return prevVal.appHelpers === nextVal.appHelpers});

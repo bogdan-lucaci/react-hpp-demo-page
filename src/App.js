@@ -24,7 +24,7 @@ import useComputedString from './services/useComputedString';
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [alert, setAlert] = useState({ isOpen: false, text: '', type: 'info' });
-  const [appState, setAppState] = useState({});
+  const [appHelpers, setAppHelpers] = useState({});
   const [postValues, setPostValues] = useState({
     // append URL params to initial values
     ...SETTINGS.initialValues.postValues, 
@@ -36,7 +36,7 @@ const App = () => {
   );
 
   // get hash from custom hook "useComputedString" 
-  const hash = useComputedString(postUrlData, postValues, appState, setAppState);
+  const hash = useComputedString(postUrlData, postValues, appHelpers, setAppHelpers);
   useEffect(() => {
     setPostValues(postValues => ({
       ...postValues,
@@ -64,8 +64,8 @@ const App = () => {
                 setAlert={setAlert}
               />
               <OverviewApp
-                appState={{
-                  ...appState,
+                appHelpers={{
+                  ...appHelpers,
                   // 'Signature': signature,
                   // 'Computed String': computedString
                 }}
@@ -108,8 +108,8 @@ const App = () => {
                   postValues={postValues}
                   setPostValues={setPostValues}
                   postUrlData={postUrlData}
-                  appState={appState}
-                  setAppState={setAppState}
+                  appHelpers={appHelpers}
+                  setAppHelpers={setAppHelpers}
                 />
 
               </Box>
@@ -131,8 +131,8 @@ const App = () => {
             <Divider />
             <Box p={3} textAlign="left" align="center" /*height="29.75vh"*/>
               <OverviewApp
-                appState={{
-                  ...appState,
+                appHelpers={{
+                  ...appHelpers,
                   // 'Signature': signature,
                   // 'Computed String': computedString
                 }}

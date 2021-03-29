@@ -36,6 +36,6 @@ const OverviewPost = ({ postValues, postUrlData }) => {
         </>
     )
 };
-// <OverviewPost> should not update when appState changes for e.g.
+// <OverviewPost> should not update when appHelpers changes for e.g.
 export default React.memo(OverviewPost, (prevVal, nextVal) => prevVal.postValues === nextVal.postValues);
 //export default OverviewPost;

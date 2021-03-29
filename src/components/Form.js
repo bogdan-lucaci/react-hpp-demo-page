@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import FORM_DATA_MODEL from '../data/FormDataModel';
 import FormArea from './FormArea';
 
-const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlName }, appState, setAppState }) => {
+const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlName }, appHelpers, setAppHelpers }) => {
 
     return (
         <form
@@ -20,8 +20,8 @@ const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlNam
                         area={area}
                         postValues={postValues}
                         setPostValues={setPostValues}
-                        appState={appState}
-                        setAppState={setAppState}
+                        appHelpers={appHelpers}
+                        setAppHelpers={setAppHelpers}
                         postUrlName={postUrlName}
                     />
                 )
