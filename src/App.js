@@ -25,26 +25,12 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [alert, setAlert] = useState({ isOpen: false, text: '', type: 'info' });
   const [appState, setAppState] = useState({});
-  const [postValues, setPostValues] = useState(SETTINGS.initialValues.postValues);
+  const [postValues, setPostValues] = useState({
+    // append URL params to initial values
+    ...SETTINGS.initialValues.postValues, 
+    ...utils.getFormModelParamsObjFromUrl()
+  });
   const [postUrlData, setPostUrlData] = useState(SETTINGS.initialValues.postUrlData);
-
-  // get and set URL params
-  useEffect(() => {
-    const urlParams = utils.getUrlParamsObj();
-
-    const urlParamsObj = FORM_DATA_MODEL.params.reduce((paramsObj, param) => {
-      const formModelParamFromUrl = Object.keys(urlParams).find(urlParamName =>
-        urlParamName.toLowerCase() === param.name.toLowerCase()
-        && param.name !== 'MerchantTransactionID'
-      );
-
-      if (formModelParamFromUrl)
-        paramsObj[param.name] = urlParams[formModelParamFromUrl];
-      return paramsObj;
-    }, {});
-
-    setPostValues(prevPostValues => ({ ...prevPostValues, ...urlParamsObj }));
-  }, []);
 
   // get hash from custom hook "useComputedString" 
   const hash = useComputedString(postUrlData, postValues, appState, setAppState);

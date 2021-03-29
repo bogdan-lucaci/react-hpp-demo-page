@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tooltip } from '@material-ui/core';
 import { grey, teal } from '@material-ui/core/colors';
 import SETTINGS from '../Settings';
@@ -82,6 +82,7 @@ const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postU
                     {hasHelper &&
                         <InputParamHelper
                             name={name}
+                            inputHasValue={postValues[name] ? true : false}
                             setInputVal={setInputVal}
                             postUrlName={postUrlName}
                             merchantId={postValues['MerchantID']}
@@ -94,5 +95,7 @@ const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postU
     )
 };
 
-//export default React.memo(InputParam, (prevVal, nextVal) => prevVal.name !== nextVal.name && prevVal.val !== nextVal.val);
+// export default React.memo(InputParam, (prevVal, nextVal) => 
+//     prevVal.postValues[prevVal.name] === nextVal.postValues[nextVal.name]
+// );
 export default InputParam;

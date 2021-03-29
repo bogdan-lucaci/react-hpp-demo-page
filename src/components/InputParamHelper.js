@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import useAppContext from '../AppContextHook';
 import { grey } from '@material-ui/core/colors';
 
-const helperBehaviour = (select, dataLength, setInputVal) => {
-    if (select) {
+const helperBehaviour = (select, dataLength, setInputVal, inputHasValue) => {
+    if (select && !inputHasValue) {
         // select helper value if helper list's length is 1
         if (dataLength === 1) {
             setInputVal(select.options[1].value)
@@ -12,7 +12,7 @@ const helperBehaviour = (select, dataLength, setInputVal) => {
     }
 };
 
-const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantId, setShowHelper }) => {
+const InputParamHelper = ({ name: inputName, inputHasValue, setInputVal, postUrlName, merchantId, setShowHelper }) => {
     const DATA_ACCESS = useAppContext('DataContext');
     const helperData = DATA_ACCESS.getHelperData(inputName, postUrlName, merchantId);
     const dataLength = helperData.length;
@@ -32,7 +32,7 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
         // tell parent component to update markup for site helpers visibility
         if (inputName === 'SiteID') {
             setShowHelper(() => dataLength > 0);
-            helperBehaviour(helperSelectRef.current, dataLength, setInputVal);
+            helperBehaviour(helperSelectRef.current, dataLength, setInputVal, inputHasValue);
         }
     }, [merchantId]);
 
@@ -41,7 +41,7 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
         // tell parent component to update markup for merchant and site helpers visibility
         if (['MerchantID', 'SiteID'].includes(inputName)) {
             setShowHelper(() => dataLength > 0);
-            helperBehaviour(helperSelectRef.current, dataLength, setInputVal);
+            helperBehaviour(helperSelectRef.current, dataLength, setInputVal, inputHasValue);
         }
     }, [postUrlName]);
 

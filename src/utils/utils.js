@@ -68,6 +68,9 @@ const utils = {
         else
             return '{}';
     },
+    //************************************
+    // FORM_DATA_MODEL data access helpers
+    //************************************    
     // OUT  :   a string containing a JSON with keys sorted in the same order as params are described inside FORM_DATA_MODEL
     sortParamsByFormModel: (obj) => {
         let sortedObj = {};
@@ -78,6 +81,23 @@ const utils = {
             });
         }
         return JSON.stringify(sortedObj);
+    },
+    // OUT  :   a part of FORM_DATA_MODEL object containing key / values found in URL params
+    getFormModelParamsObjFromUrl: () => {
+        const urlParams = utils.getUrlParamsObj();
+
+        const urlParamsObj = FORM_DATA_MODEL.params.reduce((paramsObj, param) => {
+          const formModelParamFromUrl = Object.keys(urlParams).find(urlParamName =>
+            urlParamName.toLowerCase() === param.name.toLowerCase()
+            && param.name !== 'MerchantTransactionID'
+          );
+    
+          if (formModelParamFromUrl)
+            paramsObj[param.name] = urlParams[formModelParamFromUrl];
+          return paramsObj;
+        }, {});        
+
+        return urlParamsObj;
     }
 }
 
