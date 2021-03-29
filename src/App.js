@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SETTINGS from './Settings';
-import FORM_DATA_MODEL from './data/FormDataModel';
 import utils from './utils/utils';
+import UrlParams from './services/URLParams';
 
 import { Typography, Divider, Box, Container, Paper, Grid } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
@@ -28,7 +28,7 @@ const App = () => {
   const [postValues, setPostValues] = useState({
     // append URL params to initial values
     ...SETTINGS.initialValues.postValues, 
-    ...utils.getFormModelParamsObjFromUrl()
+    ...UrlParams.getFormModelObjFromUrl()
   });
   const [postUrlData, setPostUrlData] = useState(SETTINGS.initialValues.postUrlData);
 

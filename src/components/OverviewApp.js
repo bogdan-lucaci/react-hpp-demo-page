@@ -2,6 +2,7 @@ import React from 'react';
 import { Typography, Box, Divider } from '@material-ui/core';
 import useAppContext from '../AppContextHook';
 import utils from '../utils/utils';
+import UrlParams from '../services/URLParams';
 
 const OverviewApp = ({ appState }) => {
     const palette = useAppContext('ThemeContext')['theme']['palette'];
@@ -32,7 +33,7 @@ const OverviewApp = ({ appState }) => {
                 <Divider light={true} />
                 <pre>
                     {utils.getJsonColoredMarkup(
-                        JSON.stringify(utils.getUrlParamsObj()), {
+                        JSON.stringify(UrlParams.getObj()), {
                         keyColor: palette.success.main,
                         valColor: palette.text.icon
                     }
