@@ -63,6 +63,7 @@
 
 ### Issues:
 - *< to be updated >*
+- if `merchantId` param is found in URL params (does not matter if it has value or not) `<InpuParamHelper>` -> **helperBehaviour()** will not work
 
 
 
