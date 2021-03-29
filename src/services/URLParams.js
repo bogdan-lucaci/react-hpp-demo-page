@@ -40,14 +40,15 @@ const UrlParams = {
     // OUT  :   false boolean if no 'env' param is found (or has no value) inside URL params 
     getPostUrlObjFromUrl: () => {
         const postUrlName = UrlParams.getObj()['env'];
-        const postUrlObj = DATA_ACCESS.getPostURLByName(postUrlName);
-        if (postUrlName && postUrlObj) {
-            return (
-                {
-                    postUrlName: DATA_ACCESS.getPostURLByName(postUrlName)['Name'],
-                    formAction: DATA_ACCESS.getPostURLByName(postUrlName)['URL']
-                }
-            )
+        if (postUrlName) {
+            const postUrlObj = DATA_ACCESS.getPostURLByName(postUrlName);
+            if (postUrlObj)
+                return (
+                    {
+                        postUrlName: DATA_ACCESS.getPostURLByName(postUrlName)['Name'],
+                        formAction: DATA_ACCESS.getPostURLByName(postUrlName)['URL']
+                    }
+                )
         } else {
             return false;
         }
