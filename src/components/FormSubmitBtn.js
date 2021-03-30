@@ -75,7 +75,7 @@ const SubmitButton = ({ postValues, postUrlData, setIsLoading, ...props }) => {
             endIcon={<OpenInNewIcon color="disabled" />}
             onClick={handleSubmit}
         >
-            Pay
+            Submit
         </Button>
     )
 }
