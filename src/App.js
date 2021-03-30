@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import SETTINGS from './Settings';
-import utils from './utils/utils';
 import UrlParams from './services/URLParams';
 
 import { Typography, Divider, Box, Container, Paper, Grid } from '@material-ui/core';
@@ -9,6 +8,7 @@ import { Alert } from '@material-ui/lab';
 import BlockUI from './components/UI/Backdrop';
 import SnackBarAlert from './components/UI/SnackBarAlert';
 import AppHeaderAndDrawer from './components/UI/AppHeaderAndDrawer';
+import AppBehaviourHelpers from './components/AppBehaviourHelpers';
 import Form from './components/Form';
 // import InputPostUrl from './components/InputPostUrl';
 import ToButtonGroup from './components/UI/ToButtonGroup';
@@ -55,7 +55,12 @@ const App = () => {
     <>
       <Box mb={2}>
         <AppHeaderAndDrawer
-          // leftDrawer={<></>}
+          leftDrawer={
+            <AppBehaviourHelpers 
+              appHelpers={appHelpers}
+              setAppHelpers={setAppHelpers}
+            />
+          }
           rightDrawer={
             <>
               <PostsHistory
@@ -108,8 +113,6 @@ const App = () => {
                   postValues={postValues}
                   setPostValues={setPostValues}
                   postUrlData={postUrlData}
-                  appHelpers={appHelpers}
-                  setAppHelpers={setAppHelpers}
                 />
 
               </Box>

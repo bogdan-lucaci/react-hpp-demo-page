@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { Box, Divider } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import AppHeader from './AppHeader';
 import AppDrawer from './AppDrawer';
-
-import ThemeSwitch from './ThemeSwitch';
 
 // main reason for this component's existance is to move the "drawerIsOpen" state from <App>
 const AppHeaderAndDrawer = ({ children, leftDrawer, rightDrawer }) => {
@@ -38,9 +36,7 @@ const AppHeaderAndDrawer = ({ children, leftDrawer, rightDrawer }) => {
                 </Box> */}
             </AppHeader>
             <AppDrawer open={leftDrawerIsOpen} setOpen={setLeftDrawerIsOpen} position="left">
-                <ThemeSwitch />
-                <Divider />
-                <Box align="left" pl={2} pr={2} >
+                <Box align="center" pl={2} pr={2} >
                     {leftDrawer}
                 </Box>
             </AppDrawer>

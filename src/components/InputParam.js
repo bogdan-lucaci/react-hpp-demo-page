@@ -8,33 +8,28 @@ import InputParamHelper from './InputParamHelper';
 const { noValueString } = SETTINGS;
 
 // append or delete (if no val) param to postValues
-const handleValue = (name, val, isPaymentParam, setPostValues, setAppHelpers) => {
-    if (val) {
-        if (isPaymentParam)
-            setPostValues(prevPostValues => ({...prevPostValues, [name]: (val.toLowerCase() !== noValueString ? val : '')}))
-        else
-            setAppHelpers(prevAppHelpers => ({...prevAppHelpers, [name]: val}))
-    }
-    else {
-        if (isPaymentParam)
-            setPostValues(prevPostValues => {const updatedPostValues = {...prevPostValues}; delete updatedPostValues[name]; return { ...updatedPostValues}})
-        else
-            setAppHelpers(prevAppHelpers => {const updatedAppHelpers = {...prevAppHelpers}; delete updatedAppHelpers[name]; return { ...updatedAppHelpers}})
-    }
+const handleValue = (name, val, setPostValues) => {
+    setPostValues(prevPostValues => {
+        if (val) {
+            return ({...prevPostValues, [name]: (val.toLowerCase() !== noValueString ? val : '')})
+        }
+        else {
+            const updatedPostValues = {...prevPostValues}; 
+            delete updatedPostValues[name]; 
+            return { ...updatedPostValues}
+        }
+    });
 };
 
-const handleTooltip = (name, isPaymentParam) => {
-    if (!isPaymentParam)
-        return 'NOT a payment param!'
-    else
-        return FORM_DATA_MODEL.params.find(param => param.name === name).tooltip || ''
+const handleTooltip = (name) => {
+    return FORM_DATA_MODEL.params.find(param => param.name === name).tooltip || ''
 };
 
-const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postUrlName, appHelpers, setAppHelpers }) => {
+const InputParam = ({ id, name, postValues, setPostValues, postUrlName}) => {
     const hasHelper = FORM_DATA_MODEL.helpers.find(x => x.for === name) !== undefined;
     const [showHelper, setShowHelper] = useState(false);
 
-    const setInputVal = (val) => handleValue(name, val, isPaymentParam, setPostValues, setAppHelpers);
+    const setInputVal = (val) => handleValue(name, val, setPostValues);
 
     // generate new MTID and clear MerchantID and SiteID when POST URL value changes
     const generateNewMTID = () => {
@@ -60,8 +55,8 @@ const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postU
 
     return (
         <>
-            <Tooltip title={handleTooltip(name, isPaymentParam)} placement="bottom" arrow>
-                <fieldset style={{ border: (!isPaymentParam ? `1px dotted ${grey[700]}` : 'none'), padding: '.25rem', borderRadius: '.25rem' }}>
+            <Tooltip title={handleTooltip(name)} placement="bottom" arrow>
+                <fieldset style={{ border: 'none', padding: '.25rem', borderRadius: '.25rem' }}>
                     <legend htmlFor={id} style={{ cursor: (name === 'MerchantTransactionID' ? 'pointer' : 'inherit'), color: teal[600] }} onClick={name === 'MerchantTransactionID' ? generateNewMTID : null} >
                         {name}
                     </legend>
@@ -76,7 +71,7 @@ const InputParam = ({ id, name, isPaymentParam, postValues, setPostValues, postU
                         type="text"
                         id={id}
                         name={id}
-                        value={(isPaymentParam ? postValues[name] : appHelpers[name]) || ''}
+                        value={postValues[name] || ''}
                         onChange={(e) => setInputVal(e.target.value)}
                     />
                     {hasHelper &&

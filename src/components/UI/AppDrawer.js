@@ -7,7 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     root: {
         [theme.breakpoints.up('xs')]: {
-            maxWidth: '80%'
+            maxWidth: '80%',
+            minWidth: '14rem'
         },
         [theme.breakpoints.up('sm')]: {
             maxWidth: '55%'
@@ -42,7 +43,7 @@ const AppHeaderDrawer = ({ open, setOpen, position, children }) => {
                 },
             }}
         >
-            <Box m={1} style={{ display: 'flex', alignItems: 'center', justifyContent: position === 'left' ? 'center' : 'flex-start' }}>
+            <Box m={1} style={{ display: 'flex', alignItems: 'center', justifyContent: position === 'left' ? 'flex-end' : 'flex-start' }}>
                 <IconButton onClick={() => setOpen(false)}>
                     {position === 'left' && <ChevronLeft />}
                     {position === 'right' && <ChevronRight />}

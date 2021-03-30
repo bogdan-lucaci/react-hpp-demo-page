@@ -9,7 +9,7 @@ import FormSubAreaTitle from './FormSubAreaTitle';
 const getInputsForArea = (areaId) => FORM_DATA_MODEL.params.filter(param => param.area[0] === areaId);
 const areaIsCollapsedForPostUrlName = (areId, postUrlName) => FORM_DATA_MODEL.areas.filter((area) => area.collapseFor.includes(postUrlName)).map((area) => area.id).includes(areId);
 
-const FormArea = ({ area, postValues, setPostValues, appHelpers, setAppHelpers, postUrlName }) => {
+const FormArea = ({ area, postValues, setPostValues, postUrlName }) => {
     const [isCollapsed, setIsCollapsed] = useState(areaIsCollapsedForPostUrlName(area.id, postUrlName));
 
     useEffect(() => {
@@ -19,13 +19,14 @@ const FormArea = ({ area, postValues, setPostValues, appHelpers, setAppHelpers, 
     return (
         <Accordion key={area.id}
             expanded={!isCollapsed}
+            // TransitionProps={{ unmountOnExit: true }}
             onChange={() => setIsCollapsed(!isCollapsed)}
         >
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography>{area.name}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                {isCollapsed === false &&
+                {/* {isCollapsed === false && */}
                     <Grid container spacing={1}>
                         {getInputsForArea(area.id).map((param) => {
                             return (
@@ -39,12 +40,9 @@ const FormArea = ({ area, postValues, setPostValues, appHelpers, setAppHelpers, 
                                         <InputParam
                                             id={param.name + (param.area.toString())}
                                             name={param.name}
-                                            isPaymentParam={param.isPaymentParam}
                                             postValues={postValues}
                                             setPostValues={setPostValues}
                                             postUrlName={postUrlName}
-                                            appHelpers={appHelpers}
-                                            setAppHelpers={setAppHelpers}
                                         />
 
                                     </Grid>
@@ -52,7 +50,7 @@ const FormArea = ({ area, postValues, setPostValues, appHelpers, setAppHelpers, 
                             )
                         })}
                     </Grid>
-                }
+                {/* } */}
             </AccordionDetails>
         </Accordion>
     )
