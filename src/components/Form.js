@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import FORM_DATA_MODEL from '../data/FormDataModel';
-import FormPaymentTypeSelector from './FormPaymentTypeSelector';
+import FormTransactionTypeSelector from './FormTransactionTypeSelector';
 import FormArea from './FormArea';
 
 const getParamsForArea = (areaId) => FORM_DATA_MODEL.params.filter(param => param.area[0] === areaId);
@@ -29,7 +29,7 @@ const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlNam
 
     return (
         <>
-            <FormPaymentTypeSelector
+            <FormTransactionTypeSelector
                 setTransactionType={setTransactionType}
             />
             <form
