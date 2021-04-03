@@ -1,5 +1,5 @@
 import FORM_DATA_MODEL from '../data/FormDataModel';
-import { Divider, Grid } from '@material-ui/core';
+import { Divider, Grid, Typography } from '@material-ui/core';
 
 // const getSubAreaForAreaAndParam = (areaId, paramArea) => (
 //     FORM_DATA_MODEL.areas
@@ -34,7 +34,9 @@ const FormSubAreaTitle = ({ param }) => {
         <>
             {subAreaTitle &&
                 <Grid key={param.name + (param.area.toString())} item xs={12}>
-                    <h4>{subAreaTitle}</h4>
+                    <Typography color="textSecondary" variant="caption">
+                        {subAreaTitle}
+                    </Typography>
                     <Divider />
                 </Grid>
             }
