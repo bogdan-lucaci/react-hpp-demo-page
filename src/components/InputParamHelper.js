@@ -12,9 +12,9 @@ const helperBehaviour = (select, dataLength, setInputVal, inputHasValue) => {
     }
 };
 
-const InputParamHelper = ({ name: inputName, inputHasValue, setInputVal, postUrlName, merchantId, setShowHelper }) => {
+const InputParamHelper = ({ name: inputName, inputHasValue, setInputVal, postUrlName, merchantId, setShowHelper, transactionType}) => {
     const DATA_ACCESS = useAppContext('DataContext');
-    const helperData = DATA_ACCESS.getHelperData(inputName, postUrlName, merchantId);
+    const helperData = DATA_ACCESS.getHelperData(inputName, postUrlName, merchantId, transactionType);
     const dataLength = helperData.length;
     const helperSelectRef = useRef();
 
@@ -26,6 +26,16 @@ const InputParamHelper = ({ name: inputName, inputHasValue, setInputVal, postUrl
         if (helperSelectRef.current) 
             helperSelectRef.current.selectedIndex = -1;
     }, []);
+
+    // helpers behaviour when transaction type changes
+    useEffect(() => {
+        // tell parent component to update markup for site helpers visibility
+        if (inputName === 'ActionName') {
+            console.log(dataLength);
+            setShowHelper(() => dataLength > 0);
+            helperBehaviour(helperSelectRef.current, dataLength, setInputVal, inputHasValue);
+        }
+    }, [transactionType]);
 
     // helpers behaviour when MerchantID changes
     useEffect(() => {
@@ -44,6 +54,8 @@ const InputParamHelper = ({ name: inputName, inputHasValue, setInputVal, postUrl
             helperBehaviour(helperSelectRef.current, dataLength, setInputVal, inputHasValue);
         }
     }, [postUrlName]);
+
+
 
     const handleChange = (e) => {
         setInputVal(e.target.value);
@@ -65,7 +77,7 @@ const InputParamHelper = ({ name: inputName, inputHasValue, setInputVal, postUrl
                 >
                     <option key="no-value" value=""></option >
                     {helperData.map(x =>
-                        <option key={x.id} value={x.id}>{x.val}</option >
+                        <option key={x.id} value={x.val}>{x.displayVal}</option >
                     )}
                 </select>
             }

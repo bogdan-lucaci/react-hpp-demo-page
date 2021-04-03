@@ -10,8 +10,7 @@ const getParamsForAreaAndType = (areaId, transactionType) =>
         && (!param.onlyFor || param.onlyFor.includes(transactionType))
     );
 
-const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlName } }) => {
-    const [transactionType, setTransactionType] = useState('payment');
+const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlName }, transactionType, setTransactionType }) => {
 
     useEffect(() => {
         // delete from "postValues" all params that do not belong to current transaction type

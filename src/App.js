@@ -34,6 +34,7 @@ const App = () => {
     // use post url name sent in URL params or fallback to initial values
     UrlParams.getPostUrlObjFromUrl() || SETTINGS.initialValues.postUrlData
   );
+  const [transactionType, setTransactionType] = useState('payment');
 
   // get hash from custom hook "useComputedString" 
   const hash = useComputedString(postUrlData, postValues, appHelpers, setAppHelpers);
@@ -113,6 +114,8 @@ const App = () => {
                   postValues={postValues}
                   setPostValues={setPostValues}
                   postUrlData={postUrlData}
+                  transactionType={transactionType}
+                  setTransactionType={setTransactionType}
                 />
 
               </Box>

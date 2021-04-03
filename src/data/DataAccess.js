@@ -86,12 +86,12 @@ const DATA_ACCESS = {
             else
                 return '';
         }
-        else 
+        else
             return '';
-    },    
+    },
     // OUT  :   an array of objects containing input's helper's data
     // [ {"id": "...", "val": "..."}]
-    getHelperData: function (inputName, envName, merchantId) {
+    getHelperData: function (inputName, envName, merchantId, transactionType) {
         //if (inputName === 'SiteID') alert(inputName);
         switch (inputName) {
             case 'Country':
@@ -99,7 +99,8 @@ const DATA_ACCESS = {
                     DATA_ACCESS.getCountries().map(country => (
                         {
                             id: country.Code,
-                            val: (country.Code + ' | ' + country.Name)
+                            val: country.Code,
+                            displayVal: (country.Code + ' | ' + country.Name)
                         }
                     ))
                 )
@@ -108,7 +109,8 @@ const DATA_ACCESS = {
                     DATA_ACCESS.getCurrencies().map(currency => (
                         {
                             id: currency.Code,
-                            val: (currency.Code + ' | ' + currency.Name)
+                            val: currency.Code,
+                            displayVal: (currency.Code + ' | ' + currency.Name)
                         }
                     ))
                 )
@@ -117,7 +119,8 @@ const DATA_ACCESS = {
                     DATA_ACCESS.getMerchantsForEnv(envName).map(merchant => (
                         {
                             id: merchant.ID,
-                            val: (merchant.ID + ' | ' + merchant.Alias)
+                            val: merchant.ID,
+                            displayVal: (merchant.ID + ' | ' + merchant.Alias)
                         }
                     ))
                 )
@@ -128,11 +131,66 @@ const DATA_ACCESS = {
                         .map(site => (
                             {
                                 id: site.SiteID,
-                                val: site.SiteID
+                                val: site.SiteID,
+                                displayVal: site.SiteID
                             }
                         ))
                 )
-
+            case 'SkipHPP':
+            case 'RedirectInIframe':
+            case 'MerchantRedirectInIframe':
+            case 'Capture':
+                return ([
+                    { id: 101, val: '0', displayVal: '0' },
+                    { id: 102, val: '1', displayVal: '1' },
+                ])
+            case 'IsOffline':
+                return ([
+                    { id: 201, val: 'true', displayVal: 'true' },
+                    { id: 202, val: 'false', displayVal: 'false' },
+                ])
+            case 'Articles':
+                return ([
+                    {
+                        id: 301,
+                        val: 'Name=Metro Exodus - Gold Edition&Quantity=1;Name=Dragon Age™: Origins - Ultimate Edition&Quantity=1',
+                        displayVal: 'AliPay'
+                    },
+                    {
+                        id: 302,
+                        val: 'ID=1&Quantity=1&Name=Nikon 35mm&Price=60&Type=5&TaxType=1&MerchantArticleID=123;ID=2&Quantity=2&Name=Trepied&Price=20&Type=5&MerchantArticleID=124',
+                        displayVal: 'Klarna'
+                    },
+                    {
+                        id: 303,
+                        val: 'ID=1&Quantity=1&Name=Nikon 35mm&Price=60&Type=5&TaxType=1&MerchantArticleID=123;ID=2&Quantity=2&Name=Trepied&Price=20&Type=5&TaxType=1&MerchantArticleID=124',
+                        displayVal: 'Yandex'
+                    },
+                    {
+                        id: 304,
+                        val: 'ID=1&Quantity=1;ID=2&Quantity=2',
+                        displayVal: 'Refund'
+                    }
+                ])
+            case 'ActionName':
+                switch (transactionType) {
+                    case 'payout':
+                        return ([{ id: 401, val: 'InitiatePayout', displayVal: 'InitiatePayout' }])
+                    case 'recurrent':
+                        return ([
+                            { id: 501, val: 'OpenPreapproval', displayVal: 'OpenPreapproval' },
+                            { id: 502, val: 'GetPreapprovalStatus', displayVal: 'GetPreapprovalStatus' },
+                            { id: 503, val: 'UpdatePreapproval', displayVal: 'UpdatePreapproval' },
+                            { id: 504, val: 'ClosePreapproval', displayVal: 'ClosePreapproval' },
+                            { id: 505, val: 'InitiateRecurrentPayment', displayVal: 'InitiateRecurrentPayment' }
+                        ])
+                    case 'refund':
+                        return ([{ id: 601, val: 'InitiateRefund', displayVal: 'InitiateRefund' }])
+                    case 'capture':
+                        return ([{ id: 701, val: 'CapturePayment', displayVal: 'CapturePayment' }])
+                    case 'cancel':
+                        return ([{ id: 801, val: 'CancelPayment', displayVal: 'CancelPayment' }])
+                }
             default:
                 return []
 

@@ -72,6 +72,7 @@ const FormArea = ({ area, transactionType, postValues, setPostValues, postUrlNam
                                         postValues={postValues}
                                         setPostValues={setPostValues}
                                         postUrlName={postUrlName}
+                                        transactionType={transactionType}
                                     />
 
                                 </Grid>

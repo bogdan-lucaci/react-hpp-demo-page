@@ -7,25 +7,24 @@ import InputParamHelper from './InputParamHelper';
 
 const { noValueString } = SETTINGS;
 
+const getTooltip = name => FORM_DATA_MODEL.params.find(param => param.name === name).tooltip || '';
+
 // append or delete (if no val) param to postValues
 const handleValue = (name, val, setPostValues) => {
     setPostValues(prevPostValues => {
         if (val) {
-            return ({...prevPostValues, [name]: (val.toLowerCase() !== noValueString ? val : '')})
+            console.log({ ...prevPostValues, [name]: (val.toLowerCase() !== noValueString ? val : '') });
+            return ({ ...prevPostValues, [name]: (val.toLowerCase() !== noValueString ? val : '') })
         }
         else {
-            const updatedPostValues = {...prevPostValues}; 
-            delete updatedPostValues[name]; 
-            return { ...updatedPostValues}
+            const updatedPostValues = { ...prevPostValues };
+            delete updatedPostValues[name];
+            return { ...updatedPostValues }
         }
     });
 };
 
-const handleTooltip = (name) => {
-    return FORM_DATA_MODEL.params.find(param => param.name === name).tooltip || ''
-};
-
-const InputParam = ({ id, name, postValues, setPostValues, postUrlName}) => {
+const InputParam = ({ id, name, postValues, setPostValues, postUrlName, transactionType }) => {
     const hasHelper = FORM_DATA_MODEL.helpers.find(x => x.for === name) !== undefined;
     const [showHelper, setShowHelper] = useState(false);
 
@@ -35,7 +34,7 @@ const InputParam = ({ id, name, postValues, setPostValues, postUrlName}) => {
     const generateNewMTID = () => {
         if (name === 'MerchantTransactionID')
             setInputVal(Math.floor((Math.random() * 1000000000000) + 1).toString())
-    };    
+    };
     useEffect(() => {
         generateNewMTID();
         return () => {
@@ -47,15 +46,14 @@ const InputParam = ({ id, name, postValues, setPostValues, postUrlName}) => {
     // clear SiteID when MerchantID value changes
     useEffect(() => {
         return () => {
-            if (name === 'SiteID') 
+            if (name === 'SiteID')
                 setInputVal(false);
         }
     }, [postValues['MerchantID']]);
 
-
     return (
         <>
-            <Tooltip title={handleTooltip(name)} placement="bottom" arrow>
+            <Tooltip title={getTooltip(name)} placement="bottom" arrow>
                 <fieldset style={{ border: 'none', padding: '.25rem', borderRadius: '.25rem' }}>
                     <legend htmlFor={id} style={{ cursor: (name === 'MerchantTransactionID' ? 'pointer' : 'inherit'), color: teal[600] }} onClick={name === 'MerchantTransactionID' ? generateNewMTID : null} >
                         {name}
@@ -82,6 +80,7 @@ const InputParam = ({ id, name, postValues, setPostValues, postUrlName}) => {
                             postUrlName={postUrlName}
                             merchantId={postValues['MerchantID']}
                             setShowHelper={setShowHelper}
+                            transactionType={transactionType}
                         />
                     }
                 </fieldset>

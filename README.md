@@ -35,10 +35,12 @@
 - HistoryList - ***UI*** - add custom scroll bar to history component
 - HistoryList - add 'View History for a specific period' action + add date-time range picker + validations + UI feedback
 - move logic regarding "URLparams" from `<App>` + useEffect(... setPostValues(...),[]) to affecting initial values for "postValues" and "postUrlData" when they are created (correct usage of React lifecycle events)
+- handle `postUrlName` sent as an URL param
 
 ### Functionalities to come:
 
-- handle `postUrlName` sent as an URL param
+- REFACTORY after `FORM_DATA_MODEL` has transaction type for all params (should move `transactionType` status to `<App>` and refactory the display logic for `<Form>` and `<FormArea>` + refactory for effects inside `<InputParam>` and `<InputParamHelper>`)
+- HistoryList - save and apply transaction type
 - HistoryList - stop using confirmation provider as a Material UI provider when selecting period (to be able to disable OK btn on err)
 - History list -> add 'Delete for Period'
 - set form action value by URL params
