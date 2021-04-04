@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import FORM_DATA_MODEL from '../../../data/FormDataModel';
-import TransactionTypeSelector from '../../TransactionTypeSelector';
 import FormArea from './FormArea';
 
 const getParamsForArea = (areaId) => FORM_DATA_MODEL.params.filter(param => param.area[0] === areaId);
@@ -10,7 +9,7 @@ const getParamsForAreaAndType = (areaId, transactionType) =>
         && (!param.onlyFor || param.onlyFor.includes(transactionType))
     );
 
-const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlName }, transactionType, setTransactionType }) => {
+const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlName }, transactionType }) => {
 
     useEffect(() => {
         // delete from "postValues" all params that do not belong to current transaction type
@@ -27,32 +26,27 @@ const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlNam
     }, [transactionType]);
 
     return (
-        <>
-            <TransactionTypeSelector
-                setTransactionType={setTransactionType}
-            />
-            <form
-                method="post"
-                action={formAction}
-                name="HppPostForm"
-                id="HppPostForm"
-                spellCheck="false"
-                autoComplete="off"
-            >
-                {FORM_DATA_MODEL.areas
-                    .filter(area => getParamsForAreaAndType(area.id, transactionType).length)
-                    .map(area =>
-                        <FormArea
-                            key={area.id}
-                            area={area}
-                            postValues={postValues}
-                            setPostValues={setPostValues}
-                            postUrlName={postUrlName}
-                            transactionType={transactionType}
-                        />
-                    )}
-            </form>
-        </>
+        <form
+            method="post"
+            action={formAction}
+            name="HppPostForm"
+            id="HppPostForm"
+            spellCheck="false"
+            autoComplete="off"
+        >
+            {FORM_DATA_MODEL.areas
+                .filter(area => getParamsForAreaAndType(area.id, transactionType).length)
+                .map(area =>
+                    <FormArea
+                        key={area.id}
+                        area={area}
+                        postValues={postValues}
+                        setPostValues={setPostValues}
+                        postUrlName={postUrlName}
+                        transactionType={transactionType}
+                    />
+                )}
+        </form>
     )
 };
 

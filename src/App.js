@@ -9,6 +9,7 @@ import BlockUI from './components/UI/Backdrop';
 import SnackBarAlert from './components/UI/SnackBarAlert';
 import AppHeaderAndDrawer from './components/UI/AppHeaderAndDrawer';
 import AppBehaviourHelpers from './components/AppBehaviourHelpers';
+import TransactionTypeSelector from './components/TransactionTypeSelector';
 import Form from './components/reqParamsDisplay/accordion/Form';
 // import ReqUrlSelectorV1 from './components/reqUrlSelector/ReqUrlSelectorV1';
 import ToButtonGroup from './components/UI/ToButtonGroup';
@@ -108,6 +109,11 @@ const App = () => {
                   />
                 </ToButtonGroup>
               </Box>
+              <Box mb={1}>
+                <TransactionTypeSelector
+                  setTransactionType={setTransactionType}
+                />
+              </Box>      
               <Box align="left">
 
                 <Form
@@ -115,7 +121,6 @@ const App = () => {
                   setPostValues={setPostValues}
                   postUrlData={postUrlData}
                   transactionType={transactionType}
-                  setTransactionType={setTransactionType}
                 />
 
               </Box>
