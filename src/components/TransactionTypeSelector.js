@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     }
 });
 
-const FormTransactionTypeSelector = ({ setTransactionType }) => {
+const TransactionTypeSelector = ({ setTransactionType }) => {
     const [value, setValue] = React.useState('payment');
     const classes = useStyles();
 
@@ -44,4 +44,4 @@ const FormTransactionTypeSelector = ({ setTransactionType }) => {
     );
 }
 
-export default FormTransactionTypeSelector;
+export default TransactionTypeSelector;

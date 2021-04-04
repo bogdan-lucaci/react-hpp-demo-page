@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Tooltip } from '@material-ui/core';
 import { grey, teal } from '@material-ui/core/colors';
-import SETTINGS from '../Settings';
-import FORM_DATA_MODEL from '../data/FormDataModel';
+import SETTINGS from '../../../Settings';
+import FORM_DATA_MODEL from '../../../data/FormDataModel';
 import InputParamHelper from './InputParamHelper';
 
 const { noValueString } = SETTINGS;

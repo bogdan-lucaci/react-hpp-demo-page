@@ -9,11 +9,11 @@ import BlockUI from './components/UI/Backdrop';
 import SnackBarAlert from './components/UI/SnackBarAlert';
 import AppHeaderAndDrawer from './components/UI/AppHeaderAndDrawer';
 import AppBehaviourHelpers from './components/AppBehaviourHelpers';
-import Form from './components/Form';
-// import InputPostUrl from './components/InputPostUrl';
+import Form from './components/paramsDisplay/accordion/Form';
+// import ReqUrlSelectorV1 from './components/reqUrlSelector/ReqUrlSelectorV1';
 import ToButtonGroup from './components/UI/ToButtonGroup';
-import FormActionSelector from './components/FormActionSelector';
-import FormSubmitButton from './components/FormSubmitBtn';
+import ReqUrlSelectorV2 from './components/reqUrlSelector/ReqUrlSelectorV2';
+import SubmitBtn from './components/SubmitBtn';
 import OverviewPost from './components/OverviewPost';
 import OverviewApp from './components/OverviewApp';
 import PostsHistory from './components/PostsHistory';
@@ -79,8 +79,8 @@ const App = () => {
             </>}
         >
           <h1>GlobalPay Demo</h1>
-          {/* <InputPostUrl setPostUrlData={setPostUrlData} />
-          <FormSubmitButton formAction={postUrlData['formAction']} postValues={postValues} setIsLoading={setIsLoading}/> */}
+          {/* <ReqUrlSelectorV1 postUrlData={postUrlData} setPostUrlData={setPostUrlData} />
+          <SubmitBtn formAction={postUrlData['formAction']} postValues={postValues} setIsLoading={setIsLoading}/> */}
         </AppHeaderAndDrawer>
       </Box>
 
@@ -97,11 +97,11 @@ const App = () => {
               </Box>
               <Box mb={1}>
                 <ToButtonGroup>
-                  <FormActionSelector
+                  <ReqUrlSelectorV2
                     postUrlData={postUrlData}
                     setPostUrlData={setPostUrlData}
                   />
-                  <FormSubmitButton
+                  <SubmitBtn
                     postUrlData={postUrlData}
                     postValues={postValues}
                     setIsLoading={setIsLoading}

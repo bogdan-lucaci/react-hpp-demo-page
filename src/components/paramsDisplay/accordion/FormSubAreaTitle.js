@@ -1,4 +1,4 @@
-import FORM_DATA_MODEL from '../data/FormDataModel';
+import FORM_DATA_MODEL from '../../../data/FormDataModel';
 import { Divider, Grid, Typography } from '@material-ui/core';
 
 // const getSubAreaForAreaAndParam = (areaId, paramArea) => (

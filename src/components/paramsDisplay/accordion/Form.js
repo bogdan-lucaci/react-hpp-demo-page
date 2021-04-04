@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import FORM_DATA_MODEL from '../data/FormDataModel';
-import FormTransactionTypeSelector from './FormTransactionTypeSelector';
+import FORM_DATA_MODEL from '../../../data/FormDataModel';
+import TransactionTypeSelector from '../../TransactionTypeSelector';
 import FormArea from './FormArea';
 
 const getParamsForArea = (areaId) => FORM_DATA_MODEL.params.filter(param => param.area[0] === areaId);
@@ -28,7 +28,7 @@ const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlNam
 
     return (
         <>
-            <FormTransactionTypeSelector
+            <TransactionTypeSelector
                 setTransactionType={setTransactionType}
             />
             <form

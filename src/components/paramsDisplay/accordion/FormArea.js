@@ -3,7 +3,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Grid, Typography } from 
 //import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
-import FORM_DATA_MODEL from '../data/FormDataModel';
+import FORM_DATA_MODEL from '../../../data/FormDataModel';
 import InputParam from './InputParam';
 import FormSubAreaTitle from './FormSubAreaTitle';
 

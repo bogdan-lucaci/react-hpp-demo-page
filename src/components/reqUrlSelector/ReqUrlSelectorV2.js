@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
 import { Box, Button, ClickAwayListener, Grow, OutlinedInput, Paper, Popper, MenuItem, MenuList } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import DATA_ACCESS from '../data/DataAccess';
-import useAppContext from '../AppContextHook';
+import DATA_ACCESS from '../../data/DataAccess';
+import useAppContext from '../../AppContextHook';
 
 const options = DATA_ACCESS.getPostURLs();
 
-const FormActionSelector = ({ formAction, postValues, postUrlData, setPostUrlData,  ...childProps }) => {
+const ReqUrlSelector = ({ formAction, postValues, postUrlData, setPostUrlData,  ...childProps }) => {
     
     const [open, setOpen] = useState(false);
     const anchorRef = useRef(null);
@@ -114,4 +114,4 @@ const FormActionSelector = ({ formAction, postValues, postUrlData, setPostUrlDat
     );
 };
 
-export default FormActionSelector;
+export default ReqUrlSelector;
