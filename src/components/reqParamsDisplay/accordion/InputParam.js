@@ -13,7 +13,7 @@ const getTooltip = name => FORM_DATA_MODEL.params.find(param => param.name === n
 const handleValue = (name, val, setPostValues) => {
     setPostValues(prevPostValues => {
         if (val) {
-            console.log({ ...prevPostValues, [name]: (val.toLowerCase() !== noValueString ? val : '') });
+            //console.log({ ...prevPostValues, [name]: (val.toLowerCase() !== noValueString ? val : '') });
             return ({ ...prevPostValues, [name]: (val.toLowerCase() !== noValueString ? val : '') })
         }
         else {

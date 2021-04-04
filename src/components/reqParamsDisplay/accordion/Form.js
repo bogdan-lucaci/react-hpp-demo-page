@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import FORM_DATA_MODEL from '../../../data/FormDataModel';
 import FormArea from './FormArea';
 
-const getParamsForArea = (areaId) => FORM_DATA_MODEL.params.filter(param => param.area[0] === areaId);
+const getParamsForArea = (areaId) => FORM_DATA_MODEL.params.filter(param => param.area === areaId);
 const getParamsForAreaAndType = (areaId, transactionType) =>
     FORM_DATA_MODEL.params.filter(param =>
-        param.area[0] === areaId
+        param.area === areaId
         && (!param.onlyFor || param.onlyFor.includes(transactionType))
     );
 

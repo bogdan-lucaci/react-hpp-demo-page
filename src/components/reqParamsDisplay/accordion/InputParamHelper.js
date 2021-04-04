@@ -31,7 +31,7 @@ const InputParamHelper = ({ name: inputName, inputHasValue, setInputVal, postUrl
     useEffect(() => {
         // tell parent component to update markup for site helpers visibility
         if (inputName === 'ActionName') {
-            console.log(dataLength);
+            //console.log(dataLength);
             setShowHelper(() => dataLength > 0);
             helperBehaviour(helperSelectRef.current, dataLength, setInputVal, inputHasValue);
         }

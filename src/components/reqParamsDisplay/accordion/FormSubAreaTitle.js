@@ -14,20 +14,18 @@ const getSubAreasForArea = (areaId) => {
 };
 const getParamsForAreaAndSubArea = (areaId, subAreaId) =>
     FORM_DATA_MODEL.params
-        .filter(param => param.area[0] === areaId && param.area[1] && param.area[1] === subAreaId);
+        .filter(param => param.area === areaId && param.subArea && param.subArea === subAreaId);
 
 const FormSubAreaTitle = ({ param }) => {
     let subAreaTitle = null;
-    const areaId = param.area[0];
-    const subAreaId = param.area[1];
 
-    const subAreas = getSubAreasForArea(areaId);
+    const subAreas = getSubAreasForArea(param.area);
     if (subAreas.length) {
         // subarea title should appear before the first input from subarea            
-        const firstParamsForAreaAndSubArea = getParamsForAreaAndSubArea(areaId, subAreaId)[0];
+        const firstParamsForAreaAndSubArea = getParamsForAreaAndSubArea(param.area, param.subArea)[0];
 
         if (param.name === firstParamsForAreaAndSubArea.name)
-            subAreaTitle = subAreas.find(subArea => subArea.id === subAreaId).name;
+            subAreaTitle = subAreas.find(subArea => subArea.id === param.subArea).name;
     }
 
     return (

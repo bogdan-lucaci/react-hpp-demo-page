@@ -8,10 +8,10 @@ import InputParam from './InputParam';
 import FormSubAreaTitle from './FormSubAreaTitle';
 
 
-const getParamsForArea = (areaId) => FORM_DATA_MODEL.params.filter(param => param.area[0] === areaId);
+const getParamsForArea = (areaId) => FORM_DATA_MODEL.params.filter(param => param.area === areaId);
 const getParamsForAreaAndType = (areaId, transactionType) =>
     FORM_DATA_MODEL.params.filter(param =>
-        param.area[0] === areaId
+        param.area === areaId
         && (!param.onlyFor || param.onlyFor.includes(transactionType))
     );
 const areaIsCollapsedForPostUrlName = (areId, postUrlName) => FORM_DATA_MODEL.areas.filter((area) => area.collapseFor.includes(postUrlName)).map((area) => area.id).includes(areId);
@@ -61,7 +61,7 @@ const FormArea = ({ area, transactionType, postValues, setPostValues, postUrlNam
                         return (
                             <React.Fragment key={param.name + (param.area.toString())} >
                                 {/* check if a form sub-area starts and if we should display a title */}
-                                {area.id === param.area[0] && param.area[1] &&
+                                {area.id === param.area && param.subArea &&
                                     <FormSubAreaTitle param={param} />
                                 }
                                 <Grid item xs={12} sm={6}>
