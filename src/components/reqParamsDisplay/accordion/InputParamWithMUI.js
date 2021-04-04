@@ -7,7 +7,7 @@ import InputParamHelper from './InputParamHelper';
 
 const { noValueString } = SETTINGS;
 
-const getTooltip = name => FORM_DATA_MODEL.params.find(param => param.name === name).tooltip || '';
+const getParamTooltipByName = name => FORM_DATA_MODEL.params.find(param => param.name === name).tooltip || '';
 
 // append or delete (if no val) param to postValues
 const handleValue = (currObj, name, val) => {
@@ -60,7 +60,7 @@ const InputParam = ({ id, name, postValues, setPostValues, postUrlName, appHelpe
     return (
         <>
 
-            <Tooltip title={getTooltip(name)} placement="bottom" arrow>
+            <Tooltip title={getParamTooltipByName(name)} placement="bottom" arrow>
                 <ButtonGroup 
                     disableElevation={true} 
                     size="large" 

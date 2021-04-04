@@ -159,7 +159,7 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
         }, 0);
     };
 
-    const getTooltip = ({ date, url: formAction, urlName, val: postValue }) => {
+    const getParamTooltipByName = ({ date, url: formAction, urlName, val: postValue }) => {
         const jsonMarkup = (json) => (
             <>
                 {"{"}
@@ -275,7 +275,7 @@ const PostsHistory = ({ setPostValues, setPostUrlData, setAlert }) => {
                                 <SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: '40vh' }}>
                                     <List dense={true} >
                                         {visibleHistory.reverse().map(submittedPost => (
-                                            <BootstrapTooltip key={submittedPost.date + Math.floor(Math.random() * 100)} title={getTooltip(submittedPost)} placement="top" arrow>
+                                            <BootstrapTooltip key={submittedPost.date + Math.floor(Math.random() * 100)} title={getParamTooltipByName(submittedPost)} placement="top" arrow>
                                                 <ListItem style={{ paddingLeft: "0" }}>
                                                     <ListItemIcon>
                                                         <IconButton color="primary" edge="end" onClick={() => applySubmitToPage(submittedPost)}>
