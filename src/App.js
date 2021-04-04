@@ -9,7 +9,7 @@ import BlockUI from './components/UI/Backdrop';
 import SnackBarAlert from './components/UI/SnackBarAlert';
 import AppHeaderAndDrawer from './components/UI/AppHeaderAndDrawer';
 import AppBehaviourHelpers from './components/AppBehaviourHelpers';
-import Form from './components/paramsDisplay/accordion/Form';
+import Form from './components/reqParamsDisplay/accordion/Form';
 // import ReqUrlSelectorV1 from './components/reqUrlSelector/ReqUrlSelectorV1';
 import ToButtonGroup from './components/UI/ToButtonGroup';
 import ReqUrlSelectorV2 from './components/reqUrlSelector/ReqUrlSelectorV2';
