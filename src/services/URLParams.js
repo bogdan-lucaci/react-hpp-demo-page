@@ -2,7 +2,14 @@ import FORM_DATA_MODEL from '../data/FormDataModel';
 import DATA_ACCESS from '../data/DataAccess';
 
 const UrlParams = {
-    getNamesArray: () => String(document.location).split('?')[1].split('&').map(paramPair => paramPair.split('=')[0].toLowerCase()),
+    getNamesArray: () => {
+        if (window.location.href.includes('?')) {
+            let allKeysValuesString = String(document.location).split('?')[1];
+            return allKeysValuesString.split('&').map(paramPair => paramPair.split('=')[0].toLowerCase());
+        }
+        else
+            return [];
+    },
     // OUT  :   an object containing the keys and values found inside the URL
     getObj: () => {
         const url = String(document.location);
