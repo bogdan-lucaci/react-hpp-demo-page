@@ -10,11 +10,12 @@ import SnackBarAlert from './components/UI/SnackBarAlert';
 import AppHeaderAndDrawer from './components/UI/AppHeaderAndDrawer';
 import AppBehaviourHelpers from './components/AppBehaviourHelpers';
 import TransactionTypeSelector from './components/TransactionTypeSelector';
-import Form from './components/reqParamsDisplay/accordion/Form';
 // import ReqUrlSelectorV1 from './components/reqUrlSelector/ReqUrlSelectorV1';
 import ToButtonGroup from './components/UI/ToButtonGroup';
 import ReqUrlSelectorV2 from './components/reqUrlSelector/ReqUrlSelectorV2';
 import SubmitBtn from './components/SubmitBtn';
+import Form from './components/reqParamsDisplay/accordion/Form';
+import ParamsPicker from './components/reqParamsDisplay/pickList/ParamsPicker';
 import OverviewPost from './components/OverviewPost';
 import OverviewApp from './components/OverviewApp';
 import PostsHistory from './components/PostsHistory';
@@ -28,7 +29,7 @@ const App = () => {
   const [appHelpers, setAppHelpers] = useState({});
   const [postValues, setPostValues] = useState({
     // append URL params to initial values
-    ...SETTINGS.initialValues.postValues, 
+    ...SETTINGS.initialValues.postValues,
     ...UrlParams.getFormModelObjFromUrl()
   });
   const [postUrlData, setPostUrlData] = useState(
@@ -58,7 +59,7 @@ const App = () => {
       <Box mb={2}>
         <AppHeaderAndDrawer
           leftDrawer={
-            <AppBehaviourHelpers 
+            <AppBehaviourHelpers
               appHelpers={appHelpers}
               setAppHelpers={setAppHelpers}
             />
@@ -113,16 +114,24 @@ const App = () => {
                 <TransactionTypeSelector
                   setTransactionType={setTransactionType}
                 />
-              </Box>      
+              </Box>
               <Box align="left">
-
-                <Form
-                  postValues={postValues}
-                  setPostValues={setPostValues}
-                  postUrlData={postUrlData}
-                  transactionType={transactionType}
-                />
-
+                {UrlParams.getNamesArray().includes('v2')
+                  ?
+                  <ParamsPicker
+                    postValues={postValues}
+                    setPostValues={setPostValues}
+                    postUrlData={postUrlData}
+                    transactionType={transactionType}
+                  />
+                  :
+                  <Form
+                    postValues={postValues}
+                    setPostValues={setPostValues}
+                    postUrlData={postUrlData}
+                    transactionType={transactionType}
+                  />
+                }
               </Box>
             </Box>
             {/* </Paper> */}
@@ -163,7 +172,7 @@ const App = () => {
       </Grid>
 
       <SnackBarAlert
-        open={alert['isOpen']} setOpen={setAlert} 
+        open={alert['isOpen']} setOpen={setAlert}
         text={alert['text']}
         severity={alert['type']}
       />
