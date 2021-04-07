@@ -33,17 +33,6 @@ const FormArea = ({ area, transactionType, postValues, setPostValues, postUrlNam
         setIsCollapsed(areaIsCollapsedForPostUrlName(area.id, postUrlName));
     }, [postUrlName]);
 
-    useEffect(() => {
-        // delete from "postValues" all params that do not belong to current transaction type
-        setPostValues(prevPostValues => {
-            const updatedPostValues = { ...prevPostValues };
-            getParamsForArea(area.id)
-                .filter(param => param.onlyFor && !param.onlyFor.includes(transactionType))
-                .forEach(param => { delete updatedPostValues[param.name] });
-            return { ...updatedPostValues }
-        })
-    }, [transactionType]);
-
     return (
         <Accordion key={area.id}
             expanded={!isCollapsed}

@@ -8,22 +8,22 @@ const getParamsForAreaAndType = (areaId, transactionType) =>
         param.area === areaId
         && (!param.onlyFor || param.onlyFor.includes(transactionType))
     );
+const getParamsForType = (transactionType) => FORM_DATA_MODEL.params.filter(param => !param.onlyFor || param.onlyFor.includes(transactionType));
+const getParamsNamesForType = (transactionType) => FORM_DATA_MODEL.params.filter(param => !param.onlyFor || param.onlyFor.includes(transactionType)).map(param => param.name);
 
 const Form = ({ postValues, setPostValues, postUrlData: { formAction, postUrlName }, transactionType }) => {
 
+    // delete from "postValues" all params that do not belong to current transaction type
     useEffect(() => {
-        // delete from "postValues" all params that do not belong to current transaction type
-        FORM_DATA_MODEL.areas.forEach(area => {
-            const areaHasInputs = getParamsForAreaAndType(area.id, transactionType).length;
-            if (!areaHasInputs) {
-                setPostValues(prevPostValues => {
-                    const updatedPostValues = { ...prevPostValues };
-                    getParamsForArea(area.id).forEach(param => { delete updatedPostValues[param.name] })
-                    return { ...updatedPostValues }
-                })
-            }
-        });
-    }, [transactionType]);
+        const paramsToRemove = Object.keys(postValues).filter(paramName => !getParamsNamesForType(transactionType).includes(paramName));
+        if (paramsToRemove.length) {
+            setPostValues(prevPostValues => {
+                const updatedPostValues = { ...prevPostValues };
+                paramsToRemove.forEach(paramName => { delete updatedPostValues[paramName] })
+                return { ...updatedPostValues }
+            });
+        }
+    }, [postValues, transactionType]);
 
     return (
         <form

@@ -4,7 +4,6 @@ import { grey } from '@material-ui/core/colors';
 
 const helperBehaviour = (select, dataLength, setInputVal, inputHasValue) => {
     if (select && dataLength && !inputHasValue) {
-        console.log(dataLength);
         // select helper's value if helper's list's length is 1
         if (dataLength === 1)
             setInputVal(select.options[1].value);
