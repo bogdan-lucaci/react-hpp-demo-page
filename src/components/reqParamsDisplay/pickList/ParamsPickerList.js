@@ -22,7 +22,7 @@ const getParamsForAreaAndType = (areaId, transactionType) =>
 const getParamTooltipByName = name => FORM_DATA_MODEL.params.find(param => param.name === name).tooltip || '';
 
 
-const ParamsPicker = ({ transactionType, postValues }) => {
+const ParamsPickerList = ({ transactionType, postValues }) => {
     const [searched, setSearched] = useState('');
     const [visibleParams, setVisibleParams] = useState(FORM_DATA_MODEL.params);
     const palette = useAppContext('ThemeContext')['theme']['palette'];
@@ -55,7 +55,6 @@ const ParamsPicker = ({ transactionType, postValues }) => {
             <SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: '50vh' }}>
                 <List dense={true} >
                     {visibleParams.map(param => {
-                        console.log(param);
                         return (
                             <ListItem /*style={{ paddingLeft: "0" }}*/>
                                 <ListItemText
@@ -82,4 +81,4 @@ const ParamsPicker = ({ transactionType, postValues }) => {
 
 }
 
-export default ParamsPicker;
+export default ParamsPickerList;
