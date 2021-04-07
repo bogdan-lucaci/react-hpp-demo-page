@@ -3,12 +3,16 @@ import useAppContext from '../../../AppContextHook';
 import { grey } from '@material-ui/core/colors';
 
 const helperBehaviour = (select, dataLength, setInputVal, inputHasValue) => {
-    if (select && !inputHasValue) {
-        // select helper value if helper list's length is 1
-        if (dataLength === 1) {
-            setInputVal(select.options[1].value)
-            select.selectedIndex = -1;
-        }
+    if (select && dataLength && !inputHasValue) {
+        console.log(dataLength);
+        // select helper's value if helper's list's length is 1
+        if (dataLength === 1)
+            setInputVal(select.options[1].value);
+        // remove value if helper's list length is > 1
+        else
+            setInputVal(false);
+
+        select.selectedIndex = -1;
     }
 };
 
@@ -33,7 +37,8 @@ const InputParamHelper = ({ name: inputName, inputHasValue, setInputVal, postUrl
         if (inputName === 'ActionName') {
             //console.log(dataLength);
             setShowHelper(() => dataLength > 0);
-            helperBehaviour(helperSelectRef.current, dataLength, setInputVal, inputHasValue);
+            // inputHasValue=false because we want to clear ActionName each time transactionType changes
+            helperBehaviour(helperSelectRef.current, dataLength, setInputVal, false); 
         }
     }, [transactionType]);
 
