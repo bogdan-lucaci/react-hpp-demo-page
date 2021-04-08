@@ -26,7 +26,7 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
             helperSelect.current.selectedIndex = -1;
     }, []);
 
-    // helpers behaviour when MerchantID changes
+    // helpers behavior when MerchantID changes
     useEffect(() => {
         // tell parent component to update markup for site helpers visibility
         if (inputName === 'SiteID') {
@@ -35,7 +35,7 @@ const InputParamHelper = ({ name: inputName, setInputVal, postUrlName, merchantI
         }
     }, [merchantId]);
 
-    // helpers behaviour when POST URL changes
+    // helpers behavior when POST URL changes
     useEffect(() => {
         // tell parent component to update markup for merchant and site helpers visibility
         if (['MerchantID', 'SiteID'].includes(inputName)) {
