@@ -47,6 +47,7 @@ const DisplayInIframeHelper = ({ appHelpers, setAppHelpers }) => {
                                 InputLabelProps={{
                                     shrink: true
                                 }}
+                                helperText="Type an URL to be displayed under the iframe"
                             />
                         </Box>
                     </Grow>
