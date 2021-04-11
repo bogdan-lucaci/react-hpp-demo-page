@@ -64,13 +64,19 @@ const ReqUrlSelector = ({ formAction, postValues, postUrlData, setPostUrlData, .
                 <ArrowDropDownIcon />
             </Button>
             <OutlinedInput
-                {...childProps}
+                // remove properties that do not make sense for this component
+                {...(() => { 
+                    const {disableElevation, disableFocusRipple, disableRipple, ...childPropsUpdated} = childProps; 
+                    return childPropsUpdated})()
+                }
                 disabled={urlName !== 'custom'}
                 value={value/* || options.find(url => url.ID === selectedIndex.toString()).URL */}
                 margin="dense"
-                style={{ width: '50%' }}
+                style={{ 
+                    width: '50%'
+                }}
                 inputProps={{
-                    style: { textAlign: 'center', fontSize: '80%', padding: '10px 6px' }
+                    style: { textAlign: 'center', fontSize: '80%', padding: '10px 6px', cursor: 'pointer' }
                 }}
                 onClick={urlName !== 'custom' ? handleToggle : null}
                 onChange={(e) => {
@@ -89,7 +95,7 @@ const ReqUrlSelector = ({ formAction, postValues, postUrlData, setPostUrlData, .
                             transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
                         }}
                     >
-                        <Paper elevation="10" style={{ border: `2px solid ${theme.palette.primary.main}` }}>
+                        <Paper elevation={10} style={{ border: `2px solid ${theme.palette.primary.main}` }}>
                             <ClickAwayListener onClickAway={handleClose}>
                                 <MenuList id="split-button-menu">
                                     {options.map((option, index) => (
