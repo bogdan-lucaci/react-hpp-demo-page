@@ -6,8 +6,8 @@ import useAppContext from '../../AppContextHook';
 
 const options = DATA_ACCESS.getPostURLs();
 
-const ReqUrlSelector = ({ formAction, postValues, postUrlData, setPostUrlData,  ...childProps }) => {
-    
+const ReqUrlSelector = ({ formAction, postValues, postUrlData, setPostUrlData, ...childProps }) => {
+
     const [open, setOpen] = useState(false);
     const anchorRef = useRef(null);
     const [selectedIndex, setSelectedIndex] = useState(1);
@@ -29,7 +29,7 @@ const ReqUrlSelector = ({ formAction, postValues, postUrlData, setPostUrlData,  
         });
 
         setUrlName(name);
-    
+
         setOpen(false);
     };
 
@@ -47,7 +47,7 @@ const ReqUrlSelector = ({ formAction, postValues, postUrlData, setPostUrlData,  
 
     return (
         <>
-            <Button {...childProps} disabled="true" style={{ width: "30%" }}>
+            <Button {...childProps} disabled={true} style={{ width: "30%" }}>
                 {urlName /*|| options.find(url => url.ID === selectedIndex.toString()).Name.toUpperCase()*/}
             </Button>
             <Button
@@ -65,7 +65,7 @@ const ReqUrlSelector = ({ formAction, postValues, postUrlData, setPostUrlData,  
             </Button>
             <OutlinedInput
                 {...childProps}
-                disabled={ urlName !== 'custom' }
+                disabled={urlName !== 'custom'}
                 value={value/* || options.find(url => url.ID === selectedIndex.toString()).URL */}
                 margin="dense"
                 style={{ width: '50%' }}

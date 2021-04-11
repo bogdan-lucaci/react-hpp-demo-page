@@ -21,7 +21,7 @@ const DisplayInIframeHelper = ({ appHelpers, setAppHelpers }) => {
     };
     return (
         <Box mt={2}>
-            <FormGroup column>
+            <FormGroup column="true">
                 <FormControlLabel
                     control={
                         <Checkbox

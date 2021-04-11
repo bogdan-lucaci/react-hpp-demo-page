@@ -137,7 +137,6 @@ let formModel = {
         { name: "ActionName", onlyFor: ['refund'], area: 7 },
         { name: "InitialPaymentID", onlyFor: ['refund'], area: 7 },
         // Refunds / Extra Parameters
-        { name: "InitialPaymentID", onlyFor: ['refund'], area: 7, subArea: 71 },
         { name: "BankAccountType", onlyFor: ['refund'], area: 7, subArea: 71 },
         { name: "BankAddress", onlyFor: ['refund'], area: 7, subArea: 71 },
         { name: "BankAgencyCode", onlyFor: ['refund'], area: 7, subArea: 71 },
@@ -170,13 +169,13 @@ let formModel = {
         { for: "Currency" },
         { for: "Country" },
         { for: "MethodID" },
-        { for: "SkipHPP" },
-        { for: "RedirectInIframe" },
-        { for: "MerchantRedirectInIframe" },
         { for: "SiteID" },
-        { for: "Articles" },
-        { for: "IsOffline" },
         { for: "Capture" },
+        { for: "MerchantRedirectInIframe" },
+        { for: "RedirectInIframe" },
+        { for: "SkipHPP" },
+        { for: "IsOffline" },
+        { for: "Articles" },
         { for: "ActionName" },
     ]
 };
