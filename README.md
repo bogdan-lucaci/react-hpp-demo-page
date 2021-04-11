@@ -36,9 +36,14 @@
 - HistoryList - add 'View History for a specific period' action + add date-time range picker + validations + UI feedback
 - move logic regarding "URLparams" from `<App>` + useEffect(... setPostValues(...),[]) to affecting initial values for "postValues" and "postUrlData" when they are created (correct usage of React lifecycle events)
 - handle `postUrlName` sent as an URL param
+- handle all text helpers
+- add image helper for methods
+- add methods list helper to toggle sort order display name / id
 
 ### Functionalities to come:
 
+- add + handle default values for transaction type
+- add + handle default values for post URL
 - REFACTORY after `FORM_DATA_MODEL` has transaction type for all params (should move `transactionType` status to `<App>` and refactory the display logic for `<Form>` and `<FormArea>` + refactory for effects inside `<InputParam>` and `<InputParamHelper>`)
 - HistoryList - save and apply transaction type
 - HistoryList - stop using confirmation provider as a Material UI provider when selecting period (to be able to disable OK btn on err)
@@ -46,11 +51,8 @@
 - set form action value by URL params
 - ***UI*** - move `<OverviewPost>` and `<OverviewApp>` to a Material UI permanent right drawer that collapses on smaller breakpoints
 - handle exotic actions (payout, refund, recurrent, capture, cancel)
-- handle all text helpers
-- add image helper for methods
 - add MTID generator helper as an icon integrated inside input
 - add custom actions with icons to inputs (clear input, generate random val, etc)
-- add methods list helper to toggle sort order display name / id
 - save and restore form data from **localStorage**
 - ***UI*** - move inputs that are not payment params related to the left drawer as actions with icons (**DisplayInsideIframe**, **IframeOverlaySource**)
 - ***UI*** - integrate Material UI for `<InputParam>` and `<InputParamHelper>`

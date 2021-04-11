@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useAppContext from '../../../AppContextHook';
 import { grey } from '@material-ui/core/colors';
 
@@ -15,18 +15,19 @@ const helperBehaviour = (select, dataLength, setInputVal, inputHasValue) => {
     }
 };
 
-const InputParamHelper = ({ name: inputName, inputHasValue, setInputVal, postUrlName, merchantId, setShowHelper, transactionType}) => {
+const InputParamHelper = ({ name: inputName, inputHasValue, setInputVal, postUrlName, merchantId, methodId, setShowHelper, transactionType }) => {
     const DATA_ACCESS = useAppContext('DataContext');
     const helperData = DATA_ACCESS.getHelperData(inputName, postUrlName, merchantId, transactionType);
     const dataLength = helperData.length;
     const helperSelectRef = useRef();
+    const [logoUrl, setLogoUrl] = useState('');
 
     // initial render
     useEffect(() => {
         // tell parent component to update markup for helpers
         setShowHelper(() => dataLength > 0)
         // deselect helper list
-        if (helperSelectRef.current) 
+        if (helperSelectRef.current)
             helperSelectRef.current.selectedIndex = -1;
     }, []);
 
@@ -37,7 +38,7 @@ const InputParamHelper = ({ name: inputName, inputHasValue, setInputVal, postUrl
             //console.log(dataLength);
             setShowHelper(() => dataLength > 0);
             // inputHasValue=false because we want to clear ActionName each time transactionType changes
-            helperBehaviour(helperSelectRef.current, dataLength, setInputVal, false); 
+            helperBehaviour(helperSelectRef.current, dataLength, setInputVal, false);
         }
     }, [transactionType]);
 
@@ -59,6 +60,24 @@ const InputParamHelper = ({ name: inputName, inputHasValue, setInputVal, postUrl
         }
     }, [postUrlName]);
 
+    // method logo when methodId value changes
+    useEffect(() => {
+        if (inputName === 'MethodID') {
+            if (methodId) {
+                const optionsElems = helperSelectRef.current.options;
+                const foundOption = [...optionsElems].find(option => option.value === methodId);
+                if (foundOption) {
+                    const foundIndex = foundOption.index;
+                    const newLogoUrl = 'https://apitest.smart2pay.com/' + helperSelectRef.current.options[foundIndex].getAttribute('data-logourl');
+                    setLogoUrl(newLogoUrl);
+                }
+                else
+                    setLogoUrl('');
+            }
+            else
+                setLogoUrl('');
+        }
+    }, [methodId]);
 
 
     const handleChange = (e) => {
@@ -69,21 +88,45 @@ const InputParamHelper = ({ name: inputName, inputHasValue, setInputVal, postUrl
     return (
         <>
             {dataLength > 0 &&
-                <select
-                    ref={helperSelectRef}
-                    style={{
-                        width: '9%',
-                        height: '1.5rem', border: 'none', borderRadius: '.25rem',
-                        backgroundColor: grey[600],
-                        borderLeft: '2px solid ' + grey[500]
-                    }}
-                    onChange={handleChange}
-                >
-                    <option key="no-value" value=""></option >
-                    {helperData.map(x =>
-                        <option key={x.id} value={x.val}>{x.displayVal}</option >
-                    )}
-                </select>
+                <>
+                    <select
+                        id={`${inputName}_helper`}
+                        ref={helperSelectRef}
+                        style={{
+                            width: '9%',
+                            height: '1.5rem', border: 'none', borderRadius: '.25rem',
+                            backgroundColor: grey[600],
+                            borderLeft: '2px solid ' + grey[500]
+                        }}
+                        onChange={handleChange}
+                    >
+                        <option key="no-value" value=""></option >
+                        {helperData.map(x => {
+                            const helperHasDataSet = x.dataSet && x.dataSet.length ? true : false;
+                            let helperDataSet = {};
+                            if (helperHasDataSet)
+                                helperDataSet = x.dataSet.reduce((allDataSets, currDataSet) => ({ ...allDataSets, [`data-${currDataSet.key}`]: currDataSet.val }), {});
+
+                            return (helperHasDataSet
+                                ? <option key={x.id} value={x.val} {...helperDataSet} >{x.displayVal}</option>
+                                : <option key={x.id} value={x.val} >{x.displayVal}</option>
+                            )
+                        }
+                        )}
+                    </select>
+                    {inputName === 'MethodID' && logoUrl &&
+                        <img
+                            style={{
+                                position: 'absolute', top: '1.55em', right: '1.75em',
+                                maxWidth: '85px', maxHeight: '30px',
+                                padding: '1px',
+                                borderRadius: '5px',
+                                backgroundColor: '#FFF'
+                            }}
+                            src={logoUrl}
+                        />
+                    }
+                </>
             }
         </>
     )

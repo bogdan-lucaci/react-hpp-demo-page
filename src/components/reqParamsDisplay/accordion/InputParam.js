@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Tooltip } from '@material-ui/core';
+import { Box, Tooltip } from '@material-ui/core';
 import { grey, teal } from '@material-ui/core/colors';
 import SETTINGS from '../../../Settings';
 import FORM_DATA_MODEL from '../../../data/FormDataModel';
 import InputParamHelper from './InputParamHelper';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import utils from '../../../utils/utils';
 
 const { noValueString } = SETTINGS;
 
@@ -51,13 +53,31 @@ const InputParam = ({ id, name, postValues, setPostValues, postUrlName, transact
         }
     }, [postValues['MerchantID']]);
 
+    const handleLegendClick = (e) => {
+        switch (e.target.innerText) {
+            case 'MerchantTransactionID':
+                return generateNewMTID()
+            case 'MethodID':
+                return utils.sortSelect('MethodID_helper', true);
+            default:
+                return null
+        }
+    }
+
     return (
         <>
-            <Tooltip title={getParamTooltipByName(name)} placement="bottom" arrow>
-                <fieldset style={{ border: 'none', padding: '.25rem', borderRadius: '.25rem' }}>
-                    <legend htmlFor={id} style={{ cursor: (name === 'MerchantTransactionID' ? 'pointer' : 'inherit'), color: teal[600] }} onClick={name === 'MerchantTransactionID' ? generateNewMTID : null} >
+            <Tooltip title={getParamTooltipByName(name)} placement="top-start" arrow>
+                <fieldset style={{ border: 'none', padding: '.25rem', borderRadius: '.25rem', position:'relative' }}>
+                    <Box display="flex">
+                    <legend 
+                        htmlFor={id}
+                        style={{ cursor: (['MerchantTransactionID', 'MethodID'].includes(name) ? 'pointer' : 'inherit'), color: teal[600] }}
+                        onClick={handleLegendClick} 
+                    >
                         {name}
                     </legend>
+                    {['MerchantTransactionID', 'MethodID'].includes(name) && <InfoOutlinedIcon style={{ fontSize: 18, position: 'relative', top: '-.25em' }} color="secondary" />}
+                    </Box>
                     <input
                         //autoComplete="off"
                         autoComplete="new-password"
@@ -79,6 +99,7 @@ const InputParam = ({ id, name, postValues, setPostValues, postUrlName, transact
                             setInputVal={setInputVal}
                             postUrlName={postUrlName}
                             merchantId={postValues['MerchantID']}
+                            methodId={postValues['MethodID']}
                             setShowHelper={setShowHelper}
                             transactionType={transactionType}
                         />
@@ -89,7 +110,16 @@ const InputParam = ({ id, name, postValues, setPostValues, postUrlName, transact
     )
 };
 
-// export default React.memo(InputParam, (prevVal, nextVal) => 
-//     prevVal.postValues[prevVal.name] === nextVal.postValues[nextVal.name]
+// export default React.memo(InputParam, (prevVal, nextVal) => {
+
+//     if (prevVal.postValues[prevVal.name] !== nextVal.postValues[nextVal.name]) {
+//         console.log('---', prevVal.name, nextVal.name,     prevVal.name === nextVal.name && prevVal.postValues[prevVal.name] === nextVal.postValues[nextVal.name]);
+//         console.log('---', prevVal.postValues[prevVal.name], nextVal.postValues[nextVal.name]);
+//     }
+//     // prevVal.name === nextVal.name &&    
+//     // prevVal.postValues[prevVal.name] === nextVal.postValues[nextVal.name]
+//     console.log(nextVal.name, prevVal.postValues[prevVal.name] === nextVal.postValues[nextVal.name]);
+//     return prevVal.postValues[prevVal.name] === nextVal.postValues[nextVal.name];
+// }
 // );
 export default InputParam;

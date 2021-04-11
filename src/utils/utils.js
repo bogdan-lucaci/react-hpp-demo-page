@@ -39,7 +39,36 @@ const utils = {
                 {"}"}
             </>
         )
-    },    
+    },
+    // sort the values of a select
+    // selElement = selector's ID ; if sortByText is FALSE we sort by the option's value else by option's text
+    sortSelect: function(selElement, sortByText) {
+        //let options = $('select#' + selElement + ' option');
+        let options = document.getElementById(selElement).options;
+        options = [...options];
+        options = options.filter(o => o.dataset);
+        let arr = options.map(function(o) {
+            return {
+                t: o.innerText,
+                v: o.value,
+                l: o.dataset.logourl
+            };
+        });
+        arr.sort(function(o1, o2) {
+            if (sortByText) {
+                let t1 = o1.t.toLowerCase();
+                let t2 = o2.t.toLowerCase();
+                return t1 > t2 ? 1 : t1 < t2 ? -1 : 0;
+            } else {
+                return o1.v - o2.v;
+            }
+        });
+        options.forEach(function(o, i) {
+            o.value = arr[i].v;
+            o.dataset.logourl = arr[i].l;
+            o.innerText = arr[i].t;
+        });
+    },
     // OUT  :   a string containing a JSON with keys sorted alphabetically (only first level)
     sortParamsByName: obj => {
         if (Object.keys(obj).length > 0) {

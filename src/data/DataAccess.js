@@ -94,13 +94,13 @@ const DATA_ACCESS = {
     getHelperData: function (inputName, envName, merchantId, transactionType) {
         //if (inputName === 'SiteID') alert(inputName);
         switch (inputName) {
-            case 'Country':
+            case 'MerchantID':
                 return (
-                    DATA_ACCESS.getCountries().map(country => (
+                    DATA_ACCESS.getMerchantsForEnv(envName).map(merchant => (
                         {
-                            id: country.Code,
-                            val: country.Code,
-                            displayVal: (country.Code + ' | ' + country.Name)
+                            id: merchant.ID,
+                            val: merchant.ID,
+                            displayVal: (merchant.ID + ' | ' + merchant.Alias)
                         }
                     ))
                 )
@@ -114,13 +114,24 @@ const DATA_ACCESS = {
                         }
                     ))
                 )
-            case 'MerchantID':
+            case 'Country':
                 return (
-                    DATA_ACCESS.getMerchantsForEnv(envName).map(merchant => (
+                    DATA_ACCESS.getCountries().map(country => (
                         {
-                            id: merchant.ID,
-                            val: merchant.ID,
-                            displayVal: (merchant.ID + ' | ' + merchant.Alias)
+                            id: country.Code,
+                            val: country.Code,
+                            displayVal: (country.Code + ' | ' + country.Name)
+                        }
+                    ))
+                )
+            case 'MethodID':
+                return (
+                    DATA_ACCESS.getMethods().map(method => (
+                        {
+                            id: method.ID,
+                            val: method.ID,
+                            displayVal: `${method.DisplayName} (${method.ID})`,
+                            dataSet: [{ key: 'logourl', val: method.LogoURL }]
                         }
                     ))
                 )
@@ -136,10 +147,10 @@ const DATA_ACCESS = {
                             }
                         ))
                 )
-            case 'SkipHPP':
-            case 'RedirectInIframe':
-            case 'MerchantRedirectInIframe':
             case 'Capture':
+            case 'MerchantRedirectInIframe':
+            case 'RedirectInIframe':
+            case 'SkipHPP':
                 return ([
                     { id: 101, val: '0', displayVal: '0' },
                     { id: 102, val: '1', displayVal: '1' },

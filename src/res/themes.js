@@ -52,6 +52,9 @@ const DarkTheme = createMuiTheme({
                     backgroundImage: "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAdCAQAAAB/Xpa/AAABdElEQVR4AaWVwaqDQAxF/UMn/RmhC8GF4EJwIcxCeP/6omZxoLcaLEKdmpnjTTJzbawra/kTV7XeOpte79e7zPFsxex5j9jkc/pSJWGV8HYrsy8aSuUY8GqDj2aPYZyDr1CLLPzJ4r9LmaEWWYBDODUfxeipgwDrPl6s1yl4lOAYK4DjA/B5neXRcOhjislrjXXXcBtcoWuwUSuUGY3Wnetu4cd9OXQsCThmpuChZzr1fAdHjlPMycAZth51FPvHeq7Ow7F/gMBruTeewpm8LtgvcLbNgWz173DuZBt4CpJwpCsOP+IojzQAxgNOu4q7Vq8NGtYVd8BhO2hYqUl4ZcPB2uE2skU0Wbq0hDtKGHC038aGdVKpMhJwoEUJ0Z/GQ/W7axAGOP5fOFBtrl3jHn7lQAqOI38PhxUk4DCrJBxbUcK1a+ThdCAJF66RgksC4fy0PYfzkxdwUbHHcBrJDl/Y69/h3G8NXURPaTcNbzfKUo7zD09sqSqB22YgAAAAAElFTkSuQmCC')",
                     backgroundSize: "3rem",
                     //background: "#2a4c5d url( data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw== )"                
+                },
+                option: {
+                    fontFamily: 'monospace'
                 }
             }
         }
@@ -111,6 +114,9 @@ const LightTheme = createMuiTheme({
 
                     backgroundSize: "3rem"
                     //background: "#2a4c5d url( data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw== )"
+                },
+                option: {
+                    fontFamily: 'monospace'
                 }
             }
         }

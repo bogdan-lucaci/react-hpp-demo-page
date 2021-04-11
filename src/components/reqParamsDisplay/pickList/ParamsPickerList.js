@@ -54,9 +54,9 @@ const ParamsPickerList = ({ transactionType, postValues }) => {
             </Box>
             <SimpleBar forceVisible="y" autoHide={false} style={{ maxHeight: '50vh' }}>
                 <List dense={true} >
-                    {visibleParams.map(param => {
+                    {visibleParams.map((param, i) => {
                         return (
-                            <ListItem /*style={{ paddingLeft: "0" }}*/>
+                            <ListItem key={i} /*style={{ paddingLeft: "0" }}*/>
                                 <ListItemText
                                     primary={param.name}
                                     primaryTypographyProps={{

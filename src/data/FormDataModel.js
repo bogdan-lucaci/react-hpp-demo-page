@@ -44,7 +44,7 @@ let formModel = {
         { name: "Hash", area: 1 },
 
         // Flow Control
-        { name: "MethodID", area: 2 },
+        { name: "MethodID", area: 2, tooltip: "Click label to toggle sort by name/id" },
         { name: "CustomerEmail", area: 2 },
         { name: "ReferenceNumber", area: 2 },
         { name: "CustomerName", area: 2 },
