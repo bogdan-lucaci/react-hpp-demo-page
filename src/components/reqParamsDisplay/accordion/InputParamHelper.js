@@ -117,7 +117,7 @@ const InputParamHelper = ({ name: inputName, inputHasValue, setInputVal, postUrl
                     {inputName === 'MethodID' && logoUrl &&
                         <img
                             style={{
-                                position: 'absolute', top: '1.55em', right: '1.75em',
+                                position: 'absolute', top: '1.55em', right: '11.5%',
                                 maxWidth: '85px', maxHeight: '30px',
                                 padding: '1px',
                                 borderRadius: '5px',
