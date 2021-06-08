@@ -3,6 +3,8 @@ import { Typography, Box, Divider } from '@material-ui/core';
 //import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 import useAppContext from '../AppContextHook';
 import utils from '../utils/utils';
+import FDM_ACCESS from '../data/FormDataModelAccess';
+
 
 const OverviewPost = ({ postValues, postUrlData }) => {
     const palette = useAppContext('ThemeContext')['theme']['palette'];
@@ -27,7 +29,7 @@ const OverviewPost = ({ postValues, postUrlData }) => {
             <Divider light={true} />
             <pre>
                 {utils.getJsonColoredMarkup(
-                    utils.sortParamsByFormModel(postValues), {
+                    FDM_ACCESS.sortParamsByFormModel(postValues), {
                         keyColor: palette.success.main,
                         valColor: palette.text.icon
                     }

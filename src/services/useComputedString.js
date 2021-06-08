@@ -1,9 +1,9 @@
 import { useEffect, useMemo } from 'react';
-import utils from '../utils/utils';
 import useAppContext from '../AppContextHook';
+import FDM_ACCESS from '../data/FormDataModelAccess';
 
 const getComputedString = (postValues, signature) => {
-    const postValuesSorted = JSON.parse(utils.sortParamsByFormModel(postValues));
+    const postValuesSorted = JSON.parse(FDM_ACCESS.sortParamsByFormModel(postValues));
     const computedString = Object.keys(postValuesSorted)
         .filter(param => param !== 'Hash')
         .reduce((computedString, param) => {

@@ -2,12 +2,10 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { ButtonGroup, FormControl, InputLabel, OutlinedInput, TextField, Tooltip } from '@material-ui/core';
 import { grey, teal } from '@material-ui/core/colors';
 import SETTINGS from '../Settings';
-import FORM_DATA_MODEL from '../data/FormDataModel';
+import FDM_ACCESS from '../../../data/FormDataModelAccess';
 import InputParamHelper from './InputParamHelper';
 
 const { noValueString } = SETTINGS;
-
-const getParamTooltipByName = name => FORM_DATA_MODEL.params.find(param => param.name === name).tooltip || '';
 
 // append or delete (if no val) param to postValues
 const handleValue = (currObj, name, val) => {
@@ -28,7 +26,7 @@ const handleValue = (currObj, name, val) => {
 };
 
 const InputParam = ({ id, name, postValues, setPostValues, postUrlName, appHelpers, setAppHelpers }) => {
-    const hasHelper = FORM_DATA_MODEL.helpers.find(x => x.for === name) !== undefined;
+    const hasHelper = FDM_ACCESS.paramHasHelper(name);
     const [showHelper, setShowHelper] = useState(false);
 
     const setInputVal = (val) => {
@@ -60,7 +58,7 @@ const InputParam = ({ id, name, postValues, setPostValues, postUrlName, appHelpe
     return (
         <>
 
-            <Tooltip title={getParamTooltipByName(name)} placement="bottom" arrow>
+            <Tooltip title={FDM_ACCESS.getParamTooltipByName(name)} placement="bottom" arrow>
                 <ButtonGroup 
                     disableElevation={true} 
                     size="large" 

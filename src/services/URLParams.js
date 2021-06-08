@@ -1,5 +1,5 @@
-import FORM_DATA_MODEL from '../data/FormDataModel';
 import DATA_ACCESS from '../data/DataAccess';
+import FDM_ACCESS from '../data/FormDataModelAccess';
 
 const UrlParams = {
     getNamesArray: () => {
@@ -30,7 +30,7 @@ const UrlParams = {
     getFormModelObjFromUrl: () => {
         const urlParams = UrlParams.getObj();
 
-        const urlParamsObj = FORM_DATA_MODEL.params.reduce((paramsObj, param) => {
+        const urlParamsObj = FDM_ACCESS.getParams().reduce((paramsObj, param) => {
             const formModelParamFromUrl = Object.keys(urlParams).find(urlParamName =>
             urlParamName.toLowerCase() === param.name.toLowerCase()
             && param.name !== 'MerchantTransactionID'

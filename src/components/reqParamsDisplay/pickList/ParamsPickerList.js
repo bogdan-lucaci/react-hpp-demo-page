@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import useAppContext from '../../../AppContextHook';
-import FORM_DATA_MODEL from '../../../data/FormDataModel';
+import FDM_ACCESS from '../../../data/FormDataModelAccess';
 import { Box, IconButton, List, ListItem, ListItemText, Paper, Table, TableContainer } from '@material-ui/core/';
 import SimpleBar from 'simplebar-react';
 import SearchBar from '../../_vendors/material-ui-search-bar/SearchBar';
@@ -11,24 +11,14 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import AddIcon from '@material-ui/icons/Add';
 
-const getAreaNameById = areaId => FORM_DATA_MODEL.areas.filter(area => area.id === areaId).map(area => area.name);
-const getAreaNameByParam = paramName => FORM_DATA_MODEL.areas.filter(area => area.id === FORM_DATA_MODEL.params.find(param => param.name === paramName).area);
-const getParamsForArea = (areaId) => FORM_DATA_MODEL.params.filter(param => param.area === areaId);
-const getParamsForAreaAndType = (areaId, transactionType) =>
-    FORM_DATA_MODEL.params.filter(param =>
-        param.area === areaId
-        && (!param.onlyFor || param.onlyFor.includes(transactionType))
-    );
-const getParamTooltipByName = name => FORM_DATA_MODEL.params.find(param => param.name === name).tooltip || '';
-
 
 const ParamsPickerList = ({ transactionType, postValues }) => {
     const [searched, setSearched] = useState('');
-    const [visibleParams, setVisibleParams] = useState(FORM_DATA_MODEL.params);
+    const [visibleParams, setVisibleParams] = useState(FDM_ACCESS.getParams());
     const palette = useAppContext('ThemeContext')['theme']['palette'];
 
     const requestSearch = (searchedVal) => {
-        const visibleParams = FORM_DATA_MODEL.params.filter(param =>
+        const visibleParams = FDM_ACCESS.getParams().filter(param =>
             param.name.toLowerCase().includes(searchedVal.toLowerCase())
         );
         setVisibleParams(visibleParams);
@@ -62,7 +52,7 @@ const ParamsPickerList = ({ transactionType, postValues }) => {
                                     primaryTypographyProps={{
                                         style: { color: palette.text.icon }
                                     }}
-                                    secondary={`${getAreaNameById(param.area)}${getParamTooltipByName(param.name).length ? ' - ' + getParamTooltipByName(param.name) : ''}`}
+                                    secondary={`${FDM_ACCESS.getAreaNameById(param.area)}${FDM_ACCESS.getParamTooltipByName(param.name).length ? ' - ' + FDM_ACCESS.getParamTooltipByName(param.name) : ''}`}
                                     secondaryTypographyProps={{
                                         style: { color: palette.primary.main }
                                     }}

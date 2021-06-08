@@ -1,5 +1,4 @@
 import React from 'react';
-import FORM_DATA_MODEL from '../data/FormDataModel';
 
 const utils = {
     // OUT  :   true if the objects are shallow equal
@@ -79,22 +78,7 @@ const utils = {
         }
         else
             return '{}';
-    },
-    //************************************
-    // FORM_DATA_MODEL data access helpers
-    //************************************    
-    // OUT  :   a string containing a JSON with keys sorted in the same order as params are described inside FORM_DATA_MODEL
-    sortParamsByFormModel: (obj) => {
-        let sortedObj = {};
-        if (Object.keys(obj).length > 0) {
-            FORM_DATA_MODEL.params.forEach(paramFromDataModel => {
-                const x = Object.keys(obj).find(paramName => paramName === paramFromDataModel.name);
-                if (x) sortedObj[x] = obj[x];
-            });
-        }
-        return JSON.stringify(sortedObj);
-    },
-
+    }
 }
 
 export default utils;

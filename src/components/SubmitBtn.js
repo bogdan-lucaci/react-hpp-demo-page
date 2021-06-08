@@ -1,6 +1,6 @@
 import { Box, Button } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import utils from '../utils/utils';
+import FDM_ACCESS from '../data/FormDataModelAccess';
 import { addToHistory } from './PostsHistory';
 
 const post_to_url = (action, params, method) => {
@@ -47,7 +47,7 @@ const SubmitButton = ({ postValues, postUrlData, setIsLoading, ...props }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const postValuesSorted = JSON.parse(utils.sortParamsByFormModel(postValues));
+        const postValuesSorted = JSON.parse(FDM_ACCESS.sortParamsByFormModel(postValues));
         if (Object.keys(postValuesSorted).length) {
             const paramsWithValueSorted = Object.keys(postValuesSorted).map(param => ({ name: param, value: postValues[param] }));
             setIsLoading(true);

@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Box, Tooltip } from '@material-ui/core';
 import { grey, teal } from '@material-ui/core/colors';
 import SETTINGS from '../../../Settings';
-import FORM_DATA_MODEL from '../../../data/FormDataModel';
+import FDM_ACCESS from '../../../data/FormDataModelAccess';
 import InputParamHelper from './InputParamHelper';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import utils from '../../../utils/utils';
 
 const { noValueString } = SETTINGS;
-
-const getParamTooltipByName = name => FORM_DATA_MODEL.params.find(param => param.name === name).tooltip || '';
 
 // append or delete (if no val) param to postValues
 const handleValue = (name, val, setPostValues) => {
@@ -27,7 +25,7 @@ const handleValue = (name, val, setPostValues) => {
 };
 
 const InputParam = ({ id, name, postValues, setPostValues, postUrlName, transactionType }) => {
-    const hasHelper = FORM_DATA_MODEL.helpers.find(x => x.for === name) !== undefined;
+    const hasHelper = FDM_ACCESS.paramHasHelper(name);
     const [showHelper, setShowHelper] = useState(false);
 
     const setInputVal = (val) => handleValue(name, val, setPostValues);
@@ -66,7 +64,7 @@ const InputParam = ({ id, name, postValues, setPostValues, postUrlName, transact
 
     return (
         <>
-            <Tooltip title={getParamTooltipByName(name)} placement="top-start" arrow>
+            <Tooltip title={FDM_ACCESS.getParamTooltipByName(name)} placement="top-start" arrow>
                 <fieldset style={{ border: 'none', padding: '.25rem', borderRadius: '.25rem', position:'relative' }}>
                     <Box display="flex">
                     <legend 

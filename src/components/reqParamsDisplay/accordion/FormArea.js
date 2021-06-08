@@ -3,18 +3,9 @@ import { Accordion, AccordionDetails, AccordionSummary, Grid, Typography } from 
 //import { grey, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
-import FORM_DATA_MODEL from '../../../data/FormDataModel';
+import FDM_ACCESS from '../../../data/FormDataModelAccess';
 import InputParam from './InputParam';
 import FormSubAreaTitle from './FormSubAreaTitle';
-
-
-const getParamsForArea = (areaId) => FORM_DATA_MODEL.params.filter(param => param.area === areaId);
-const getParamsForAreaAndType = (areaId, transactionType) =>
-    FORM_DATA_MODEL.params.filter(param =>
-        param.area === areaId
-        && (!param.onlyFor || param.onlyFor.includes(transactionType))
-    );
-const areaIsCollapsedForPostUrlName = (areId, postUrlName) => FORM_DATA_MODEL.areas.filter((area) => area.collapseFor.includes(postUrlName)).map((area) => area.id).includes(areId);
 
 
 const useStyles = makeStyles({
@@ -26,11 +17,11 @@ const useStyles = makeStyles({
 });
 
 const FormArea = ({ area, transactionType, postValues, setPostValues, postUrlName }) => {
-    const [isCollapsed, setIsCollapsed] = useState(areaIsCollapsedForPostUrlName(area.id, postUrlName));
+    const [isCollapsed, setIsCollapsed] = useState(FDM_ACCESS.areaIsCollapsedForPostUrlName(area.id, postUrlName));
     const classes = useStyles();
 
     useEffect(() => {
-        setIsCollapsed(areaIsCollapsedForPostUrlName(area.id, postUrlName));
+        setIsCollapsed(FDM_ACCESS.areaIsCollapsedForPostUrlName(area.id, postUrlName));
     }, [postUrlName]);
 
     return (
@@ -46,7 +37,7 @@ const FormArea = ({ area, transactionType, postValues, setPostValues, postUrlNam
             <AccordionDetails>
                 {/* {isCollapsed === false && */}
                 <Grid container spacing={1}>
-                    {getParamsForAreaAndType(area.id, transactionType).map((param) => {
+                    {FDM_ACCESS.getParamsForAreaAndType(area.id, transactionType).map((param) => {
                         return (
                             <React.Fragment key={param.name + (param.area.toString())} >
                                 {/* check if a form sub-area starts and if we should display a title */}
