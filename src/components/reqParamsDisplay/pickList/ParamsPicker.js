@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const ParamsPicker = ({ postValues, setPostValues, postUrlData: { formAction, postUrlName }, transactionType }) => {
+const ParamsPicker = ({ postValues, setPostValues, postUrlData: { formAction, postUrlName }, transactionType, setAlert }) => {
     const classes = useStyles();
     return (
         <Paper>
@@ -29,6 +29,7 @@ const ParamsPicker = ({ postValues, setPostValues, postUrlData: { formAction, po
                             <ParamsPickerList 
                                 postValues={postValues}
                                 transactionType={transactionType}
+                                setAlert={setAlert}
                             />
                         {/* </Paper> */}
                         {/* <Divider orientation="vertical" classes={{root: classes.divider}} /> */}

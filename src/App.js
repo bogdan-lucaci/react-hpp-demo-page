@@ -123,6 +123,7 @@ const App = () => {
                     setPostValues={setPostValues}
                     postUrlData={postUrlData}
                     transactionType={transactionType}
+                    setAlert={setAlert}
                   />
                   :
                   <Form

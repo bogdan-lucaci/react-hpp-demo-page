@@ -14,7 +14,8 @@ const FDM_ACCESS = {
     // OUT  :   string representing area's name
     getAreaNameById: areaId => 
         FORM_DATA_MODEL.areas
-            .filter(area => area.id === areaId).map(area => area.name)
+            .filter(area => area.id === areaId)
+            .map(area => area.name)
     ,
     // IN   :   int representing the area's id
     // OUT  :   array of subAreas objects
@@ -25,6 +26,17 @@ const FDM_ACCESS = {
             .map(area => area.subArea)
         return x && x.length ? x[0] : [];
     },
+    // IN   :   int representing a subArea ID
+    // OUT  :   string representing subArea's name
+    getSubAreaNameById: subAreaId => {
+        const foundSubArea = FORM_DATA_MODEL.areas
+            .filter(area => area.subArea && area.subArea.length)
+            .reduce((subAreas, area) => subAreas.concat(area.subArea), [])
+            .find(subArea => subArea.id === subAreaId);
+        
+        return foundSubArea ? foundSubArea.name : '';
+    }
+    ,    
     //// const getSubAreaForAreaAndParam = (areaId, paramArea) => (
     ////     FORM_DATA_MODEL.areas
     ////         .filter(area => area.id === paramArea[0])

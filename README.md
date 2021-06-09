@@ -43,6 +43,8 @@
 
 ### Functionalities to come:
 
+- ***UI*** - params picker - add drawer with params list for smaller breakpoits
+- ***UI*** - params picker - add alert for adding/removing params from post
 - add + handle default values for transaction type
 - add + handle default values for post URL
 - REFACTORY after `FORM_DATA_MODEL` has transaction type for all params (should move `transactionType` status to `<App>` and refactory the display logic for `<Form>` and `<FormArea>` + refactory for effects inside `<InputParam>` and `<InputParamHelper>`)
