@@ -27,17 +27,17 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [alert, setAlert] = useState({ isOpen: false, text: '', type: 'info' });
   const [appHelpers, setAppHelpers] = useState({});
+  const [transactionType, setTransactionType] = useState('payment');
   const [postValues, setPostValues] = useState({
     // append URL params to initial values
-    ...SETTINGS.initialValues.postValues,
+    ...SETTINGS.initialValues.transactionType.find(type => type.name === transactionType)['postValues'],
     ...UrlParams.getFormModelObjFromUrl()
   });
   const [postUrlData, setPostUrlData] = useState(
     // use post url name sent in URL params or fallback to initial values
     UrlParams.getPostUrlObjFromUrl() || SETTINGS.initialValues.postUrlData
   );
-  const [transactionType, setTransactionType] = useState('payment');
-
+  
   // get hash from custom hook "useComputedString" 
   const hash = useComputedString(postUrlData, postValues, appHelpers, setAppHelpers);
   useEffect(() => {

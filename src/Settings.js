@@ -3,11 +3,46 @@ const settings = {
     noValueString: "novalue",
     //ignoredValues: ["", "undefined", undefined, "Pay", null, "NOVALUE", "novalue"],
     initialValues: {
-        postValues: {
-            'Amount': '100',
-            'Currency': 'EUR',
-            'ReturnURL': 'https://demo.smart2pay.com/redirect.php'
-        },
+        transactionType: [
+            {
+                name: 'payment',
+                postValues: {
+                    'MerchantTransactionID': '1234567890',
+                    'Amount': '100',
+                    'Currency': 'EUR',
+                    'ReturnURL': 'https://demo.smart2pay.com/redirect.php',
+                }
+            },
+            {
+                name: 'payout',
+                postValues: {
+                    'MerchantTransactionID': '1234567890',
+                    'Amount': '100',
+                    'Currency': 'EUR',
+                }
+            },
+            {
+                name: 'recurrent',
+                postValues: {}
+            },
+            {
+                name: 'refund',
+                postValues: {
+                    'MerchantTransactionID': '1234567890',
+                    'Amount': '100',
+                }
+            },
+            {
+                name: 'capture',
+                postValues: {
+                    'Amount': '100',
+                }
+            },
+            {
+                name: 'cancel',
+                postValues: {}
+            }                                                            
+        ],
         postUrlData: {
             formAction: 'https://apitest.smart2pay.com/',
             postUrlName: 'demo'

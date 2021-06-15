@@ -78,7 +78,10 @@ const utils = {
         }
         else
             return '{}';
-    }
+    },
+    // IN   :   an array of objects with same keys and a string representing an object's key
+    // OUT  :   an array of objects sorted alphabetically by the given keyName
+    sortArrayByObjKey: (arrayOfObjects, keyName) => arrayOfObjects.sort((a, b) => a[keyName].toLowerCase().localeCompare(b[keyName].toLowerCase()))
 }
 
 export default utils;

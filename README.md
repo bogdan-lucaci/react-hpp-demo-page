@@ -40,11 +40,13 @@
 - add image helper for methods
 - add methods list helper to toggle sort order display name / id
 - create a **Form Data Model Access** layer -> and move/use all queries regarding form data model to it
+- add and handle default SETTINGS values for each transaction type
 
 ### Functionalities to come:
 
-- ***UI*** - params picker - add drawer with params list for smaller breakpoits
-- ***UI*** - params picker - add alert for adding/removing params from post
+- ***UI - params picker*** - add drawer with params list for smaller breakpoits
+- ***UI - params picker*** - add alert for adding/removing params from post
+-***UI - params picker*** - add posibility to mark params as "favourites" (option saved inside browser's localStorage) - params that will be displayed on top of list
 - add + handle default values for transaction type
 - add + handle default values for post URL
 - REFACTORY after `FORM_DATA_MODEL` has transaction type for all params (should move `transactionType` status to `<App>` and refactory the display logic for `<Form>` and `<FormArea>` + refactory for effects inside `<InputParam>` and `<InputParamHelper>`)
